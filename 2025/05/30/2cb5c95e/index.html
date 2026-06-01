@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本研究通过构建简化的游戏战斗模型，比较两种不同武器在面对怪物时的击杀效率，采用蒙特卡洛仿真和期望分析方法，在此基础上引入暴击机制和伪随机补偿机制，从概率统计角度探讨武器平衡性的调整方法。研究表明，引入复杂机制可有效平衡武器性能，提升玩家体验">
+  <title>概率统计大作业 | 夏末</title>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav-wrap">
+      <a class="brand" href="/">
+        <span class="brand-title">夏末</span>
+        
+          <span class="brand-subtitle">不啻微茫，造炬成阳</span>
+        
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="/">首页</a>
+        <a href="/archives/">归档</a>
+        <a href="/about/">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <article class="article">
+  <header class="article-header">
+    
+      <img class="article-cover" src="https://source.unsplash.com/1200x630/?%E7%BB%9F%E8%AE%A1%2C%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86%2C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0" alt="">
+    
+    <div class="post-meta">
+      <time datetime="2025-05-30">2025-05-30</time>
+      
+        <span>学习</span>
+      
+    </div>
+    <h1>概率统计大作业</h1>
+    
+      <p class="article-description">本研究通过构建简化的游戏战斗模型，比较两种不同武器在面对怪物时的击杀效率，采用蒙特卡洛仿真和期望分析方法，在此基础上引入暴击机制和伪随机补偿机制，从概率统计角度探讨武器平衡性的调整方法。研究表明，引入复杂机制可有效平衡武器性能，提升玩家体验</p>
+    
+    
+      <div class="tag-row">
+        
+          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
+        
+          <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+        
+          <a href="/tags/%E7%BB%9F%E8%AE%A1/">#统计</a>
+        
+      </div>
+    
+  </header>
+  <div class="article-body">
+    
+      <aside class="article-toc" aria-label="文章目录">
+        <div class="toc-title">目录</div>
+        <ul><li><a href="#摘要：">摘要：</a></li><li><a href="#关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿">关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿</a></li><li><a href="#引言：">引言：</a></li><li><a href="#1-方法：概率建模与蒙特卡洛仿真">1 方法：概率建模与蒙特卡洛仿真</a><ul><li><a href="#1-1-模型目标">1.1 模型目标</a></li></ul></li><li><a href="#2-蒙特卡洛模拟方法">2 蒙特卡洛模拟方法</a><ul><li><a href="#2-1初始化生命值">2.1初始化生命值</a></li><li><a href="#2-2-循环：直到">2.2 循环：直到</a></li><li><a href="#2-3-随机从-mathcal-D-中抽取一次伤害">2.3 随机从$\mathcal{D}$中抽取一次伤害</a></li><li><a href="#2-4-更新血量：">2.4 更新血量：</a></li><li><a href="#2-5-累加攻击次数：">2.5 累加攻击次数：</a></li><li><a href="#2-6-记录当前轮击杀所需次数-n">2.6 记录当前轮击杀所需次数 $n$</a></li></ul></li><li><a href="#3-扩展机制建模">3 扩展机制建模</a><ul><li><a href="#3-1暴击机制（Critical-Hit）">3.1暴击机制（Critical Hit）</a></li><li><a href="#3-2-伪随机补偿机制（Pity-System）">3.2 伪随机补偿机制（Pity System）</a></li></ul></li><li><a href="#4-结论分析">4 结论分析</a></li><li><a href="#5-展望">5 展望</a></li><li><a href="#参考文献：">参考文献：</a></li><li><a href="#案例代码：">案例代码：</a><ul><li><a href="#Test-1-：">Test 1 ：</a></li><li><a href="#Test-2">Test 2 :</a></li></ul></li><li><a href="#暴击机制">暴击机制</a><ul><li><a href="#Test-3">Test 3 :</a></li></ul></li></ul>
+      </aside>
+    
+    <div class="article-content">
+      <p><strong>游戏平衡机制的研究：以伤害期望为例</strong></p>
+<p><strong>——基于蒙特卡洛仿真的统计学研究</strong></p>
+<p>X 经济与管理学院 学号已脱敏 笔者</p>
+<h2 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h2><p>本研究通过构建简化的游戏战斗模型，比较两种不同武器在面对怪物时的击杀效率，采用蒙特卡洛仿真和期望分析方法，在此基础上引入暴击机制和伪随机补偿机制，从概率统计角度探讨武器平衡性的调整方法。研究表明，引入复杂机制可有效平衡武器性能，提升玩家体验。</p>
+<h2 id="关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿"><a href="#关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿" class="headerlink" title="关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿"></a>关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿</h2><h1 id="引言："><a href="#引言：" class="headerlink" title="引言："></a>引言：</h1><p>游戏设计中，武器平衡性是提升玩家体验和保持竞技公平性的关键因素。武器若存在显著优劣，会影响玩家选择与策略，甚至削弱游戏寿命。本文从概率论与数理统计角度出发，研究两种伤害模型各异的武器在击杀敌人所需攻击次数上的差异，并通过仿真数据量化差距。同时，引入现代游戏中常见的暴击机制与补偿机制，进一步分析其对武器平衡的影响。</p>
+<h1 id="1-方法：概率建模与蒙特卡洛仿真"><a href="#1-方法：概率建模与蒙特卡洛仿真" class="headerlink" title="1 方法：概率建模与蒙特卡洛仿真"></a>1 方法：概率建模与蒙特卡洛仿真</h1><p>我们将击杀怪物所需的攻击次数建模为一个随机变量问题。设怪物初始生命值为$<code>H \in \mathbb&#123;N&#125;^&#123;+&#125;</code>$，攻击所造成的伤害为离散随机变量 D，其概率分布由武器决定。</p>
+<p>定义如下：</p>
+<p>对于武器1，其伤害集合为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathcal&#123;D&#125;_&#123;1&#125; = \&#123; 1,2,3,4,5\&#125;</span><br></pre></td></tr></table></figure>
+<p>，均匀分布，则每一项概率为：$<code>\mathbb&#123;P&#125;(D = d) = \frac&#123;1&#125;&#123;5&#125;</code>$ ，$<code>\ \ d \in \mathcal&#123;D&#125;_&#123;1&#125;\</code>$；</p>
+<p>对于武器2，其伤害集合为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathcal&#123;D&#125;_&#123;2&#125; = \&#123; 2,3,4\&#125;</span><br></pre></td></tr></table></figure>
+<p>，每一项概率为：$<code>\mathbb&#123;P&#125;(D = d) = \frac&#123;1&#125;&#123;3&#125;</code>$ $<code>\ \ d \in \mathcal&#123;D&#125;_&#123;2&#125;</code>$。</p>
+<h2 id="1-1-模型目标"><a href="#1-1-模型目标" class="headerlink" title="1.1 模型目标"></a>1.1 模型目标</h2><p>我们感兴趣的目标是，击杀血量为H的怪物所需攻击次数的期望，记作$<code>\mathbb&#123;E&#125;\lbrack N_&#123;H&#125;\rbrack</code>$。</p>
+<p>由于伤害是离散的、递减的非线性过程，难以通过解析方法直接求解，因此采用蒙特卡洛模拟逼近其期望值。</p>
+<h1 id="2-蒙特卡洛模拟方法"><a href="#2-蒙特卡洛模拟方法" class="headerlink" title="2 蒙特卡洛模拟方法"></a>2 蒙特卡洛模拟方法</h1><p>定义仿真轮数为 T（如 15000），每轮模拟过程如下[1]：</p>
+<h3 id="2-1初始化生命值"><a href="#2-1初始化生命值" class="headerlink" title="2.1初始化生命值"></a>2.1初始化生命值</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h: = H</span><br></pre></td></tr></table></figure>
+<p>，攻击计数 $<code>n: = 0</code>$</p>
+<h3 id="2-2-循环：直到"><a href="#2-2-循环：直到" class="headerlink" title="2.2 循环：直到"></a>2.2 循环：直到</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h \leq 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-随机从-mathcal-D-中抽取一次伤害"><a href="#2-3-随机从-mathcal-D-中抽取一次伤害" class="headerlink" title="2.3 随机从$\mathcal{D}$中抽取一次伤害"></a>2.3 随机从$<code>\mathcal&#123;D&#125;</code>$中抽取一次伤害</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\ d \sim D</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-更新血量："><a href="#2-4-更新血量：" class="headerlink" title="2.4 更新血量："></a>2.4 更新血量：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h: = h - d</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-累加攻击次数："><a href="#2-5-累加攻击次数：" class="headerlink" title="2.5 累加攻击次数："></a>2.5 累加攻击次数：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n: = n + 1</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-记录当前轮击杀所需次数-n"><a href="#2-6-记录当前轮击杀所需次数-n" class="headerlink" title="2.6 记录当前轮击杀所需次数 $n$"></a>2.6 记录当前轮击杀所需次数 $<code>n</code>$</h3><p>完成 T 次仿真后，期望估计值为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathbb&#123;E&#125;\lbrack N_&#123;H&#125;\rbrack \approx \frac&#123;1&#125;&#123;T&#125;\sum_&#123;i = 1&#125;^&#123;T&#125;n_&#123;i&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模拟结果如下（图1、图2）：</p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image1.png" alt="Screenshot 2025-05-30 at 14.58.52"></p>
+<p>图1 : 原始模型下预期击杀所需次数</p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image2.png" alt="Screenshot 2025-05-30 at 15.00.58"></p>
+<p>图2 : 原始模型下两把武器攻击次数的差值</p>
+<h1 id="3-扩展机制建模"><a href="#3-扩展机制建模" class="headerlink" title="3 扩展机制建模"></a>3 扩展机制建模</h1><p>我们进一步引入两个常见机制：</p>
+<h2 id="3-1暴击机制（Critical-Hit）"><a href="#3-1暴击机制（Critical-Hit）" class="headerlink" title="3.1暴击机制（Critical Hit）"></a>3.1暴击机制（Critical Hit）</h2><p>设暴击概率为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p</span><br></pre></td></tr></table></figure>
+<p>，暴击倍率为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\beta</span><br></pre></td></tr></table></figure>
+<p>，则每次攻击的伤害变为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D’ = \left\&#123; \begin&#123;matrix&#125;</span><br><span class="line">\beta \cdot D, &amp; p \\</span><br><span class="line">D, &amp; 1 - p</span><br><span class="line">\end&#123;matrix&#125; \right.\ </span><br></pre></td></tr></table></figure>
+
+<p>这使得$<code>D’</code>$成为混合分布，期望伤害为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathbb&#123;E&#125;\lbrack D’\rbrack = (1 - p) \cdot \mathbb&#123;E&#125;\lbrack D\rbrack + p \cdot \beta \cdot \mathbb&#123;E&#125;\lbrack D\rbrack = \mathbb&#123;E&#125;\lbrack D\rbrack \cdot \lbrack 1 + p(\beta - 1)\rbrack</span><br></pre></td></tr></table></figure>
+
+<p>模拟结果如下（图3、图4），可以看出不同武器差值有所下降：</p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image3.png" alt="Screenshot 2025-05-30 at 15.05.23"></p>
+<p>图3 : 引入暴击后预期击杀所需次数</p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image4.png" alt="Screenshot 2025-05-30 at 15.07.58"></p>
+<p>图4 : 引入暴击后两把武器攻击次数的差值</p>
+<h2 id="3-2-伪随机补偿机制（Pity-System）"><a href="#3-2-伪随机补偿机制（Pity-System）" class="headerlink" title="3.2 伪随机补偿机制（Pity System）"></a>3.2 伪随机补偿机制（Pity System）</h2><p>为模拟玩家体验优化系统，引入线性补偿机制[2]：若连续</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\ k</span><br></pre></td></tr></table></figure>
+<p>次未暴击，则下一次暴击概率提高到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p_&#123;k&#125; = \min(1,p + \delta \cdot k)</span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\delta</span><br></pre></td></tr></table></figure>
+<p>为每次未暴击后暴击概率的递增量。这种机制通过控制波动，缓解概率失控问题。</p>
+<p>模拟结果如下（图5、图6），可以看出不同武器差值进一步下降，平衡性补偿更好：</p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image5.png" alt="Screenshot 2025-05-30 at 15.10.36"></p>
+<p>图5 : 引入伪随机后预期击杀所需次数</p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image6.png" alt="Screenshot 2025-05-30 at 15.11.56"></p>
+<p>图6 : 引入伪随机后两把武器攻击次数的差值</p>
+<h1 id="4-结论分析"><a href="#4-结论分析" class="headerlink" title="4 结论分析"></a>4 结论分析</h1><p>仿真数据显示，在基础模型下，武器2在大多数血量下击杀效率更高（期望攻击次数更少），只有当 $<code>HP = 5</code>$ 时武器1略有优势。<br>引入暴击机制后，若暴击分布均匀，武器1受益更大，因其基础伤害波动大，暴击后最高可达10。<br>进一步引入伪随机补偿机制后，两武器在整体期望上更为接近。说明补偿机制有助于平衡武器输出的一致性。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h1 id="5-展望"><a href="#5-展望" class="headerlink" title="5 展望"></a>5 展望</h1><p>未来研究可将模型扩展到更复杂的 RPG 战斗系统，如加入技能冷却、状态异常、敌人抗性等机制。同时可尝试更多平衡设计的自动化验证方法（如强化学习驱动的测试角色模拟）。</p>
+<h1 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h1><p>[1] 朱陆陆.蒙特卡洛方法及应用[D].华中师范大学,2014.</p>
+<p>[2] 陈海龙,李宏.基于MATLAB的伪随机序列的产生和分析[J].计算机仿真,2005,(05):98-100.</p>
+<h1 id="案例代码："><a href="#案例代码：" class="headerlink" title="案例代码："></a>案例代码：</h1><h2 id="Test-1-："><a href="#Test-1-：" class="headerlink" title="Test 1 ："></a>Test 1 ：</h2><table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 93%" />
+</colgroup>
+<tbody>
+<tr>
+<td><ol type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">import random</td>
+</tr>
+<tr>
+<td><ol start="2" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">import matplotlib.pyplot as plt</td>
+</tr>
+<tr>
+<td><ol start="3" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;"># === 配置参数 ===</td>
+</tr>
+<tr>
+<td><ol start="4" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">MAX_HP = 50 # 最大怪物血量</td>
+</tr>
+<tr>
+<td><ol start="5" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">TRIALS_PER_HP = 15000 # 每个血量下的仿真次数</td>
+</tr>
+<tr>
+<td><ol start="6" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;"># 武器伤害范围</td>
+</tr>
+<tr>
+<td><ol start="7" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">weapon1_range = [1, 2, 3, 4, 5] # Weapon 1: 1~5</td>
+</tr>
+<tr>
+<td><ol start="8" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">weapon2_range = [2, 3, 4] # Weapon 2: 2~4</td>
+</tr>
+<tr>
+<td><ol start="9" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;"># 存储期望攻击次数</td>
+</tr>
+<tr>
+<td><ol start="10" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">expect1 = []</td>
+</tr>
+<tr>
+<td><ol start="11" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">expect2 = []</td>
+</tr>
+<tr>
+<td><ol start="12" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;"># 蒙特卡洛函数</td>
+</tr>
+<tr>
+<td><ol start="13" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">def simulate_kill(hp, damage_range, trials):</td>
+</tr>
+<tr>
+<td><ol start="14" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">total_attacks = 0</td>
+</tr>
+<tr>
+<td><ol start="15" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">for _ in range(trials):</td>
+</tr>
+<tr>
+<td><ol start="16" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">current_hp = hp</td>
+</tr>
+<tr>
+<td><ol start="17" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">attacks = 0</td>
+</tr>
+<tr>
+<td><ol start="18" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">while current_hp &gt; 0:</td>
+</tr>
+<tr>
+<td><ol start="19" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">damage = random.choice(damage_range)</td>
+</tr>
+<tr>
+<td><ol start="20" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">current_hp -= damage</td>
+</tr>
+<tr>
+<td><ol start="21" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">attacks += 1</td>
+</tr>
+<tr>
+<td><ol start="22" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">total_attacks += attacks</td>
+</tr>
+<tr>
+<td><ol start="23" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">return total_attacks / trials</td>
+</tr>
+<tr>
+<td><ol start="24" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;"># 进行仿真</td>
+</tr>
+<tr>
+<td><ol start="25" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">hp_range = list(range(1, MAX_HP + 1))</td>
+</tr>
+<tr>
+<td><ol start="26" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">print("正在进行蒙特卡洛仿真，请稍候...")</td>
+</tr>
+<tr>
+<td><ol start="27" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">for hp in hp_range:</td>
+</tr>
+<tr>
+<td><ol start="28" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">e1 = simulate_kill(hp, weapon1_range, TRIALS_PER_HP)</td>
+</tr>
+<tr>
+<td><ol start="29" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">e2 = simulate_kill(hp, weapon2_range, TRIALS_PER_HP)</td>
+</tr>
+<tr>
+<td><ol start="30" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">expect1.append(e1)</td>
+</tr>
+<tr>
+<td><ol start="31" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">expect2.append(e2)</td>
+</tr>
+<tr>
+<td><ol start="32" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">print("仿真完成。开始绘图...")</td>
+</tr>
+<tr>
+<td><ol start="33" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;"># === 绘制期望攻击次数图 ===</td>
+</tr>
+<tr>
+<td><ol start="34" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.figure(figsize=(10, 6))</td>
+</tr>
+<tr>
+<td><ol start="35" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.plot(hp_range, expect1, label='Weapon 1 (1~5 dmg)', marker='o')</td>
+</tr>
+<tr>
+<td><ol start="36" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.plot(hp_range, expect2, label='Weapon 2 (2~4 dmg)', marker='s')</td>
+</tr>
+<tr>
+<td><ol start="37" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.xlabel('Monster HP')</td>
+</tr>
+<tr>
+<td><ol start="38" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.ylabel('Expected Hits to Kill')</td>
+</tr>
+<tr>
+<td><ol start="39" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.title('Expected Hits vs Monster HP (Monte Carlo Simulation)')</td>
+</tr>
+<tr>
+<td><ol start="40" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.legend()</td>
+</tr>
+<tr>
+<td><ol start="41" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.grid(True)</td>
+</tr>
+<tr>
+<td><ol start="42" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.tight_layout()</td>
+</tr>
+<tr>
+<td><ol start="43" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.show()</td>
+</tr>
+<tr>
+<td><ol start="44" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;"># === 绘制差值图（武器1 - 武器2）===</td>
+</tr>
+<tr>
+<td><ol start="45" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">diff = [e1 - e2 for e1, e2 in zip(expect1, expect2)]</td>
+</tr>
+<tr>
+<td><ol start="46" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.figure(figsize=(10, 4))</td>
+</tr>
+<tr>
+<td><ol start="47" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.axhline(0, color='gray', linestyle='--')</td>
+</tr>
+<tr>
+<td><ol start="48" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.plot(hp_range, diff, label='Weapon1 - Weapon2', color='purple', marker='^')</td>
+</tr>
+<tr>
+<td><ol start="49" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.xlabel('Monster HP')</td>
+</tr>
+<tr>
+<td><ol start="50" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.ylabel('Expected Hit Difference')</td>
+</tr>
+<tr>
+<td><ol start="51" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.title('Expected Hits Difference: Weapon1 - Weapon2')</td>
+</tr>
+<tr>
+<td><ol start="52" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.legend()</td>
+</tr>
+<tr>
+<td><ol start="53" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.grid(True)</td>
+</tr>
+<tr>
+<td><ol start="54" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.tight_layout()</td>
+</tr>
+<tr>
+<td><ol start="55" type="1">
+<li></li>
+</ol></td>
+<td style="text-align: left;">plt.show()</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><h2 id="Test-2"><a href="#Test-2" class="headerlink" title="Test 2 :"></a>Test 2 :</h2><h1 id="暴击机制"><a href="#暴击机制" class="headerlink" title="暴击机制"></a>暴击机制</h1><p>CRIT_CHANCE &#x3D; 0.2 # 暴击率</p>
+<p>CRIT_MULTIPLIER &#x3D; 2 # 暴击伤害倍率</p>
+<h2 id="Test-3"><a href="#Test-3" class="headerlink" title="Test 3 :"></a>Test 3 :</h2><p>def simulate_kill(hp, damage_range, trials):</p>
+<p>total_attacks &#x3D; 0</p>
+<p>for _ in range(trials):</p>
+<p>current_hp &#x3D; hp</p>
+<p>attacks &#x3D; 0</p>
+<p>crit_chance &#x3D; BASE_CRIT_CHANCE</p>
+<p>while current_hp &gt; 0:</p>
+<p>damage &#x3D; random.choice(damage_range)</p>
+<p>if random.random() &lt; crit_chance:</p>
+<p>damage *&#x3D; CRIT_MULTIPLIER</p>
+<p>crit_chance &#x3D; BASE_CRIT_CHANCE # 暴击后重置暴击率</p>
+<p>else:</p>
+<p>crit_chance +&#x3D; BASE_CRIT_CHANCE # 未暴击时增加暴击率</p>
+<p>crit_chance &#x3D; min(crit_chance, 1.0) # 暴击率不超过100%</p>
+<p>current_hp -&#x3D; damage</p>
+<p>attacks +&#x3D; 1</p>
+<p>total_attacks +&#x3D; attacks</p>
+<p>return total_attacks &#x2F; trials</p>
+
+    </div>
+  </div>
+</article>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>&copy; 2026 夏末</span>
+      <span>Powered by Hexo</span>
+    </div>
+  </footer>
+</body>
+</html>
