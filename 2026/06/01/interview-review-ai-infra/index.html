@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="48 个面试问题完整 Q&amp;A 记录 + 每一类暴露的不足 + 正确思路 + 改进优先级。一句话总结：不是不会说，是说得太泛，被顺着关键词打穿时全面崩盘。">
+  <title>AI 基建投资实习面试复盘：48 问 × 我的不足清单 | 夏末</title>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav-wrap">
+      <a class="brand" href="/">
+        <span class="brand-title">夏末</span>
+        
+          <span class="brand-subtitle">不啻微茫，造炬成阳</span>
+        
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="/">首页</a>
+        <a href="/archives/">归档</a>
+        <a href="/about/">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <article class="article">
+  <header class="article-header">
+    
+      <img class="article-cover" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&q=80&auto=format&fit=crop" alt="">
+    
+    <div class="post-meta">
+      <time datetime="2026-06-01">2026-06-01</time>
+      
+        <span>工作</span>
+      
+    </div>
+    <h1>AI 基建投资实习面试复盘：48 问 × 我的不足清单</h1>
+    
+      <p class="article-description">48 个面试问题完整 Q&amp;A 记录 + 每一类暴露的不足 + 正确思路 + 改进优先级。一句话总结：不是不会说，是说得太泛，被顺着关键词打穿时全面崩盘。</p>
+    
+    
+      <div class="tag-row">
+        
+          <a href="/tags/%E5%B7%A5%E4%BD%9C/">#工作</a>
+        
+          <a href="/tags/%E5%A4%8D%E7%9B%98/">#复盘</a>
+        
+          <a href="/tags/%E9%9D%A2%E8%AF%95/">#面试</a>
+        
+          <a href="/tags/AI%E5%9F%BA%E5%BB%BA/">#AI基建</a>
+        
+          <a href="/tags/%E5%8F%8D%E6%80%9D/">#反思</a>
+        
+      </div>
+    
+  </header>
+  <div class="article-body">
+    
+      <aside class="article-toc" aria-label="文章目录">
+        <div class="toc-title">目录</div>
+        <ul><li><a href="#写在最前">写在最前</a></li><li><a href="#一、本次面试暴露的-5-大不足">一、本次面试暴露的 5 大不足</a></li><li><a href="#二、面试-48-问-×-当时回答（完整-Q-A）">二、面试 48 问 × 当时回答（完整 Q&amp;A）</a></li><li><a href="#三、按主题复盘：每一类问题，我哪里答错了，应该怎么答">三、按主题复盘：每一类问题，我哪里答错了，应该怎么答</a><ul><li><a href="#3-1-AI-基建表述：训练-vs-推理">3.1 AI 基建表述：训练 vs 推理</a></li><li><a href="#3-2-液冷分类：自己都搞混了">3.2 液冷分类：自己都搞混了</a></li><li><a href="#3-3-UPS-与传统-UPS-的差异">3.3 UPS 与传统 UPS 的差异</a></li><li><a href="#3-4-为什么用光模块不用铜缆（最基础但答错）">3.4 为什么用光模块不用铜缆（最基础但答错）</a></li><li><a href="#3-5-课程基础：OLTP-OLAP、特征值、MSE、IQR、K-means">3.5 课程基础：OLTP/OLAP、特征值、MSE、IQR、K-means</a></li><li><a href="#3-6-大模型机制：Q-K-V-答对，KV-cache-答不出">3.6 大模型机制：Q/K/V 答对，KV cache 答不出</a></li><li><a href="#3-7-LoRA：简历上写过但没讲机制">3.7 LoRA：简历上写过但没讲机制</a></li><li><a href="#3-8-财务指标：顺序、定义、对应项都乱">3.8 财务指标：顺序、定义、对应项都乱</a></li></ul></li><li><a href="#四、面试官画像与”被问穿”规律">四、面试官画像与”被问穿”规律</a></li><li><a href="#五、补强清单（按优先级）">五、补强清单（按优先级）</a><ul><li><a href="#24-小时内必须重记">24 小时内必须重记</a></li><li><a href="#1-周内补齐">1 周内补齐</a></li><li><a href="#持续机制">持续机制</a></li></ul></li><li><a href="#六、行动-Checklist">六、行动 Checklist</a></li><li><a href="#写在最后">写在最后</a></li></ul>
+      </aside>
+    
+    <div class="article-content">
+      <blockquote>
+<p>基于 2026-06-01 14:59 语音转文字稿整理</p>
+</blockquote>
+<h1 id="写在最前"><a href="#写在最前" class="headerlink" title="写在最前"></a>写在最前</h1><p>一场 AI 基建投资实习面试，48 个问题。</p>
+<p>复盘下来<strong>核心问题不是”不会说”，而是”说得太泛”<strong>——面试官一直在把问题从行业判断往</strong>技术细节</strong>、<strong>财务概念</strong>、<strong>课程基础</strong>三个方向压：</p>
+<ul>
+<li>液冷追到<strong>冷板 &#x2F; 浸没 &#x2F; 热交换</strong>的区别，再到浸没式<strong>泄漏</strong>怎么处理</li>
+<li>电力追到 <strong>AI UPS 与传统 UPS 的差异</strong></li>
+<li>光通信追到<strong>为什么不用铜缆</strong></li>
+<li>课程追到 <strong>OLTP &#x2F; OLAP、特征值、MSE、QKV、KV Cache、IQR、ROE</strong></li>
+</ul>
+<p>这一篇用问答形式还原全场，**重点是”哪里答得不够”**，并把每一类问题应有的回答方式记下来。</p>
+<hr>
+<h1 id="一、本次面试暴露的-5-大不足"><a href="#一、本次面试暴露的-5-大不足" class="headerlink" title="一、本次面试暴露的 5 大不足"></a>一、本次面试暴露的 5 大不足</h1><table>
+<thead>
+<tr>
+<th align="center">#</th>
+<th align="left">不足</th>
+<th align="left">典型问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="left"><strong>AI 基建表述混着说</strong></td>
+<td align="left">没分清训练 &#x2F; 推理，把功耗、机架、KV cache 一起说</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="left"><strong>技术细节答不上</strong></td>
+<td align="left">浸没式泄漏、UPS 高负载技术需求、铜缆 vs 光模块都答不出</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="left"><strong>简历技术词讲不出机制</strong></td>
+<td align="left">LoRA 只说”低成本微调”，没讲 low-rank；IQR 规则忘了</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="left"><strong>课程基础不熟</strong></td>
+<td align="left">特征值、MSE、OLTP&#x2F;OLAP、K-means、KV cache 答不全</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="left"><strong>财务指标顺序乱</strong></td>
+<td align="left">ROE 一开始答成”利润除以收入”；营业利润到净利润答不全</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="二、面试-48-问-×-当时回答（完整-Q-A）"><a href="#二、面试-48-问-×-当时回答（完整-Q-A）" class="headerlink" title="二、面试 48 问 × 当时回答（完整 Q&amp;A）"></a>二、面试 48 问 × 当时回答（完整 Q&amp;A）</h1><blockquote>
+<p><strong>图例</strong>：✅ 答得还行 ｜ ⚠️ 答得不够 ｜ ⛔ 答错 &#x2F; 答不上</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">#</th>
+<th align="left">面试官问题</th>
+<th align="left">我当时的回答</th>
+<th align="center">评价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="left">能听到吗？</td>
+<td align="left">可以，可以。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="left">先介绍一下自己。</td>
+<td align="left">老师好，我是周济睿，现在就读于上海交通大学大数据管理与应用专业，学积分前 10%。主修课程包括经济学、回归分析、中级微观经济学和中级宏观经济学等。过去在国泰海通证券做投资策略实习，参与 AI 行业研究，搭建过 token 研究框架，拆解 AI 从训练成本转向推理成本的结构，也找过液冷和电力系统等潜在投资赛道；同时搭建了策略周报 agent，把周报数据更新流程缩短约 80%。在科尔尼战略咨询实习期间，做过新能源专利池和东南亚电力市场研究。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="left">今年是大三是吧？</td>
+<td align="left">对，我马上就要大三，现在是大二下学期。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="left">所有项目和实习经历里，最想聊哪一个？</td>
+<td align="left">聊 AI 方向研究：2020-2023 年 AI 投资主线是看谁有更多 GPU；2026 年五大厂商 AI 基建资本开支 6500 亿美元，2025 年是 3800 亿；AI 训练机架功耗从 2023 年 10kW 提升到 2025 年 120kW。</td>
+<td align="center">⚠️ 把”训练”和”推理”数据混着说</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="left">咱讨论的是推理还是训练？</td>
+<td align="left">训练，训练。</td>
+<td align="center">⛔ <strong>自己都没分清</strong></td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="left">继续。</td>
+<td align="left">功耗提升让空气冷却不太可行，液冷成为更有潜力的投资赛道。美国水务公司 ECL 在 2026 年 3 月以 47 亿美元收购一家美国私人企业，收购价约 29 倍前瞻 EBITDA。</td>
+<td align="center">✅ 案例好</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="left">是什么的 29 倍？</td>
+<td align="left">是它的前瞻 EBITDA。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="left">正常市场上这个倍数大概应该是多少？</td>
+<td align="left">普通产业基础倍数 0-10 倍，潜力产业 10-20 倍。29 倍非常夸张。</td>
+<td align="center">⚠️ 太粗，”0-10 &#x2F; 10-20”是拍脑袋的数</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="left">什么东西是它的 29 倍？</td>
+<td align="left">它的收购价格。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="left">继续。</td>
+<td align="left">AI 基建价值链：应用 → GPU 计算层 → 网络互联、液冷散热 → 电力设备、水冷。</td>
+<td align="center">⚠️ 层级没讲清，缺”训练 vs 推理”维度</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="left">液冷打算采用浸没式吗？浸没式有前景吗？还是其他方式？</td>
+<td align="left">三个方向相对看好：冷板式、浸没式、热交换器。</td>
+<td align="center">⛔ <strong>冷板式本身就是热交换式的一种</strong>，分类错误</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="left">浸没式怎么解决潜在泄漏问题？一台服务器 600 万美元，怎么解决？</td>
+<td align="left">这个确实是我之前做研究时没有考虑到的，对于技术方面实际跟踪还是比较有限。</td>
+<td align="center">⛔ <strong>直接承认”没考虑过”</strong></td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="left">热交换式和冷板式的本质区别在哪里？</td>
+<td align="left">了解得不特别多。</td>
+<td align="center">⛔</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td align="left">介绍一下你对热交换式的理解。</td>
+<td align="left">水的比热容高，靠近芯片冷却，热交换把热量带走；冷板式把冷板贴 GPU 背后，冷却液管路流动直接冷却。</td>
+<td align="center">⚠️ 答得不清晰，没说”二次换热” vs “一次换热”</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td align="left">电力设备里面哪些细分赛道比较有机会？</td>
+<td align="left">AI 持续不间断运行，需要 UPS、备用发电机。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td align="left">AI 所用 UPS 和传统 UPS 的区别是什么？</td>
+<td align="left">AI 数据中心密度提升，UPS 需要承受更大瞬时负载，更高负载承受能力。</td>
+<td align="center">⚠️ 只答了”功率更大”，没讲<strong>电池、拓扑、储能耦合</strong>区别</td>
+</tr>
+<tr>
+<td align="center">17</td>
+<td align="left">更高负载会带来哪些技术需求？</td>
+<td align="left">不太了解。可能涉及高压直流、更模块化、UPS + 储能结合。</td>
+<td align="center">⛔ <strong>技术细节 0 输出</strong></td>
+</tr>
+<tr>
+<td align="center">18</td>
+<td align="left">网络传输这一块具体指哪些细分市场？</td>
+<td align="left">光通信。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">19</td>
+<td align="left">光通信具体是哪一类？</td>
+<td align="left">光模块、光学收发器。</td>
+<td align="center">⚠️ 概念没对齐——“光学收发器”≈”光模块”，重复</td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td align="left">光学收发器指的是？</td>
+<td align="left">先说光模块：用于 GPU-交换机、交换机-交换机；现在 400G，AI 数据中心向 800G 发展。光学收发器支持更高带宽、更低功耗、更高密度。</td>
+<td align="center">⚠️ 概念重复 + 没解释<strong>光模块 vs AEC 铜缆</strong></td>
+</tr>
+<tr>
+<td align="center">21</td>
+<td align="left">为什么用光模块？不能用铜线吗？</td>
+<td align="left">光信号可能出错概率会更低一点。</td>
+<td align="center">⛔ <strong>本质答错</strong>——光的核心优势是<strong>距离 + 带宽 + 抗干扰</strong>，不是”出错率”</td>
+</tr>
+<tr>
+<td align="center">22</td>
+<td align="left">你的本科主修课程没有写很多大数据管理相关课程？</td>
+<td align="left">大数据管理更偏统计和运筹；偏代码课程是机器学习、回归分析。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">23</td>
+<td align="left">OLTP 和 OLAP 的区别学过吗？</td>
+<td align="left">课内不特别了解。OLAP 是 Online Analytical Processing。OLTP 管业务运行，OLAP 管经营分析。</td>
+<td align="center">⛔ <strong>大概念都知道，机制答不全</strong></td>
+</tr>
+<tr>
+<td align="center">24</td>
+<td align="left">为什么要分成两种？</td>
+<td align="left">OLTP 管具体业务（查订单、更新库存），OLAP 偏宏观聚合，不太关心单条数据实时修改。</td>
+<td align="center">⚠️ 答得浅</td>
+</tr>
+<tr>
+<td align="center">25</td>
+<td align="left">为什么不能在 OLTP 模式下做分析？</td>
+<td align="left">OLTP 上做分析会拖慢整体读写，因为 OLTP 更强调快速、准确、实时。</td>
+<td align="center">⚠️ 没答到<strong>行存 vs 列存</strong>、<strong>索引结构</strong>这些根因</td>
+</tr>
+<tr>
+<td align="center">26</td>
+<td align="left">为什么分析会拖慢读写速度？</td>
+<td align="left">因为它是整行整行存出来的。</td>
+<td align="center">⛔ <strong>行存 ≠ 慢</strong>——根因是<strong>锁竞争 + 索引失效 + 大量随机 IO</strong></td>
+</tr>
+<tr>
+<td align="center">27</td>
+<td align="left">解释一下 eigenvalue。</td>
+<td align="left">中文叫特征值、特征向量，大一上内容，记不太清。</td>
+<td align="center">⛔ <strong>完全没答</strong></td>
+</tr>
+<tr>
+<td align="center">28</td>
+<td align="left">管理科学主要学什么？</td>
+<td align="left">线性规划、非线性规划、整数规划、排队模型。运筹学导论。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">29</td>
+<td align="left">回归分析里 MSE 怎么算？</td>
+<td align="left">单样本误差平方 (yᵢ - ŷᵢ)²，加总后除以总样本量。</td>
+<td align="center">⚠️ 答对但<strong>没提”为什么除以 n 而非 n-1”，没提与 RMSE、MAE 区别</strong></td>
+</tr>
+<tr>
+<td align="center">30</td>
+<td align="left">大语言模型公司了解哪些？</td>
+<td align="left">没具体拆解。看过 Cursor、Agent、DeepSeek。</td>
+<td align="center">⚠️ 缺<strong>头部公司分类</strong>（基础模型 &#x2F; 应用 &#x2F; 基础设施）</td>
+</tr>
+<tr>
+<td align="center">31</td>
+<td align="left">讲一下 Transformer 里面 Q、K、V 的区别。</td>
+<td align="left">Q&#x3D;query，K&#x3D;key，V&#x3D;value。K 是 index&#x2F;标签，V 是内容。分开是为了 match 和 select。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">32</td>
+<td align="left">了解过 KV caching 吗？</td>
+<td align="left">不太了解。可以理解为 token 缓存。输入&#x2F;缓存&#x2F;输出 token 计费差异大。缓存大影响上下文窗口、batch、显存。</td>
+<td align="center">⚠️ <strong>没答到</strong>注意力矩阵复杂度从 O(n²) 降到 O(n)、显存换时间</td>
+</tr>
+<tr>
+<td align="center">33</td>
+<td align="left">数学建模竞赛里提到用 IQR 清洗数据，说一下什么是 IQR。</td>
+<td align="left">和 25% &#x2F; 50% &#x2F; 75% 分位数有关。具体规则忘了。</td>
+<td align="center">⛔ <strong>公式答不出：IQR &#x3D; Q3 - Q1，异常值阈值 Q1-1.5IQR &#x2F; Q3+1.5IQR</strong></td>
+</tr>
+<tr>
+<td align="center">34</td>
+<td align="left">说一下 K-means。</td>
+<td align="left">无监督聚类。随机选 K 个中心 → 计算距离分组 → 重新生成中心 → 迭代收敛。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">35</td>
+<td align="left">碳交易时序神经网络模型里做了 LoRA 金融微调，细讲一下。</td>
+<td align="left">喂入金融语料、碳交易语料防幻觉；只改少量可训练参数。</td>
+<td align="center">⚠️ <strong>没讲</strong>low-rank 矩阵 A、B、ΔW &#x3D; BA</td>
+</tr>
+<tr>
+<td align="center">36</td>
+<td align="left">这个调整和 LoRA 的关系是什么？</td>
+<td align="left">当时说的时候有点取巧，主要强调低成本，没有完全重构训练。<strong>项目里没体现 low-rank 的具体设计</strong>。</td>
+<td align="center">⛔ <strong>自己承认简历写得不扎实</strong></td>
+</tr>
+<tr>
+<td align="center">37</td>
+<td align="left">资产周转率怎么算？</td>
+<td align="left">总收入 &#x2F; 总资产。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">38</td>
+<td align="left">ROE 怎么算？</td>
+<td align="left">一开始说成”利润除以收入”，后来意识到是<strong>净资产收益率 &#x3D; 净利润 &#x2F; 平均股东权益</strong>。</td>
+<td align="center">⛔ <strong>第一反应答错</strong></td>
+</tr>
+<tr>
+<td align="center">39</td>
+<td align="left">从收入开始，需要减掉哪些东西最终得到净利润？</td>
+<td align="left">减营业成本 → 减税 → 减销售、研发等费用。</td>
+<td align="center">⚠️ <strong>顺序乱、漏非经营性损益、漏所得税独立步骤</strong></td>
+</tr>
+<tr>
+<td align="center">40</td>
+<td align="left">从收入减掉什么得到毛利？</td>
+<td align="left">减营业成本。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">41</td>
+<td align="left">从毛利减掉什么得到营业利润？</td>
+<td align="left">再减去具体费用，得到最终利润。</td>
+<td align="center">⛔ <strong>“具体费用”是销售&#x2F;管理&#x2F;研发&#x2F;财务四项费用，没说全</strong></td>
+</tr>
+<tr>
+<td align="center">42</td>
+<td align="left">营业利润和净利润的区别是什么？</td>
+<td align="left">营业利润到净利润之间，还要考虑公允价值变动损益、资产减值损失等。</td>
+<td align="center">⛔ <strong>漏所得税、漏少数股东损益、漏营业外收支的分类</strong></td>
+</tr>
+<tr>
+<td align="center">43</td>
+<td align="left">你有什么要问我们的？</td>
+<td align="left">更关注如果加入贵公司，平常更多会做什么内容？快速扫描赛道 vs 其他？</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">44</td>
+<td align="left">怎么区分”专业领域知识复现”和”大概的行业扫描”？</td>
+<td align="left">之前看到公司投了金盘科技，比较好奇投资是基于什么考量。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">45</td>
+<td align="left">你问投资规模？</td>
+<td align="left">问整体投资规模、团队决策规模。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">46</td>
+<td align="left">一年会跟进几个项目扫描？</td>
+<td align="left">追问一年大概跟进多少项目扫描。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">47</td>
+<td align="left">你想看哪个垂直行业？</td>
+<td align="left">AI 方向。AI 可算一个大的垂直行业，关注 AI 与其他领域结合。</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="center">48</td>
+<td align="left">—</td>
+<td align="left">后续补问。</td>
+<td align="center">✅</td>
+</tr>
+</tbody></table>
+<p><strong>统计</strong>：48 问中，✅ 19 个，⚠️ 14 个，⛔ 15 个。<strong>近三分之一问题答错或答不上</strong>。</p>
+<hr>
+<h1 id="三、按主题复盘：每一类问题，我哪里答错了，应该怎么答"><a href="#三、按主题复盘：每一类问题，我哪里答错了，应该怎么答" class="headerlink" title="三、按主题复盘：每一类问题，我哪里答错了，应该怎么答"></a>三、按主题复盘：每一类问题，我哪里答错了，应该怎么答</h1><h2 id="3-1-AI-基建表述：训练-vs-推理"><a href="#3-1-AI-基建表述：训练-vs-推理" class="headerlink" title="3.1 AI 基建表述：训练 vs 推理"></a>3.1 AI 基建表述：训练 vs 推理</h2><p><strong>我的问题</strong>：把训练和推理的数据混着说，被面试官反问”咱讨论的是推理还是训练”才反应过来。</p>
+<p><strong>正确表述</strong>：</p>
+<ul>
+<li><strong>训练侧</strong>：强调<strong>集群规模、GPU 互联、功耗密度、液冷需求、网络拓扑</strong>。液冷、电力、高带宽光模块、PCIe&#x2F;CXL 都是为训练集群服务的。</li>
+<li><strong>推理侧</strong>：强调<strong>请求量、延迟 (Latency)、吞吐 (Throughput)、成本、KV cache 显存、单卡利用率</strong>。推理对功耗&#x2F;液冷没有训练那么敏感，但<strong>对网络延迟、单卡算力、利用率极敏感</strong>。</li>
+</ul>
+<p><strong>关键句</strong>：一句**”AI 基建 ≠ GPU”**开头，再分训练和推理两条线讲。</p>
+<h2 id="3-2-液冷分类：自己都搞混了"><a href="#3-2-液冷分类：自己都搞混了" class="headerlink" title="3.2 液冷分类：自己都搞混了"></a>3.2 液冷分类：自己都搞混了</h2><p><strong>我的问题</strong>：把”冷板式 &#x2F; 浸没式 &#x2F; 热交换器”三者并列。<strong>冷板式本身就是热交换的一种</strong>。</p>
+<p><strong>正确分类</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="left">维度</th>
+<th align="left">冷板式</th>
+<th align="left">浸没式</th>
+<th align="left">喷淋式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">冷却液与芯片接触</td>
+<td align="left">间接（冷板接触芯片）</td>
+<td align="left">直接（浸泡）</td>
+<td align="left">直接（喷淋）</td>
+</tr>
+<tr>
+<td align="left">二次换热</td>
+<td align="left">冷板 → CDU → 冷却塔</td>
+<td align="left">冷却液 → CDU → 冷却塔</td>
+<td align="left">冷却液 → CDU → 冷却塔</td>
+</tr>
+<tr>
+<td align="left">泄漏风险</td>
+<td align="left">中</td>
+<td align="left">高（一次侧全浸）</td>
+<td align="left">中</td>
+</tr>
+<tr>
+<td align="left">维护</td>
+<td align="left">容易</td>
+<td align="left">难</td>
+<td align="left">中</td>
+</tr>
+</tbody></table>
+<p><strong>浸没式泄漏问题（被问到没答出）</strong>：</p>
+<ul>
+<li><strong>二次侧隔离设计</strong>：电子部分与冷却液完全密封</li>
+<li><strong>绝缘冷却液</strong>：介电常数低、击穿电压高</li>
+<li><strong>压力&#x2F;温度&#x2F;液位传感器</strong>：实时监测，泄漏立即报警</li>
+<li><strong>冗余 CDU</strong>：单点故障不影响运行</li>
+</ul>
+<h2 id="3-3-UPS-与传统-UPS-的差异"><a href="#3-3-UPS-与传统-UPS-的差异" class="headerlink" title="3.3 UPS 与传统 UPS 的差异"></a>3.3 UPS 与传统 UPS 的差异</h2><p><strong>我的问题</strong>：只答了”承受更大瞬时负载”，被追问”具体技术需求”答不上。</p>
+<p><strong>正确答案要点</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="left">维度</th>
+<th align="left">传统 UPS</th>
+<th align="left">AI 数据中心 UPS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">功率密度</td>
+<td align="left">0.5-1 kW&#x2F;U</td>
+<td align="left">2-5 kW&#x2F;U</td>
+</tr>
+<tr>
+<td align="left">拓扑</td>
+<td align="left">工频塔式</td>
+<td align="left">高频模块化（高频化、小型化）</td>
+</tr>
+<tr>
+<td align="left">储能</td>
+<td align="left">铅酸</td>
+<td align="left">锂电池（更高能量密度、更长寿命）</td>
+</tr>
+<tr>
+<td align="left">响应时间</td>
+<td align="left">10-20 ms</td>
+<td align="left">&lt; 5 ms</td>
+</tr>
+<tr>
+<td align="left">与电网耦合</td>
+<td align="left">单一供电</td>
+<td align="left">**光储直柔 (PEDF)**，含光伏、储能、柔性直流</td>
+</tr>
+<tr>
+<td align="left">监控</td>
+<td align="left">本地</td>
+<td align="left">远程预测性维护</td>
+</tr>
+</tbody></table>
+<h2 id="3-4-为什么用光模块不用铜缆（最基础但答错）"><a href="#3-4-为什么用光模块不用铜缆（最基础但答错）" class="headerlink" title="3.4 为什么用光模块不用铜缆（最基础但答错）"></a>3.4 为什么用光模块不用铜缆（最基础但答错）</h2><p><strong>我的错误回答</strong>：”光信号可能出错概率会更低一点。”</p>
+<p><strong>正确逻辑</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="left">维度</th>
+<th align="left">铜缆 (DAC&#x2F;AEC)</th>
+<th align="left">光模块</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">传输距离</td>
+<td align="left">&lt; 3 m (DAC) &#x2F; &lt; 5 m (AEC)</td>
+<td align="left">100 m - 80 km</td>
+</tr>
+<tr>
+<td align="left">带宽上限</td>
+<td align="left">800G 已是极限</td>
+<td align="left">1.6T、3.2T 在研</td>
+</tr>
+<tr>
+<td align="left">功耗</td>
+<td align="left">短距离低</td>
+<td align="left">长距离低（短距离不分胜负）</td>
+</tr>
+<tr>
+<td align="left">抗电磁干扰</td>
+<td align="left">弱</td>
+<td align="left">强</td>
+</tr>
+<tr>
+<td align="left">线缆体积&#x2F;重量</td>
+<td align="left">粗重</td>
+<td align="left">细轻</td>
+</tr>
+<tr>
+<td align="left">成本</td>
+<td align="left">短距离便宜</td>
+<td align="left">长距离便宜</td>
+</tr>
+</tbody></table>
+<p><strong>关键句</strong>：<strong>短距离铜缆也行，但带宽、距离、功耗一起涨时铜缆就是瓶颈；光模块是工程上的必然选择</strong>。</p>
+<h2 id="3-5-课程基础：OLTP-OLAP、特征值、MSE、IQR、K-means"><a href="#3-5-课程基础：OLTP-OLAP、特征值、MSE、IQR、K-means" class="headerlink" title="3.5 课程基础：OLTP&#x2F;OLAP、特征值、MSE、IQR、K-means"></a>3.5 课程基础：OLTP&#x2F;OLAP、特征值、MSE、IQR、K-means</h2><table>
+<thead>
+<tr>
+<th align="left">题目</th>
+<th align="left">正确答案（要点）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>OLTP vs OLAP</strong></td>
+<td align="left">OLTP &#x3D; 行存 + 事务 + 高并发短查询；OLAP &#x3D; 列存 + 复杂分析 + 大批量扫描。两者<strong>不能在同一个数据库</strong>，因为行存跑分析慢、列存跑事务慢。</td>
+</tr>
+<tr>
+<td align="left"><strong>为什么 OLTP 跑分析慢</strong></td>
+<td align="left"><strong>行存读整行 + 锁竞争 + 索引失效 + 大量随机 IO</strong>，不是”整行整行存出来”那么简单。</td>
+</tr>
+<tr>
+<td align="left"><strong>特征值</strong></td>
+<td align="left">A·v &#x3D; λ·v，方阵 A 的特征向量 v 经线性变换仍沿原方向，缩放因子 λ 是特征值。在 PCA、PageRank、解微分方程中都是核心。</td>
+</tr>
+<tr>
+<td align="left"><strong>MSE</strong></td>
+<td align="left">MSE &#x3D; (1&#x2F;n) Σ(yᵢ - ŷᵢ)²。除以 n 是无偏估计的前置；除以 (n-1) 是样本方差。RMSE &#x3D; √MSE，与 y 同量纲。MAE 更抗异常值。</td>
+</tr>
+<tr>
+<td align="left"><strong>IQR</strong></td>
+<td align="left">IQR &#x3D; Q3 - Q1。异常值 &#x3D; 低于 Q1 - 1.5·IQR 或高于 Q3 + 1.5·IQR。源自 Tukey boxplot。</td>
+</tr>
+<tr>
+<td align="left"><strong>K-means</strong></td>
+<td align="left">步骤：① 选 K 个初始中心（K-means++ 优化）；② 按距离分到最近中心；③ 用簇内均值更新中心；④ 收敛（中心不再变 &#x2F; 达到 max_iter）。<strong>前提是球形簇、特征量纲统一</strong>。</td>
+</tr>
+</tbody></table>
+<h2 id="3-6-大模型机制：Q-K-V-答对，KV-cache-答不出"><a href="#3-6-大模型机制：Q-K-V-答对，KV-cache-答不出" class="headerlink" title="3.6 大模型机制：Q&#x2F;K&#x2F;V 答对，KV cache 答不出"></a>3.6 大模型机制：Q&#x2F;K&#x2F;V 答对，KV cache 答不出</h2><p><strong>Q&#x2F;K&#x2F;V</strong>（已答对）：Q&#x3D;query 是当前 token 的查询；K&#x3D;key 是序列里所有位置的索引；V&#x3D;value 是对应位置的内容。Attention &#x3D; softmax(QKᵀ&#x2F;√d)·V。</p>
+<p><strong>KV cache</strong>（没答出）：</p>
+<ul>
+<li><strong>机制</strong>：推理时，第 t 个 token 的 Attention 要看前 t-1 个 token 的 K、V。每次都重算太贵，<strong>把历史的 K、V 缓存下来</strong>直接用。</li>
+<li><strong>效果</strong>：计算量从 **O(n²) 降到 O(n)**，单 token 延迟大幅下降。</li>
+<li><strong>代价</strong>：<strong>显存线性增长</strong>（长上下文时 KV cache 占用甚至超过权重本身）。这也是为什么有 PagedAttention、KV cache 量化、KV cache 共享等优化方向。</li>
+</ul>
+<h2 id="3-7-LoRA：简历上写过但没讲机制"><a href="#3-7-LoRA：简历上写过但没讲机制" class="headerlink" title="3.7 LoRA：简历上写过但没讲机制"></a>3.7 LoRA：简历上写过但没讲机制</h2><p><strong>我的回答</strong>：”低成本微调”。**面试官追问”和 LoRA 的关系是什么”，我承认”项目里没体现 low-rank 的具体设计”**。</p>
+<p><strong>正确答案</strong>：</p>
+<ul>
+<li>冻结预训练模型的原始权重 W ∈ ℝ^(d×k)</li>
+<li>在 W 旁边加<strong>两个低秩矩阵</strong> A ∈ ℝ^(d×r) 和 B ∈ ℝ^(r×k)，其中 <strong>r ≪ min(d, k)</strong></li>
+<li>训练时<strong>只更新 A、B</strong>，权重更新 ΔW &#x3D; BA</li>
+<li>推理时可以把 BA 合并回 W，<strong>不增加推理成本</strong></li>
+</ul>
+<p><strong>为什么能 work</strong>：预训练权重主要分布在低秩子空间，所以低秩近似就够用。</p>
+<h2 id="3-8-财务指标：顺序、定义、对应项都乱"><a href="#3-8-财务指标：顺序、定义、对应项都乱" class="headerlink" title="3.8 财务指标：顺序、定义、对应项都乱"></a>3.8 财务指标：顺序、定义、对应项都乱</h2><p>正确推导链（一定要能背）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">营业收入</span><br><span class="line">  − 营业成本</span><br><span class="line">  = 毛利</span><br><span class="line">  − 销售费用</span><br><span class="line">  − 管理费用</span><br><span class="line">  − 研发费用</span><br><span class="line">  − 财务费用</span><br><span class="line">  ± 其他经营收益 (投资收益、公允价值变动...)</span><br><span class="line">  = 营业利润 (Operating Profit)</span><br><span class="line">  + 营业外收入</span><br><span class="line">  − 营业外支出</span><br><span class="line">  = 利润总额 (EBT)</span><br><span class="line">  − 所得税</span><br><span class="line">  = 净利润</span><br><span class="line">  − 少数股东损益</span><br><span class="line">  = 归母净利润</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">指标</th>
+<th align="left">公式</th>
+<th align="left">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>ROE</strong></td>
+<td align="left">净利润 &#x2F; 平均股东权益</td>
+<td align="left">杜邦三因子：净利率 × 周转率 × 杠杆</td>
+</tr>
+<tr>
+<td align="left"><strong>ROA</strong></td>
+<td align="left">净利润 &#x2F; 平均总资产</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>资产周转率</strong></td>
+<td align="left">营业收入 &#x2F; 平均总资产</td>
+<td align="left">反映资产效率</td>
+</tr>
+<tr>
+<td align="left"><strong>毛利率</strong></td>
+<td align="left">(营收 − 营业成本) &#x2F; 营收</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>净利率</strong></td>
+<td align="left">净利润 &#x2F; 营收</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="四、面试官画像与”被问穿”规律"><a href="#四、面试官画像与”被问穿”规律" class="headerlink" title="四、面试官画像与”被问穿”规律"></a>四、面试官画像与”被问穿”规律</h1><blockquote>
+<p>这次面试官风格：<strong>顺着简历关键词一层层打穿</strong>。</p>
+</blockquote>
+<ul>
+<li>提到”AI 基建”→ 追训练&#x2F;推理；</li>
+<li>提到”液冷”→ 追冷板&#x2F;浸没&#x2F;泄漏；</li>
+<li>提到”光通信”→ 追光模块&#x2F;铜缆；</li>
+<li>提到”LoRA”→ 追 low-rank；</li>
+<li>提到”IQR”→ 追 Q1&#x2F;Q3&#x2F;1.5·IQR；</li>
+<li>提到”ROE”→ 追公式 + 杜邦分解。</li>
+</ul>
+<p><strong>应对原则</strong>：每个关键词至少准备<strong>三层</strong>——</p>
+<ol>
+<li><strong>是什么</strong>（定义、分类）</li>
+<li><strong>为什么有用</strong>（解决了什么问题、有什么 trade-off）</li>
+<li><strong>被追问时技术细节是什么</strong>（公式、机制、案例数据）</li>
+</ol>
+<hr>
+<h1 id="五、补强清单（按优先级）"><a href="#五、补强清单（按优先级）" class="headerlink" title="五、补强清单（按优先级）"></a>五、补强清单（按优先级）</h1><h2 id="24-小时内必须重记"><a href="#24-小时内必须重记" class="headerlink" title="24 小时内必须重记"></a>24 小时内必须重记</h2><ul>
+<li><input disabled="" type="checkbox"> <strong>财务指标完整链</strong>：收入 → 毛利 → 营业利润 → 利润总额 → 净利润 → 归母净利润，每一步加减项能背</li>
+<li><input disabled="" type="checkbox"> <strong>ROE &#x2F; ROA &#x2F; 资产周转率公式</strong> + 杜邦三因子</li>
+<li><input disabled="" type="checkbox"> <strong>液冷分类</strong>：冷板 vs 浸没 vs 喷淋的接触方式、二次换热、泄漏控制</li>
+<li><input disabled="" type="checkbox"> <strong>为什么光模块不用铜缆</strong>：距离 &#x2F; 带宽 &#x2F; 功耗 &#x2F; 抗干扰四维度</li>
+<li><input disabled="" type="checkbox"> <strong>AI UPS vs 传统 UPS 差异</strong>：功率密度、拓扑、储能、响应时间</li>
+</ul>
+<h2 id="1-周内补齐"><a href="#1-周内补齐" class="headerlink" title="1 周内补齐"></a>1 周内补齐</h2><ul>
+<li><input disabled="" type="checkbox"> 训练 vs 推理分线表述（每个细分赛道明确属于哪一侧）</li>
+<li><input disabled="" type="checkbox"> LoRA low-rank 机制（ΔW &#x3D; BA、r 取值、推理合并）</li>
+<li><input disabled="" type="checkbox"> KV cache 机制（O(n²) → O(n)、显存换时间）</li>
+<li><input disabled="" type="checkbox"> OLTP vs OLAP：行存 &#x2F; 列存 &#x2F; 锁竞争 &#x2F; 索引失效</li>
+<li><input disabled="" type="checkbox"> 特征值、MSE、IQR、K-means：定义 + 公式 + 适用场景</li>
+</ul>
+<h2 id="持续机制"><a href="#持续机制" class="headerlink" title="持续机制"></a>持续机制</h2><ul>
+<li><input disabled="" type="checkbox"> 简历上<strong>每一个关键词</strong>都建三层笔记</li>
+<li><input disabled="" type="checkbox"> 每周一次”被追问 10 分钟”自测（请朋友随机问细节）</li>
+<li><input disabled="" type="checkbox"> 整理<strong>个人 Anki 牌组</strong>：定义卡 &#x2F; 公式卡 &#x2F; 机制卡</li>
+</ul>
+<hr>
+<h1 id="六、行动-Checklist"><a href="#六、行动-Checklist" class="headerlink" title="六、行动 Checklist"></a>六、行动 Checklist</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">□  财务三表推导链（背到肌肉记忆）</span><br><span class="line">□  液冷分类 + 浸没式泄漏控制</span><br><span class="line">□  UPS + 光模块 + 铜缆 基础四件套</span><br><span class="line">□  训练 vs 推理 两条线 + 各自 KPI</span><br><span class="line">□  LoRA / KV cache / QKV 机制笔记</span><br><span class="line">□  OLTP/OLAP / 特征值 / MSE / IQR / K-means 速记</span><br><span class="line">□  简历关键词三层结构（定义/价值/细节）</span><br><span class="line">□  Anki 牌组 + 每周自测</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>这场面试的真正价值不是”挂了”，而是<strong>让我看见了简历和真实能力的 gap</strong>。</p>
+<p>简历能写”参与 LoRA 微调”，但面试官多问一句”low-rank 怎么体现”就崩——这不是知识问题，是<strong>对自己写过的东西不熟</strong>的问题。</p>
+<p>下一场前：<strong>把简历上每个词都问三遍自己</strong>。</p>
+
+    </div>
+  </div>
+</article>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>&copy; 2026 夏末</span>
+      <span>Powered by Hexo</span>
+    </div>
+  </footer>
+</body>
+</html>
