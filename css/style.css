@@ -224,9 +224,13 @@ a {
 }
 
 .article-toc ol ol {
-  padding-left: 14px;
+  padding-left: 0;
   border-left: none;
   margin-top: 2px;
+}
+
+.article-toc ol ol li {
+  padding-left: 0;
 }
 
 .article-toc li {
