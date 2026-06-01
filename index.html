@@ -34,9 +34,38 @@
   
 </section>
 
+<section class="filter-panel" aria-label="文章筛选">
+  <label class="search-box">
+    <span>搜索</span>
+    <input id="post-search" type="search" placeholder="输入标题、摘要、分类或标签" autocomplete="off">
+  </label>
+  <div class="filter-tags" id="tag-filters" aria-label="按标签筛选">
+    <button class="filter-tag is-active" type="button" data-tag="">全部</button>
+    
+      <button class="filter-tag" type="button" data-tag="AI">AI</button>
+    
+      <button class="filter-tag" type="button" data-tag="学习">学习</button>
+    
+      <button class="filter-tag" type="button" data-tag="工作">工作</button>
+    
+      <button class="filter-tag" type="button" data-tag="投资">投资</button>
+    
+      <button class="filter-tag" type="button" data-tag="数字工具">数字工具</button>
+    
+      <button class="filter-tag" type="button" data-tag="生日">生日</button>
+    
+      <button class="filter-tag" type="button" data-tag="精益生产">精益生产</button>
+    
+      <button class="filter-tag" type="button" data-tag="运营管理">运营管理</button>
+    
+  </div>
+  <div class="filter-status" id="filter-status" aria-live="polite"></div>
+</section>
+
 <section class="post-list">
   
-    <article class="post-card">
+    
+    <article class="post-card" data-search="精益生产七大浪费的数字工具实现 toyota / bosch / siemens amberg / navistar / dhl / e-kanban 六个案例横向对比：数字工具如何把七大浪费从经验判断变成实时数据证据。 学习 运营管理 精益生产 数字工具 学习" data-tags="学习|运营管理|精益生产|数字工具">
       
         <a class="post-cover" href="/2026/06/01/lean-seven-wastes-digital/">
           <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80&auto=format&fit=crop" alt="">
@@ -69,7 +98,8 @@
       </div>
     </article>
   
-    <article class="post-card">
+    
+    <article class="post-card" data-search="ai 算力基础设施投资机遇深度研究 从 astera labs 到全产业链：为什么算力瓶颈正在从 gpu 转向电力/散热/网络基础设施（2026-05-31 研究快照） 学习 工作 ai 投资 工作" data-tags="学习|工作|AI|投资">
       
         <a class="post-cover" href="/2026/06/01/ai-compute-infra/">
           <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200" alt="">
@@ -89,9 +119,9 @@
         
           <div class="tag-row">
             
-              <a href="/tags/%E5%B7%A5%E4%BD%9C/">#工作</a>
-            
               <a href="/tags/%E5%AD%A6%E4%B9%A0/">#学习</a>
+            
+              <a href="/tags/%E5%B7%A5%E4%BD%9C/">#工作</a>
             
               <a href="/tags/AI/">#AI</a>
             
@@ -102,7 +132,8 @@
       </div>
     </article>
   
-    <article class="post-card">
+    
+    <article class="post-card" data-search="hi 祝我们生活快乐  生日 生日特辑" data-tags="生日">
       
         <a class="post-cover" href="/2025/04/01/birthday2025/">
           <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1200&q=80&auto=format&fit=crop" alt="">
@@ -127,7 +158,8 @@
       </div>
     </article>
   
-    <article class="post-card">
+    
+    <article class="post-card" data-search="presentation要求  学习 生活" data-tags="学习">
       
         <a class="post-cover" href="/2025/03/20/presentation/">
           <img src="https://ossimg.xinli001.com/20161208/d8d25177303cc86caef9181819473738.jpg" alt="">
@@ -152,7 +184,8 @@
       </div>
     </article>
   
-    <article class="post-card">
+    
+    <article class="post-card" data-search="筑梦返校答辩  学习 工作 技术 学习" data-tags="学习|工作">
       
         <a class="post-cover" href="/2025/03/20/pre-zhzx/">
           <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&q=80&auto=format&fit=crop" alt="">
@@ -170,16 +203,17 @@
         
           <div class="tag-row">
             
-              <a href="/tags/%E5%B7%A5%E4%BD%9C/">#工作</a>
-            
               <a href="/tags/%E5%AD%A6%E4%B9%A0/">#学习</a>
+            
+              <a href="/tags/%E5%B7%A5%E4%BD%9C/">#工作</a>
             
           </div>
         
       </div>
     </article>
   
-    <article class="post-card">
+    
+    <article class="post-card" data-search="2024年本科生迎新大会学生代表发言稿  工作 工作" data-tags="工作">
       
         <a class="post-cover" href="/2025/03/06/fayangao/">
           <img src="https://www.acem.sjtu.edu.cn/acem/static/notices/20234/NEW_spe_202342710192549%E5%8E%8B%E7%BC%A9%E5%9B%BE.jpg" alt="">
@@ -206,7 +240,49 @@
   
 </section>
 
+<div class="empty-state" id="empty-state" hidden>没有找到匹配的文章。</div>
 
+
+
+<script>
+  (() => {
+    const input = document.getElementById('post-search')
+    const filters = Array.from(document.querySelectorAll('.filter-tag'))
+    const cards = Array.from(document.querySelectorAll('.post-card'))
+    const status = document.getElementById('filter-status')
+    const empty = document.getElementById('empty-state')
+    let activeTag = ''
+
+    const update = () => {
+      const query = input.value.trim().toLowerCase()
+      let visible = 0
+
+      cards.forEach(card => {
+        const text = card.dataset.search || ''
+        const tags = (card.dataset.tags || '').split('|').filter(Boolean)
+        const matchesQuery = !query || text.includes(query)
+        const matchesTag = !activeTag || tags.includes(activeTag)
+        const shouldShow = matchesQuery && matchesTag
+        card.hidden = !shouldShow
+        if (shouldShow) visible += 1
+      })
+
+      status.textContent = visible === cards.length ? `${cards.length} 篇文章` : `筛选出 ${visible} / ${cards.length} 篇文章`
+      empty.hidden = visible !== 0
+    }
+
+    input.addEventListener('input', update)
+    filters.forEach(button => {
+      button.addEventListener('click', () => {
+        activeTag = button.dataset.tag || ''
+        filters.forEach(item => item.classList.toggle('is-active', item === button))
+        update()
+      })
+    })
+
+    update()
+  })()
+</script>
 
   </div>
 

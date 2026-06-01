@@ -97,6 +97,74 @@ a {
   font-size: 18px;
 }
 
+.filter-panel {
+  display: grid;
+  gap: 16px;
+  margin: 4px 0 8px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.search-box {
+  display: grid;
+  gap: 8px;
+}
+
+.search-box span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.search-box input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  line-height: 1.4;
+  padding: 12px 14px;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-tag {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.2;
+  padding: 7px 12px;
+}
+
+.filter-tag:hover,
+.filter-tag.is-active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.filter-status {
+  min-height: 20px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .post-list {
   display: grid;
   gap: 20px;
@@ -111,6 +179,10 @@ a {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
+}
+
+.post-card[hidden] {
+  display: none;
 }
 
 .post-cover {
@@ -427,6 +499,15 @@ a {
   gap: 18px;
   padding: 0 0 72px;
   color: var(--muted);
+}
+
+.empty-state {
+  margin: -36px 0 72px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  padding: 24px;
+  text-align: center;
 }
 
 .pager a {
