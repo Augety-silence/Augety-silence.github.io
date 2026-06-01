@@ -30,7 +30,7 @@
     <article class="article">
   <header class="article-header">
     
-      <img class="article-cover" src="https://source.unsplash.com/1200x630/?%E7%BB%9F%E8%AE%A1%2C%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86%2C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0" alt="">
+      <img class="article-cover" src="https://images.unsplash.com/photo-1543286386-2e659306cd6c?w=1200&q=80&auto=format&fit=crop" alt="">
     
     <div class="post-meta">
       <time datetime="2025-05-30">2025-05-30</time>
@@ -92,9 +92,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathbb&#123;E&#125;\lbrack N_&#123;H&#125;\rbrack \approx \frac&#123;1&#125;&#123;T&#125;\sum_&#123;i = 1&#125;^&#123;T&#125;n_&#123;i&#125;</span><br></pre></td></tr></table></figure>
 
 <p>模拟结果如下（图1、图2）：</p>
-<p><img src="/images/posts/20250530-post-2efd1cb5/image1.png" alt="Screenshot 2025-05-30 at 14.58.52"></p>
+<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image1.png" alt="Screenshot 2025-05-30 at 14.58.52"></p>
 <p>图1 : 原始模型下预期击杀所需次数</p>
-<p><img src="/images/posts/20250530-post-2efd1cb5/image2.png" alt="Screenshot 2025-05-30 at 15.00.58"></p>
+<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image2.png" alt="Screenshot 2025-05-30 at 15.00.58"></p>
 <p>图2 : 原始模型下两把武器攻击次数的差值</p>
 <h1 id="3-扩展机制建模"><a href="#3-扩展机制建模" class="headerlink" title="3 扩展机制建模"></a>3 扩展机制建模</h1><p>我们进一步引入两个常见机制：</p>
 <h2 id="3-1暴击机制（Critical-Hit）"><a href="#3-1暴击机制（Critical-Hit）" class="headerlink" title="3.1暴击机制（Critical Hit）"></a>3.1暴击机制（Critical Hit）</h2><p>设暴击概率为</p>
@@ -108,9 +108,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathbb&#123;E&#125;\lbrack D’\rbrack = (1 - p) \cdot \mathbb&#123;E&#125;\lbrack D\rbrack + p \cdot \beta \cdot \mathbb&#123;E&#125;\lbrack D\rbrack = \mathbb&#123;E&#125;\lbrack D\rbrack \cdot \lbrack 1 + p(\beta - 1)\rbrack</span><br></pre></td></tr></table></figure>
 
 <p>模拟结果如下（图3、图4），可以看出不同武器差值有所下降：</p>
-<p><img src="/images/posts/20250530-post-2efd1cb5/image3.png" alt="Screenshot 2025-05-30 at 15.05.23"></p>
+<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image3.png" alt="Screenshot 2025-05-30 at 15.05.23"></p>
 <p>图3 : 引入暴击后预期击杀所需次数</p>
-<p><img src="/images/posts/20250530-post-2efd1cb5/image4.png" alt="Screenshot 2025-05-30 at 15.07.58"></p>
+<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image4.png" alt="Screenshot 2025-05-30 at 15.07.58"></p>
 <p>图4 : 引入暴击后两把武器攻击次数的差值</p>
 <h2 id="3-2-伪随机补偿机制（Pity-System）"><a href="#3-2-伪随机补偿机制（Pity-System）" class="headerlink" title="3.2 伪随机补偿机制（Pity System）"></a>3.2 伪随机补偿机制（Pity System）</h2><p>为模拟玩家体验优化系统，引入线性补偿机制[2]：若连续</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\ k</span><br></pre></td></tr></table></figure>
@@ -121,9 +121,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\delta</span><br></pre></td></tr></table></figure>
 <p>为每次未暴击后暴击概率的递增量。这种机制通过控制波动，缓解概率失控问题。</p>
 <p>模拟结果如下（图5、图6），可以看出不同武器差值进一步下降，平衡性补偿更好：</p>
-<p><img src="/images/posts/20250530-post-2efd1cb5/image5.png" alt="Screenshot 2025-05-30 at 15.10.36"></p>
+<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image5.png" alt="Screenshot 2025-05-30 at 15.10.36"></p>
 <p>图5 : 引入伪随机后预期击杀所需次数</p>
-<p><img src="/images/posts/20250530-post-2efd1cb5/image6.png" alt="Screenshot 2025-05-30 at 15.11.56"></p>
+<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image6.png" alt="Screenshot 2025-05-30 at 15.11.56"></p>
 <p>图6 : 引入伪随机后两把武器攻击次数的差值</p>
 <h1 id="4-结论分析"><a href="#4-结论分析" class="headerlink" title="4 结论分析"></a>4 结论分析</h1><p>仿真数据显示，在基础模型下，武器2在大多数血量下击杀效率更高（期望攻击次数更少），只有当 $<code>HP = 5</code>$ 时武器1略有优势。<br>引入暴击机制后，若暴击分布均匀，武器1受益更大，因其基础伤害波动大，暴击后最高可达10。<br>进一步引入伪随机补偿机制后，两武器在整体期望上更为接近。说明补偿机制有助于平衡武器输出的一致性。</p>
 <h2 id=""><a href="#" class="headerlink" title=""></a></h2><h1 id="5-展望"><a href="#5-展望" class="headerlink" title="5 展望"></a>5 展望</h1><p>未来研究可将模型扩展到更复杂的 RPG 战斗系统，如加入技能冷却、状态异常、敌人抗性等机制。同时可尝试更多平衡设计的自动化验证方法（如强化学习驱动的测试角色模拟）。</p>
