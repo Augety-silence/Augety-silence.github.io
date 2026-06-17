@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Agent Repository Risk Observatory</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <p class="eyebrow">GitHub Web-Scraped Dataset</p>
+      <h1>AI Agent Repository Risk Observatory</h1>
+      <p class="tagline">Popularity, maintenance, security exposure, and collection coverage for fast-moving AI agent repositories.</p>
+    </div>
+    <div class="controlbar" aria-label="Dashboard controls">
+      <label>Category<select id="category-filter"></select></label>
+      <label>Risk<select id="risk-filter"><option>All</option><option>High</option><option>Medium</option><option>Low</option></select></label>
+      <label>Search<input id="search-box" type="search" placeholder="Repository name"></label>
+    </div>
+  </header>
+
+  <main>
+    <section class="kpis" id="kpis"></section>
+    <section class="dashboard">
+      <section class="panel hero-panel">
+        <div class="panel-head">
+          <h2>Popularity vs. Maintenance</h2>
+          <span>Bubble size = stars; click a point for details</span>
+        </div>
+        <div id="scatter" class="scatter" aria-label="Interactive quadrant scatterplot"></div>
+      </section>
+      <aside class="panel detail-panel">
+        <div class="panel-head">
+          <h2>Repository Detail</h2>
+          <span id="detail-status">Select a point</span>
+        </div>
+        <div id="repo-detail" class="repo-detail"></div>
+      </aside>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Risk Leaders</h2>
+          <span>Composite proxy score</span>
+        </div>
+        <div id="risk-bars" class="risk-bars"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Security Exposure</h2>
+          <span>Advisory, NVD, and Scorecard proxies</span>
+        </div>
+        <div id="security-list" class="security-list"></div>
+      </section>
+      <section class="panel wide">
+        <div class="panel-head">
+          <h2>Release and Issue Timelines</h2>
+          <span>Recent monthly heatmaps</span>
+        </div>
+        <div class="timeline-grid">
+          <div><h3>Release Cadence</h3><div id="release-heatmap" class="mini-heatmap"></div></div>
+          <div><h3>Issue Close Time</h3><div id="issue-heatmap" class="mini-heatmap"></div></div>
+        </div>
+      </section>
+      <section class="panel compare-panel">
+        <div class="panel-head">
+          <h2>Compare Two Repositories</h2>
+          <span>Choose any pair</span>
+        </div>
+        <div class="compare-controls">
+          <select id="compare-a"></select>
+          <select id="compare-b"></select>
+        </div>
+        <div id="compare-view" class="compare-view"></div>
+      </section>
+      <section class="panel wide">
+        <div class="panel-head">
+          <h2>Repository Table</h2>
+          <span>Click a header to sort; row click opens detail</span>
+        </div>
+        <div class="table-wrap">
+          <table id="repo-table">
+            <thead>
+              <tr>
+                <th data-key="repo">Repository</th>
+                <th data-key="category">Category</th>
+                <th data-key="stars">Stars</th>
+                <th data-key="maintenance_score">Maintenance</th>
+                <th data-key="adoption_risk_score">Risk</th>
+                <th data-key="security_advisory_count">Advisories</th>
+                <th data-key="nvd_cve_count">NVD CVEs</th>
+                <th data-key="openssf_score">OpenSSF</th>
+                <th data-key="recent_6m_median_roll3">Recent Close Days</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Collection Coverage</h2>
+          <span>HTTP status by source type</span>
+        </div>
+        <div id="coverage-list" class="coverage-list"></div>
+      </section>
+      <section class="panel wide method-panel">
+        <div class="panel-head">
+          <h2>Method Note</h2>
+          <span>No GitHub REST API</span>
+        </div>
+        <p class="method">The dataset is collected from public GitHub HTML pages, issue pages, Atom feeds, contributor graph resources loaded by GitHub web pages, GitHub Security Advisory search pages, NVD public search pages, and OpenSSF Scorecard pages. Scores are operational proxies for comparing public maintenance signals; they are not direct code-quality or security-audit labels.</p>
+      </section>
+    </section>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
