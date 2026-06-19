@@ -3,70 +3,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="&lt;img src=&#34;/Users/augety/Desktop/augety-blog/scripts/.tools/.tmpupload/基于Rank变换与PLS回归的极简方案/pandocmediaroot/media/image1.p">
+  <meta name="description" content="——基于Rank与Bootstrap-PLS的稳健方案">
+  <meta name="theme-color" content="#f3f0e8">
   <title>基于Rank变换与PLS回归的极简方案 | 夏末</title>
   
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
+<body class="page-post">
+  <div class="reading-progress" aria-hidden="true"><span></span></div>
   <header class="site-header">
-    <div class="wrap nav-wrap">
+    <div class="site-wrap nav-wrap">
       <a class="brand" href="/">
-        <span class="brand-title">夏末</span>
-        
-          <span class="brand-subtitle">不啻微茫，造炬成阳</span>
-        
+        <span class="brand-mark">夏</span>
+        <span><strong>夏末</strong><small>不啻微茫，造炬成阳</small></span>
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a href="/">首页</a>
-        <a href="/archives/">归档</a>
+        <a href="/archives/">文章</a>
+        <a href="/tags/">主题</a>
         <a href="/about/">关于</a>
       </nav>
     </div>
   </header>
 
-  <div class="wrap">
-    <article class="article">
-  <header class="article-header">
+  <main class="site-wrap">
     
-      <img class="article-cover" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop" alt="">
-    
-    <div class="post-meta">
+<article class="article">
+  <header class="article-header" data-reveal>
+    <div class="article-meta">
       <time datetime="2026-06-09">2026-06-09</time>
       
         <span>学习</span>
       
+      <span>9 分钟阅读</span>
     </div>
     <h1>基于Rank变换与PLS回归的极简方案</h1>
-    
-      <p class="article-description">&lt;img src=&#34;/Users/augety/Desktop/augety-blog/scripts/.tools/.tmpupload/基于Rank变换与PLS回归的极简方案/pandocmediaroot/media/image1.p</p>
-    
+    <p class="article-description">——基于Rank与Bootstrap-PLS的稳健方案</p>
     
       <div class="tag-row">
-        
-          <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
-        
-          <a href="/tags/AI/">#AI</a>
-        
-          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
-        
-          <a href="/tags/%E7%BB%9F%E8%AE%A1/">#统计</a>
-        
-          <a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a>
-        
+        <a href="/tags/AI/">#AI</a><a href="/tags/%E7%BB%9F%E8%AE%A1/">#统计</a><a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a><a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a><a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
       </div>
     
+    <img class="article-cover" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop" alt="" fetchpriority="high">
   </header>
-  <div class="article-body">
-    
-      <aside class="article-toc" aria-label="文章目录">
-        <div class="toc-title">目录</div>
-        <ul><li><a href="#"></a></li><li><a href="#一、问题定义与评价指标">一、问题定义与评价指标</a></li><li><a href="#二、数据结构观察">二、数据结构观察</a></li><li><a href="#三、核心算法：Category-Bootstrap-PLS12方案">三、核心算法：Category + Bootstrap PLS12方案</a><ul><li><a href="#3-1-算法流程">3.1 算法流程</a></li><li><a href="#3-2-为什么选择PLS">3.2 为什么选择PLS</a></li><li><a href="#3-3-手写PLS复现验证">3.3 手写PLS复现验证</a></li></ul></li><li><a href="#四、迭代与转折">四、迭代与转折</a><ul><li><a href="#4-1-第一阶段：基线与过拟合">4.1 第一阶段：基线与过拟合</a></li><li><a href="#4-2-第二阶段：Rank变换成为第一次真正突破">4.2 第二阶段：Rank变换成为第一次真正突破</a></li><li><a href="#4-3-第三阶段：从PCA重新回到有监督降维">4.3 第三阶段：从PCA重新回到有监督降维</a></li><li><a href="#4-4-第四阶段：Bootstrap成为第三次突破">4.4 第四阶段：Bootstrap成为第三次突破</a></li><li><a href="#4-5-第五阶段：阈值问题——把目光转向更细的地方">4.5 第五阶段：阈值问题——把目光转向更细的地方</a></li></ul></li><li><a href="#七、结论与反思">七、结论与反思</a></li><li><a href="#八、补充说明">八、补充说明</a><ul><li><a href="#8-1变量影响与共同作用">8.1变量影响与共同作用</a></li><li><a href="#8-2-对灰龟公司的使用建议">8.2 对灰龟公司的使用建议</a><ul><li><a href="#1-建议直接使用模型输出的场景">1.建议直接使用模型输出的场景</a></li><li><a href="#2-不建议直接使用模型输出的场景">2.不建议直接使用模型输出的场景</a></li></ul></li></ul></li><li><a href="#九、后记">九、后记</a></li></ul>
-      </aside>
-    
-    <div class="article-content">
-      <p><img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image1.png" style="width:1.51042in;height:1.15625in" /><strong>股票涨跌方向预测：<br>——基于Rank与Bootstrap-PLS的稳健方案</strong></p>
+
+  <div class="article-layout">
+    <div class="article-content"><p><img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image1.png" style="width:1.51042in;height:1.15625in" /><strong>股票涨跌方向预测：<br>——基于Rank与Bootstrap-PLS的稳健方案</strong></p>
 <p>学号已脱敏 大数据管理与应用 笔者</p>
 <p><strong>非正式摘要：</strong></p>
 <p><strong>写在最前：</strong>2026年5月4日凌晨，我在室友的温馨提醒下发现我忽略了Category.csv，悲喜交加下对我的算法做出了+0.6% 的重大提升，而此时我已经写完了报告，只能狼狈的进行项目重构。</p>
@@ -76,9 +59,9 @@
 <p>值得注意的是，我的最初版本（PLS，压缩至12维，Random seed &#x3D; 42）仅使用了49行就取得了0.58366的成绩，我觉得这个简洁性和速度都是值得关注的。简洁与可解释力在我看来是单一模型而非合并模型所具有的较大优势。</p>
 <p>最后，在灰龟公司使用本模型时，应将其作为日频行业方向研判的辅助。同时建议在行业&#x2F;板块方向判断、风险敞口监控预警等场景中使用，并且实际使用中，要保留时间戳，增强模型可训练能力。</p>
 <p><strong>关键词：</strong>Rank变换，Bootstrap，PLS，股票方向预测，阈值微调</p>
-<h1 id=""><a href="#" class="headerlink" title=""></a><img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image1.png" style="width:1.13681in;height:0.87083in" /></h1><h1 id="一、问题定义与评价指标"><a href="#一、问题定义与评价指标" class="headerlink" title="一、问题定义与评价指标"></a>一、问题定义与评价指标</h1><p>任务目标是对测试集437天、50只股票的方向进行预测。训练集包含1746天数据，每天有50个x变量与50个y变量；测试集仅包含50个x变量。</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a><img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image1.png" style="width:1.13681in;height:0.87083in" /></h1><h1 id="一、问题定义与评价指标"><a href="#一、问题定义与评价指标" class="headerlink" title="一、问题定义与评价指标"></a>一、问题定义与评价指标</h1><p>任务目标是对测试集437天、50只股票的方向进行预测。训练集包含1746天数据，每天有50个x变量与50个y变量；测试集仅包含50个x变量。</p>
 <p>课程采用加权准确率，当预测方向与真实收益同号时，样本贡献为正；反号时贡献为负；收益绝对值越大，该样本对总分影响越大。</p>
-<h1 id="二、数据结构观察"><a href="#二、数据结构观察" class="headerlink" title="二、数据结构观察"></a>二、数据结构观察</h1><p><img src="/images/posts/20260609-%E5%9F%BA%E4%BA%8ERank%E5%8F%98%E6%8D%A2%E4%B8%8EPLS%E5%9B%9E%E5%BD%92%E7%9A%84%E6%9E%81%E7%AE%80%E6%96%B9%E6%A1%88/image2.png" alt="图4_PCA累计方差解释率曲线"><img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image3.png" style="width:2.94514in;height:2.45972in" /></p>
+<h1 id="二、数据结构观察"><a href="#二、数据结构观察" class="headerlink" title="二、数据结构观察"></a>二、数据结构观察</h1><p><img src="/images/posts/20260609-%E5%9F%BA%E4%BA%8ERank%E5%8F%98%E6%8D%A2%E4%B8%8EPLS%E5%9B%9E%E5%BD%92%E7%9A%84%E6%9E%81%E7%AE%80%E6%96%B9%E6%A1%88/image2.png" alt="图4_PCA累计方差解释率曲线"><img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image3.png" style="width:2.94514in;height:2.45972in" /></p>
 <p>图3、4 x变量相关矩阵热力图、PCA主成分分析图</p>
 <h1 id="三、核心算法：Category-Bootstrap-PLS12方案"><a href="#三、核心算法：Category-Bootstrap-PLS12方案" class="headerlink" title="三、核心算法：Category + Bootstrap PLS12方案"></a>三、核心算法：Category + Bootstrap PLS12方案</h1><h2 id="3-1-算法流程"><a href="#3-1-算法流程" class="headerlink" title="3.1 算法流程"></a>3.1 算法流程</h2><table>
 <thead>
@@ -129,7 +112,7 @@
 <td>将连续预测转为±1，阈值取+0.00001</td>
 </tr>
 </tbody></table>
-<h2 id="3-2-为什么选择PLS"><a href="#3-2-为什么选择PLS" class="headerlink" title="3.2 为什么选择PLS"></a>3.2 为什么选择PLS</h2><p>PLS的关键优势是“有监督降维”。PCA只关心X自身方差，可能把与Y无<img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image4.png" style="width:4.95625in;height:2.41806in" />关但方差很大的方向保留下来；PLS则寻找能同时解释X并<img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image1.png" style="width:1.13681in;height:0.87083in" />与Y协方差较大的低维方向。对于本题这种x变量高度相关、y目标多达50个的任务，PLS比“PCA+Ridge”的两阶段流程更贴近评价目标。</p>
+<h2 id="3-2-为什么选择PLS"><a href="#3-2-为什么选择PLS" class="headerlink" title="3.2 为什么选择PLS"></a>3.2 为什么选择PLS</h2><p>PLS的关键优势是“有监督降维”。PCA只关心X自身方差，可能把与Y无<img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image4.png" style="width:4.95625in;height:2.41806in" />关但方差很大的方向保留下来；PLS则寻找能同时解释X并<img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image1.png" style="width:1.13681in;height:0.87083in" />与Y协方差较大的低维方向。对于本题这种x变量高度相关、y目标多达50个的任务，PLS比“PCA+Ridge”的两阶段流程更贴近评价目标。</p>
 <p>图5 简单PLS组件数调参折线图</p>
 <h2 id="3-3-手写PLS复现验证"><a href="#3-3-手写PLS复现验证" class="headerlink" title="3.3 手写PLS复现验证"></a>3.3 手写PLS复现验证</h2><p>为了确认PLS主干不是单纯依赖sklearn封装（我记得上课时候bootstrap好像自己写代码和官方库有点区别），我额外尝试了自己构建PLS的方法。</p>
 <p>下表是对比，算法结果是一致的：</p>
@@ -194,7 +177,7 @@
 <td>子集选择+Ridge</td>
 <td>0.581</td>
 <td>0.55152</td>
-<td><img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image1.png" style="width:1.13681in;height:0.87083in" />CV较高但公开榜回落，选优过拟合明显</td>
+<td><img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image1.png" style="width:1.13681in;height:0.87083in" />CV较高但公开榜回落，选优过拟合明显</td>
 </tr>
 <tr>
 <td>PCA+Ridge无rank版</td>
@@ -211,7 +194,7 @@
 </tbody></table>
 <h2 id="4-2-第二阶段：Rank变换成为第一次真正突破"><a href="#4-2-第二阶段：Rank变换成为第一次真正突破" class="headerlink" title="4.2 第二阶段：Rank变换成为第一次真正突破"></a>4.2 第二阶段：Rank变换成为第一次真正突破</h2><p>Rank变换是整个项目最关键的预处理发现。为了避免把Rank收益误判为某一个复杂模型的偶然结果，我先在前面已经出现过的早期模型上做复核，包括Ridge、Elastic Net、固定Top10子集Ridge、PCA+Ridge和Logistic回归。</p>
 <p>复核结果显示，排名变换在测试集上效果分别提升约0.013、0.007、0.013、0.019和0.018，说明Rank变换系统性改善了早期线性模型和降维模型可利用的输入信号质量。</p>
-<img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image5.png" style="width:5.00903in;height:2.37153in" />
+<img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image5.png" style="width:5.00903in;height:2.37153in" />
 
 <p>图6 Rank变换在早期模型上的效果对比</p>
 <h2 id="4-3-第三阶段：从PCA重新回到有监督降维"><a href="#4-3-第三阶段：从PCA重新回到有监督降维" class="headerlink" title="4.3 第三阶段：从PCA重新回到有监督降维"></a>4.3 第三阶段：从PCA重新回到有监督降维</h2><p>我在rank变换、标准化的基础上，去尝试了更多可能的主成分数量。B4 PCA+Ridge在Kaggle公开榜达到0.57654，证明降维去噪方向是正确的。</p>
@@ -243,7 +226,7 @@
 <td>用监督信号替代无监督PCA</td>
 </tr>
 </tbody></table>
-<h2 id="4-4-第四阶段：Bootstrap成为第三次突破"><a href="#4-4-第四阶段：Bootstrap成为第三次突破" class="headerlink" title="4.4 第四阶段：Bootstrap成为第三次突破"></a>4.4 第四阶段：Bootstrap成为第三次突破</h2><p>在PLS12我几乎放弃提升之后，室友的温馨提醒打破了我的“退休生活”，我发现category.csv是描述变量所属Major&#x2F;Minor类别的信息。于是我把每个类别内的均值、标准差以及单个变量相对Major类别均值的残差构造成新特征，使<img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image1.png" style="width:1.13681in;height:0.87083in" />模型不只看单个Y，也看变量组的共同变化和组内偏离。</p>
+<h2 id="4-4-第四阶段：Bootstrap成为第三次突破"><a href="#4-4-第四阶段：Bootstrap成为第三次突破" class="headerlink" title="4.4 第四阶段：Bootstrap成为第三次突破"></a>4.4 第四阶段：Bootstrap成为第三次突破</h2><p>在PLS12我几乎放弃提升之后，室友的温馨提醒打破了我的“退休生活”，我发现category.csv是描述变量所属Major&#x2F;Minor类别的信息。于是我把每个类别内的均值、标准差以及单个变量相对Major类别均值的残差构造成新特征，使<img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image1.png" style="width:1.13681in;height:0.87083in" />模型不只看单个Y，也看变量组的共同变化和组内偏离。</p>
 <table>
 <thead>
 <tr>
@@ -321,8 +304,8 @@
 <td align="center">极端行情适应</td>
 </tr>
 </tbody></table>
-<h1 id="八、补充说明"><a href="#八、补充说明" class="headerlink" title="八、补充说明"></a>八、补充说明</h1><h2 id="8-1变量影响与共同作用"><a href="#8-1变量影响与共同作用" class="headerlink" title="8.1变量影响与共同作用"></a>8.1变量影响与共同作用</h2><p>我用PLS的x_weights与多目标平均绝对系数构造综合影响分数。高影响变<img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image1.png" style="width:1.13681in;height:0.87083in" />量的判断，是因为它们更活跃地参与了因子构建。例如x36、x27排名靠前，说明它们在捕捉跨股票、跨行业的共同信息上更有效。</p>
-<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tools/.tmp_upload/基于Rank变换与PLS回归的极简方案/pandoc_media_root/media/image7.png" style="width:4.58125in;height:2.41319in" />图8 PLS变量影响强度Top12</p>
+<h1 id="八、补充说明"><a href="#八、补充说明" class="headerlink" title="八、补充说明"></a>八、补充说明</h1><h2 id="8-1变量影响与共同作用"><a href="#8-1变量影响与共同作用" class="headerlink" title="8.1变量影响与共同作用"></a>8.1变量影响与共同作用</h2><p>我用PLS的x_weights与多目标平均绝对系数构造综合影响分数。高影响变<img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image1.png" style="width:1.13681in;height:0.87083in" />量的判断，是因为它们更活跃地参与了因子构建。例如x36、x27排名靠前，说明它们在捕捉跨股票、跨行业的共同信息上更有效。</p>
+<p><img src="/images/posts/20260609-基于Rank变换与PLS回归的极简方案/image7.png" style="width:4.58125in;height:2.41319in" />图8 PLS变量影响强度Top12</p>
 <h2 id="8-2-对灰龟公司的使用建议"><a href="#8-2-对灰龟公司的使用建议" class="headerlink" title="8.2 对灰龟公司的使用建议"></a>8.2 对灰龟公司的使用建议</h2><h3 id="1-建议直接使用模型输出的场景"><a href="#1-建议直接使用模型输出的场景" class="headerlink" title="1.建议直接使用模型输出的场景"></a>1.建议直接使用模型输出的场景</h3><p><strong>日内方向研判辅助、行业研判参考、风险敞口监控的输入信号</strong></p>
 <h3 id="2-不建议直接使用模型输出的场景"><a href="#2-不建议直接使用模型输出的场景" class="headerlink" title="2.不建议直接使用模型输出的场景"></a>2.不建议直接使用模型输出的场景</h3><p><strong>个股独立决策（</strong>基于50个x变量的共因子结构做预测，单变量解释力有限<strong>）</strong></p>
 <p><strong>高频交易（</strong>以日级别数据训练，对分钟级或小时级市场信号不适用<strong>）</strong></p>
@@ -332,18 +315,135 @@
 <h1 id="九、后记"><a href="#九、后记" class="headerlink" title="九、后记"></a>九、后记</h1><p>回归分析真的是一门非常实用的课程，很感谢花老师帮我们重新梳理了基本的原理，比如线性变换的那个动态演示图，让我能够第一次直观的理解。同时回归分析在我实习的面试中也是经常被问到的知识点，参数的解释性更能体现我对数据本身的理解，为我在日常数据处理中提供了很大帮助！</p>
 <p>同时也很感谢课上说的“可以参考机器学习的相关知识点”，以及在降维章节提到的“可以重点关注这里的内容”，都为我的课程作业提供了很大的帮助，我觉得这个在我PLS还有category的使用上得到了体现。</p>
 <p>最后感谢身边同样选修这门课的朋友，我们在交流中碰撞出了很多思路，从预处理再到模型最后到微调，受益匪浅。</p>
+</div>
+    
+      <aside class="article-toc" aria-label="文章目录">
+        <span>目录</span>
+        <ul><li><a href="#3-1-算法流程">3.1 算法流程</a></li><li><a href="#3-2-为什么选择PLS">3.2 为什么选择PLS</a></li><li><a href="#3-3-手写PLS复现验证">3.3 手写PLS复现验证</a></li><li><a href="#4-1-第一阶段：基线与过拟合">4.1 第一阶段：基线与过拟合</a></li><li><a href="#4-2-第二阶段：Rank变换成为第一次真正突破">4.2 第二阶段：Rank变换成为第一次真正突破</a></li><li><a href="#4-3-第三阶段：从PCA重新回到有监督降维">4.3 第三阶段：从PCA重新回到有监督降维</a></li><li><a href="#4-4-第四阶段：Bootstrap成为第三次突破">4.4 第四阶段：Bootstrap成为第三次突破</a></li><li><a href="#4-5-第五阶段：阈值问题——把目光转向更细的地方">4.5 第五阶段：阈值问题——把目光转向更细的地方</a></li><li><a href="#8-1变量影响与共同作用">8.1变量影响与共同作用</a></li><li><a href="#8-2-对灰龟公司的使用建议">8.2 对灰龟公司的使用建议</a><ul><li><a href="#1-建议直接使用模型输出的场景">1.建议直接使用模型输出的场景</a></li><li><a href="#2-不建议直接使用模型输出的场景">2.不建议直接使用模型输出的场景</a></li></ul></li></ul>
+      </aside>
+    
+  </div>
 
+  <nav class="post-navigation" aria-label="文章导航">
+    <a href="/2026/06/10/ec6362fb/"><span>上一篇</span><strong>字节跳动_商业化广告风控_HRBP三面复盘报告</strong></a>
+    <a class="next" href="/2026/06/02/837cc80e/"><span>下一篇</span><strong>字节跳动_商业化广告风控_面试复盘_2026-06-02</strong></a>
+  </nav>
+
+  
+    <section class="related-posts">
+      <div class="section-heading"><div><span class="eyebrow">Continue reading</span><h2>继续阅读</h2></div></div>
+      <div class="listing-grid">
+        
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2026/06/18/cc2d9a93/" aria-label="阅读 字节跳动_国际化业务战略分析_一面复盘">
+    
+      <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80&auto=format&fit=crop" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2026-06-18">2026-06-18</time>
+      <span>工作</span>
+      <span>1 分钟阅读</span>
     </div>
+    <h3><a href="/2026/06/18/cc2d9a93/">字节跳动_国际化业务战略分析_一面复盘</a></h3>
+    <p>面试岗位  国际化业务战略分析（商业化广告方向）</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/%E5%85%AC%E5%8F%B8%E7%A0%94%E7%A9%B6/">#公司研究</a>
+        
+          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
+        
+          <a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a>
+        
+      </div>
+    
   </div>
 </article>
 
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2026/06/10/be126d0b/" aria-label="阅读 字节跳动二面复盘报告">
+    
+      <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1200&q=80&auto=format&fit=crop" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2026-06-10">2026-06-10</time>
+      <span>学习</span>
+      <span>7 分钟阅读</span>
+    </div>
+    <h3><a href="/2026/06/10/be126d0b/">字节跳动二面复盘报告</a></h3>
+    <p>候选人背景：大二 · 大数据管理应用专业 · 头部券商经历</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/%E5%85%AC%E5%8F%B8%E7%A0%94%E7%A9%B6/">#公司研究</a>
+        
+          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
+        
+          <a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a>
+        
+      </div>
+    
   </div>
+</article>
+
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2026/06/10/1113415d/" aria-label="阅读 B站_数据分析实习生_一面复盘">
+    
+      <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=80&auto=format&fit=crop" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2026-06-10">2026-06-10</time>
+      <span>工作</span>
+      <span>9 分钟阅读</span>
+    </div>
+    <h3><a href="/2026/06/10/1113415d/">B站_数据分析实习生_一面复盘</a></h3>
+    <p>2026年6月10日 | 笔者 | X 大学</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/%E5%85%AC%E5%8F%B8%E7%A0%94%E7%A9%B6/">#公司研究</a>
+        
+          <a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a>
+        
+          <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+        
+      </div>
+    
+  </div>
+</article>
+
+      </div>
+    </section>
+  
+</article>
+
+  </main>
 
   <footer class="site-footer">
-    <div class="wrap">
+    <div class="site-wrap">
+      <div><strong>夏末</strong><p>不啻微茫，造炬成阳</p></div>
+      <div class="footer-links">
+        <a href="/archives/">全部文章</a>
+        <a href="/risk-observatory/">风险观察站</a>
+        <a href="/wordScenery/">词风景</a>
+      </div>
       <span>&copy; 2026 夏末</span>
-      <span>Powered by Hexo</span>
     </div>
   </footer>
+  
+<script src="/js/site.js"></script>
+
 </body>
 </html>

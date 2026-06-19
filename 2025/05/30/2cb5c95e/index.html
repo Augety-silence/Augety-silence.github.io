@@ -4,65 +4,52 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="本研究通过构建简化的游戏战斗模型，比较两种不同武器在面对怪物时的击杀效率，采用蒙特卡洛仿真和期望分析方法，在此基础上引入暴击机制和伪随机补偿机制，从概率统计角度探讨武器平衡性的调整方法。研究表明，引入复杂机制可有效平衡武器性能，提升玩家体验">
+  <meta name="theme-color" content="#f3f0e8">
   <title>概率统计大作业 | 夏末</title>
   
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
+<body class="page-post">
+  <div class="reading-progress" aria-hidden="true"><span></span></div>
   <header class="site-header">
-    <div class="wrap nav-wrap">
+    <div class="site-wrap nav-wrap">
       <a class="brand" href="/">
-        <span class="brand-title">夏末</span>
-        
-          <span class="brand-subtitle">不啻微茫，造炬成阳</span>
-        
+        <span class="brand-mark">夏</span>
+        <span><strong>夏末</strong><small>不啻微茫，造炬成阳</small></span>
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a href="/">首页</a>
-        <a href="/archives/">归档</a>
+        <a href="/archives/">文章</a>
+        <a href="/tags/">主题</a>
         <a href="/about/">关于</a>
       </nav>
     </div>
   </header>
 
-  <div class="wrap">
-    <article class="article">
-  <header class="article-header">
+  <main class="site-wrap">
     
-      <img class="article-cover" src="https://images.unsplash.com/photo-1543286386-2e659306cd6c?w=1200&q=80&auto=format&fit=crop" alt="">
-    
-    <div class="post-meta">
+<article class="article">
+  <header class="article-header" data-reveal>
+    <div class="article-meta">
       <time datetime="2025-05-30">2025-05-30</time>
       
         <span>学习</span>
       
+      <span>10 分钟阅读</span>
     </div>
     <h1>概率统计大作业</h1>
-    
-      <p class="article-description">本研究通过构建简化的游戏战斗模型，比较两种不同武器在面对怪物时的击杀效率，采用蒙特卡洛仿真和期望分析方法，在此基础上引入暴击机制和伪随机补偿机制，从概率统计角度探讨武器平衡性的调整方法。研究表明，引入复杂机制可有效平衡武器性能，提升玩家体验</p>
-    
+    <p class="article-description">本研究通过构建简化的游戏战斗模型，比较两种不同武器在面对怪物时的击杀效率，采用蒙特卡洛仿真和期望分析方法，在此基础上引入暴击机制和伪随机补偿机制，从概率统计角度探讨武器平衡性的调整方法。研究表明，引入复杂机制可有效平衡武器性能，提升玩家体验</p>
     
       <div class="tag-row">
-        
-          <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
-        
-          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
-        
-          <a href="/tags/%E7%BB%9F%E8%AE%A1/">#统计</a>
-        
+        <a href="/tags/%E7%BB%9F%E8%AE%A1/">#统计</a><a href="/tags/Python/">#Python</a>
       </div>
     
+    <img class="article-cover" src="https://images.unsplash.com/photo-1543286386-2e659306cd6c?w=1200&q=80&auto=format&fit=crop" alt="" fetchpriority="high">
   </header>
-  <div class="article-body">
-    
-      <aside class="article-toc" aria-label="文章目录">
-        <div class="toc-title">目录</div>
-        <ul><li><a href="#摘要：">摘要：</a></li><li><a href="#关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿">关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿</a></li><li><a href="#引言：">引言：</a></li><li><a href="#1-方法：概率建模与蒙特卡洛仿真">1 方法：概率建模与蒙特卡洛仿真</a><ul><li><a href="#1-1-模型目标">1.1 模型目标</a></li></ul></li><li><a href="#2-蒙特卡洛模拟方法">2 蒙特卡洛模拟方法</a><ul><li><a href="#2-1初始化生命值">2.1初始化生命值</a></li><li><a href="#2-2-循环：直到">2.2 循环：直到</a></li><li><a href="#2-3-随机从-mathcal-D-中抽取一次伤害">2.3 随机从$\mathcal{D}$中抽取一次伤害</a></li><li><a href="#2-4-更新血量：">2.4 更新血量：</a></li><li><a href="#2-5-累加攻击次数：">2.5 累加攻击次数：</a></li><li><a href="#2-6-记录当前轮击杀所需次数-n">2.6 记录当前轮击杀所需次数 $n$</a></li></ul></li><li><a href="#3-扩展机制建模">3 扩展机制建模</a><ul><li><a href="#3-1暴击机制（Critical-Hit）">3.1暴击机制（Critical Hit）</a></li><li><a href="#3-2-伪随机补偿机制（Pity-System）">3.2 伪随机补偿机制（Pity System）</a></li></ul></li><li><a href="#4-结论分析">4 结论分析</a></li><li><a href="#5-展望">5 展望</a></li><li><a href="#参考文献：">参考文献：</a></li><li><a href="#案例代码：">案例代码：</a><ul><li><a href="#Test-1-：">Test 1 ：</a></li><li><a href="#Test-2">Test 2 :</a></li></ul></li><li><a href="#暴击机制">暴击机制</a><ul><li><a href="#Test-3">Test 3 :</a></li></ul></li></ul>
-      </aside>
-    
-    <div class="article-content">
-      <p><strong>游戏平衡机制的研究：以伤害期望为例</strong></p>
+
+  <div class="article-layout">
+    <div class="article-content"><p><strong>游戏平衡机制的研究：以伤害期望为例</strong></p>
 <p><strong>——基于蒙特卡洛仿真的统计学研究</strong></p>
 <p>X 经济与管理学院 学号已脱敏 笔者</p>
 <h2 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h2><p>本研究通过构建简化的游戏战斗模型，比较两种不同武器在面对怪物时的击杀效率，采用蒙特卡洛仿真和期望分析方法，在此基础上引入暴击机制和伪随机补偿机制，从概率统计角度探讨武器平衡性的调整方法。研究表明，引入复杂机制可有效平衡武器性能，提升玩家体验。</p>
@@ -92,9 +79,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathbb&#123;E&#125;\lbrack N_&#123;H&#125;\rbrack \approx \frac&#123;1&#125;&#123;T&#125;\sum_&#123;i = 1&#125;^&#123;T&#125;n_&#123;i&#125;</span><br></pre></td></tr></table></figure>
 
 <p>模拟结果如下（图1、图2）：</p>
-<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image1.png" alt="Screenshot 2025-05-30 at 14.58.52"></p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image1.png" alt="Screenshot 2025-05-30 at 14.58.52"></p>
 <p>图1 : 原始模型下预期击杀所需次数</p>
-<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image2.png" alt="Screenshot 2025-05-30 at 15.00.58"></p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image2.png" alt="Screenshot 2025-05-30 at 15.00.58"></p>
 <p>图2 : 原始模型下两把武器攻击次数的差值</p>
 <h1 id="3-扩展机制建模"><a href="#3-扩展机制建模" class="headerlink" title="3 扩展机制建模"></a>3 扩展机制建模</h1><p>我们进一步引入两个常见机制：</p>
 <h2 id="3-1暴击机制（Critical-Hit）"><a href="#3-1暴击机制（Critical-Hit）" class="headerlink" title="3.1暴击机制（Critical Hit）"></a>3.1暴击机制（Critical Hit）</h2><p>设暴击概率为</p>
@@ -108,9 +95,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathbb&#123;E&#125;\lbrack D’\rbrack = (1 - p) \cdot \mathbb&#123;E&#125;\lbrack D\rbrack + p \cdot \beta \cdot \mathbb&#123;E&#125;\lbrack D\rbrack = \mathbb&#123;E&#125;\lbrack D\rbrack \cdot \lbrack 1 + p(\beta - 1)\rbrack</span><br></pre></td></tr></table></figure>
 
 <p>模拟结果如下（图3、图4），可以看出不同武器差值有所下降：</p>
-<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image3.png" alt="Screenshot 2025-05-30 at 15.05.23"></p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image3.png" alt="Screenshot 2025-05-30 at 15.05.23"></p>
 <p>图3 : 引入暴击后预期击杀所需次数</p>
-<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image4.png" alt="Screenshot 2025-05-30 at 15.07.58"></p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image4.png" alt="Screenshot 2025-05-30 at 15.07.58"></p>
 <p>图4 : 引入暴击后两把武器攻击次数的差值</p>
 <h2 id="3-2-伪随机补偿机制（Pity-System）"><a href="#3-2-伪随机补偿机制（Pity-System）" class="headerlink" title="3.2 伪随机补偿机制（Pity System）"></a>3.2 伪随机补偿机制（Pity System）</h2><p>为模拟玩家体验优化系统，引入线性补偿机制[2]：若连续</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\ k</span><br></pre></td></tr></table></figure>
@@ -121,9 +108,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\delta</span><br></pre></td></tr></table></figure>
 <p>为每次未暴击后暴击概率的递增量。这种机制通过控制波动，缓解概率失控问题。</p>
 <p>模拟结果如下（图5、图6），可以看出不同武器差值进一步下降，平衡性补偿更好：</p>
-<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image5.png" alt="Screenshot 2025-05-30 at 15.10.36"></p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image5.png" alt="Screenshot 2025-05-30 at 15.10.36"></p>
 <p>图5 : 引入伪随机后预期击杀所需次数</p>
-<p><img src="/Users/augety/Desktop/augety-blog/scripts/.tmp_upload/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A/pandoc_media_root/media/image6.png" alt="Screenshot 2025-05-30 at 15.11.56"></p>
+<p><img src="/images/posts/20250530-post-2efd1cb5/image6.png" alt="Screenshot 2025-05-30 at 15.11.56"></p>
 <p>图6 : 引入伪随机后两把武器攻击次数的差值</p>
 <h1 id="4-结论分析"><a href="#4-结论分析" class="headerlink" title="4 结论分析"></a>4 结论分析</h1><p>仿真数据显示，在基础模型下，武器2在大多数血量下击杀效率更高（期望攻击次数更少），只有当 $<code>HP = 5</code>$ 时武器1略有优势。<br>引入暴击机制后，若暴击分布均匀，武器1受益更大，因其基础伤害波动大，暴击后最高可达10。<br>进一步引入伪随机补偿机制后，两武器在整体期望上更为接近。说明补偿机制有助于平衡武器输出的一致性。</p>
 <h2 id=""><a href="#" class="headerlink" title=""></a></h2><h1 id="5-展望"><a href="#5-展望" class="headerlink" title="5 展望"></a>5 展望</h1><p>未来研究可将模型扩展到更复杂的 RPG 战斗系统，如加入技能冷却、状态异常、敌人抗性等机制。同时可尝试更多平衡设计的自动化验证方法（如强化学习驱动的测试角色模拟）。</p>
@@ -488,18 +475,101 @@
 <p>attacks +&#x3D; 1</p>
 <p>total_attacks +&#x3D; attacks</p>
 <p>return total_attacks &#x2F; trials</p>
+</div>
+    
+      <aside class="article-toc" aria-label="文章目录">
+        <span>目录</span>
+        <ul><li><a href="#摘要：">摘要：</a></li><li><a href="#关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿">关键词：游戏平衡、蒙特卡洛模拟、伪随机补偿</a></li><li><a href="#1-1-模型目标">1.1 模型目标</a><ul><li><a href="#2-1初始化生命值">2.1初始化生命值</a></li><li><a href="#2-2-循环：直到">2.2 循环：直到</a></li><li><a href="#2-3-随机从-mathcal-D-中抽取一次伤害">2.3 随机从$\mathcal{D}$中抽取一次伤害</a></li><li><a href="#2-4-更新血量：">2.4 更新血量：</a></li><li><a href="#2-5-累加攻击次数：">2.5 累加攻击次数：</a></li><li><a href="#2-6-记录当前轮击杀所需次数-n">2.6 记录当前轮击杀所需次数 $n$</a></li></ul></li><li><a href="#3-1暴击机制（Critical-Hit）">3.1暴击机制（Critical Hit）</a></li><li><a href="#3-2-伪随机补偿机制（Pity-System）">3.2 伪随机补偿机制（Pity System）</a></li><li><a href="#"></a></li><li><a href="#Test-1-：">Test 1 ：</a></li><li><a href="#"></a></li><li><a href="#Test-2">Test 2 :</a></li><li><a href="#Test-3">Test 3 :</a></li></ul>
+      </aside>
+    
+  </div>
 
+  <nav class="post-navigation" aria-label="文章导航">
+    <a href="/2025/11/10/eb8c0cf3/"><span>上一篇</span><strong>华润电力国际化战略深度分析报告</strong></a>
+    <a class="next" href="/2025/05/29/6e513aca/"><span>下一篇</span><strong>建筑赏析大作业</strong></a>
+  </nav>
+
+  
+    <section class="related-posts">
+      <div class="section-heading"><div><span class="eyebrow">Continue reading</span><h2>继续阅读</h2></div></div>
+      <div class="listing-grid">
+        
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2026/06/09/1feb9a44/" aria-label="阅读 基于Rank变换与PLS回归的极简方案">
+    
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2026-06-09">2026-06-09</time>
+      <span>学习</span>
+      <span>9 分钟阅读</span>
     </div>
+    <h3><a href="/2026/06/09/1feb9a44/">基于Rank变换与PLS回归的极简方案</a></h3>
+    <p>——基于Rank与Bootstrap-PLS的稳健方案</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/%E7%BB%9F%E8%AE%A1/">#统计</a>
+        
+          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
+        
+          <a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a>
+        
+      </div>
+    
   </div>
 </article>
 
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2025/12/17/321270fd/" aria-label="阅读 睡眠质量影响因素统计分析报告">
+    
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format&fit=crop" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2025-12-17">2025-12-17</time>
+      <span>学习</span>
+      <span>9 分钟阅读</span>
+    </div>
+    <h3><a href="/2025/12/17/321270fd/">睡眠质量影响因素统计分析报告</a></h3>
+    <p>睡眠是人体修复、能量补充的关键生理过程，睡眠质量直接影响日间精力、认知功能及长期健康。随着生活节奏加快，晚睡、睡眠结构失衡等问题日益普遍，量化睡眠质量的影响因素对改善作息具有重要实践意义。</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/%E7%BB%9F%E8%AE%A1/">#统计</a>
+        
+          <a href="/tags/Python/">#Python</a>
+        
+      </div>
+    
   </div>
+</article>
+
+      </div>
+    </section>
+  
+</article>
+
+  </main>
 
   <footer class="site-footer">
-    <div class="wrap">
+    <div class="site-wrap">
+      <div><strong>夏末</strong><p>不啻微茫，造炬成阳</p></div>
+      <div class="footer-links">
+        <a href="/archives/">全部文章</a>
+        <a href="/risk-observatory/">风险观察站</a>
+        <a href="/wordScenery/">词风景</a>
+      </div>
       <span>&copy; 2026 夏末</span>
-      <span>Powered by Hexo</span>
     </div>
   </footer>
+  
+<script src="/js/site.js"></script>
+
 </body>
 </html>

@@ -4,67 +4,52 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Toyota / Bosch / Siemens Amberg / Navistar / DHL / e-Kanban 六个案例横向对比：数字工具如何把七大浪费从经验判断变成实时数据证据。">
+  <meta name="theme-color" content="#f3f0e8">
   <title>精益生产七大浪费的数字工具实现 | 夏末</title>
   
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
+<body class="page-post">
+  <div class="reading-progress" aria-hidden="true"><span></span></div>
   <header class="site-header">
-    <div class="wrap nav-wrap">
+    <div class="site-wrap nav-wrap">
       <a class="brand" href="/">
-        <span class="brand-title">夏末</span>
-        
-          <span class="brand-subtitle">不啻微茫，造炬成阳</span>
-        
+        <span class="brand-mark">夏</span>
+        <span><strong>夏末</strong><small>不啻微茫，造炬成阳</small></span>
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a href="/">首页</a>
-        <a href="/archives/">归档</a>
+        <a href="/archives/">文章</a>
+        <a href="/tags/">主题</a>
         <a href="/about/">关于</a>
       </nav>
     </div>
   </header>
 
-  <div class="wrap">
-    <article class="article">
-  <header class="article-header">
+  <main class="site-wrap">
     
-      <img class="article-cover" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80&auto=format&fit=crop" alt="">
-    
-    <div class="post-meta">
+<article class="article">
+  <header class="article-header" data-reveal>
+    <div class="article-meta">
       <time datetime="2026-06-01">2026-06-01</time>
       
         <span>学习</span>
       
+      <span>10 分钟阅读</span>
     </div>
     <h1>精益生产七大浪费的数字工具实现</h1>
-    
-      <p class="article-description">Toyota / Bosch / Siemens Amberg / Navistar / DHL / e-Kanban 六个案例横向对比：数字工具如何把七大浪费从经验判断变成实时数据证据。</p>
-    
+    <p class="article-description">Toyota / Bosch / Siemens Amberg / Navistar / DHL / e-Kanban 六个案例横向对比：数字工具如何把七大浪费从经验判断变成实时数据证据。</p>
     
       <div class="tag-row">
-        
-          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
-        
-          <a href="/tags/%E5%AD%A6%E4%B9%A0/">#学习</a>
-        
-          <a href="/tags/%E7%B2%BE%E7%9B%8A%E7%94%9F%E4%BA%A7/">#精益生产</a>
-        
-          <a href="/tags/%E6%95%B0%E5%AD%97%E5%B7%A5%E5%85%B7/">#数字工具</a>
-        
+        <a href="/tags/%E5%AD%A6%E4%B9%A0/">#学习</a><a href="/tags/%E7%AE%A1%E7%90%86/">#管理</a>
       </div>
     
+    <img class="article-cover" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80&auto=format&fit=crop" alt="" fetchpriority="high">
   </header>
-  <div class="article-body">
-    
-      <aside class="article-toc" aria-label="文章目录">
-        <div class="toc-title">目录</div>
-        <ul><li><a href="#一、报告摘要">一、报告摘要</a></li><li><a href="#二、目录">二、目录</a></li><li><a href="#三、精益七大浪费与数字工具的整体逻辑">三、精益七大浪费与数字工具的整体逻辑</a><ul><li><a href="#（一）七大浪费回顾">（一）七大浪费回顾</a></li><li><a href="#（二）数字化对浪费识别与消除的赋能逻辑">（二）数字化对浪费识别与消除的赋能逻辑</a></li></ul></li><li><a href="#四、案例分析">四、案例分析</a><ul><li><a href="#4-1-Toyota：电子看板系统">4.1 Toyota：电子看板系统</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-2-Bosch：Bosch-Production-System-IIoT">4.2 Bosch：Bosch Production System + IIoT</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-3-Siemens-Amberg：数字化工厂">4.3 Siemens Amberg：数字化工厂</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-4-Navistar：e-Kanban">4.4 Navistar：e-Kanban</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-5-DHL：IoT-仓储与物流">4.5 DHL：IoT 仓储与物流</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-6-汽车零部件供应商：e-Kanban-学术案例">4.6 汽车零部件供应商：e-Kanban 学术案例</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li></ul></li><li><a href="#五、横向对比：六大案例-×-七大浪费">五、横向对比：六大案例 × 七大浪费</a></li><li><a href="#六、总结与启示">六、总结与启示</a><ul><li><a href="#（一）核心结论">（一）核心结论</a></li><li><a href="#（二）对课程作业的启示">（二）对课程作业的启示</a></li></ul></li><li><a href="#七、参考资料">七、参考资料</a></li></ul>
-      </aside>
-    
-    <div class="article-content">
-      <blockquote>
+
+  <div class="article-layout">
+    <div class="article-content"><blockquote>
 <p>运营管理作业 | 周济睿 524120910111 2603-07 | 2026 年 6 月</p>
 </blockquote>
 <h1 id="一、报告摘要"><a href="#一、报告摘要" class="headerlink" title="一、报告摘要"></a>一、报告摘要</h1><p>精益生产的核心是识别和消除七大浪费：过量生产、库存、等待、缺陷、搬运、动作、过度加工。本报告聚焦”哪些企业案例把这些浪费的识别与消除方法通过数字工具实现”，选取 Toyota、Bosch、Siemens Amberg、Navistar、DHL 以及汽车零部件供应商 e-Kanban 六个案例，逐一说明其对应的浪费类型与数字工具的作用机制，并在最后给出横向对比与小结。</p>
@@ -226,18 +211,69 @@
 <li>DHL IoT in Logistics 趋势报告（DHL Customer Logistics）</li>
 <li>Automotive Parts Supplier e-Kanban 学术研究（Operations Management 文献）</li>
 </ol>
+</div>
+    
+      <aside class="article-toc" aria-label="文章目录">
+        <span>目录</span>
+        <ul><li><a href="#（一）七大浪费回顾">（一）七大浪费回顾</a></li><li><a href="#（二）数字化对浪费识别与消除的赋能逻辑">（二）数字化对浪费识别与消除的赋能逻辑</a></li><li><a href="#4-1-Toyota：电子看板系统">4.1 Toyota：电子看板系统</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-2-Bosch：Bosch-Production-System-IIoT">4.2 Bosch：Bosch Production System + IIoT</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-3-Siemens-Amberg：数字化工厂">4.3 Siemens Amberg：数字化工厂</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-4-Navistar：e-Kanban">4.4 Navistar：e-Kanban</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-5-DHL：IoT-仓储与物流">4.5 DHL：IoT 仓储与物流</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#4-6-汽车零部件供应商：e-Kanban-学术案例">4.6 汽车零部件供应商：e-Kanban 学术案例</a><ul><li><a href="#1-背景">1. 背景</a></li><li><a href="#2-对应的七大浪费">2. 对应的七大浪费</a></li><li><a href="#3-数字工具如何发挥作用">3. 数字工具如何发挥作用</a></li><li><a href="#4-案例要点">4. 案例要点</a></li></ul></li><li><a href="#（一）核心结论">（一）核心结论</a></li><li><a href="#（二）对课程作业的启示">（二）对课程作业的启示</a></li></ul>
+      </aside>
+    
+  </div>
 
+  <nav class="post-navigation" aria-label="文章导航">
+    <a href="/2026/06/01/interview-review-ai-infra/"><span>上一篇</span><strong>AI 基建投资实习面试复盘：48 问 × 我的不足清单</strong></a>
+    <a class="next" href="/2026/06/01/ai-compute-infra/"><span>下一篇</span><strong>AI 算力基础设施投资机遇深度研究</strong></a>
+  </nav>
+
+  
+    <section class="related-posts">
+      <div class="section-heading"><div><span class="eyebrow">Continue reading</span><h2>继续阅读</h2></div></div>
+      <div class="listing-grid">
+        
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2025/03/20/presentation/" aria-label="阅读 presentation要求">
+    
+      <img src="https://ossimg.xinli001.com/20161208/d8d25177303cc86caef9181819473738.jpg" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2025-03-20">2025-03-20</time>
+      <span>学习</span>
+      <span>4 分钟阅读</span>
     </div>
+    <h3><a href="/2025/03/20/presentation/">presentation要求</a></h3>
+    <p>本研究旨在探讨不同文化背景、性格特质、年龄层次的个体，在相同沟通场景下如何表现出不同的直接或间接沟通风格，以及影响这些差异的根本原因。</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/%E5%AD%A6%E4%B9%A0/">#学习</a>
+        
+      </div>
+    
   </div>
 </article>
 
-  </div>
+      </div>
+    </section>
+  
+</article>
+
+  </main>
 
   <footer class="site-footer">
-    <div class="wrap">
+    <div class="site-wrap">
+      <div><strong>夏末</strong><p>不啻微茫，造炬成阳</p></div>
+      <div class="footer-links">
+        <a href="/archives/">全部文章</a>
+        <a href="/risk-observatory/">风险观察站</a>
+        <a href="/wordScenery/">词风景</a>
+      </div>
       <span>&copy; 2026 夏末</span>
-      <span>Powered by Hexo</span>
     </div>
   </footer>
+  
+<script src="/js/site.js"></script>
+
 </body>
 </html>

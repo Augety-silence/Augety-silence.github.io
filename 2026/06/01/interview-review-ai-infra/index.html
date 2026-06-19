@@ -4,69 +4,52 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="48 个面试问题完整 Q&amp;A 记录 + 每一类暴露的不足 + 正确思路 + 改进优先级。一句话总结：不是不会说，是说得太泛，被顺着关键词打穿时全面崩盘。">
+  <meta name="theme-color" content="#f3f0e8">
   <title>AI 基建投资实习面试复盘：48 问 × 我的不足清单 | 夏末</title>
   
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
-<body>
+<body class="page-post">
+  <div class="reading-progress" aria-hidden="true"><span></span></div>
   <header class="site-header">
-    <div class="wrap nav-wrap">
+    <div class="site-wrap nav-wrap">
       <a class="brand" href="/">
-        <span class="brand-title">夏末</span>
-        
-          <span class="brand-subtitle">不啻微茫，造炬成阳</span>
-        
+        <span class="brand-mark">夏</span>
+        <span><strong>夏末</strong><small>不啻微茫，造炬成阳</small></span>
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a href="/">首页</a>
-        <a href="/archives/">归档</a>
+        <a href="/archives/">文章</a>
+        <a href="/tags/">主题</a>
         <a href="/about/">关于</a>
       </nav>
     </div>
   </header>
 
-  <div class="wrap">
-    <article class="article">
-  <header class="article-header">
+  <main class="site-wrap">
     
-      <img class="article-cover" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&q=80&auto=format&fit=crop" alt="">
-    
-    <div class="post-meta">
+<article class="article">
+  <header class="article-header" data-reveal>
+    <div class="article-meta">
       <time datetime="2026-06-01">2026-06-01</time>
       
         <span>工作</span>
       
+      <span>16 分钟阅读</span>
     </div>
     <h1>AI 基建投资实习面试复盘：48 问 × 我的不足清单</h1>
-    
-      <p class="article-description">48 个面试问题完整 Q&amp;A 记录 + 每一类暴露的不足 + 正确思路 + 改进优先级。一句话总结：不是不会说，是说得太泛，被顺着关键词打穿时全面崩盘。</p>
-    
+    <p class="article-description">48 个面试问题完整 Q&amp;A 记录 + 每一类暴露的不足 + 正确思路 + 改进优先级。一句话总结：不是不会说，是说得太泛，被顺着关键词打穿时全面崩盘。</p>
     
       <div class="tag-row">
-        
-          <a href="/tags/%E5%B7%A5%E4%BD%9C/">#工作</a>
-        
-          <a href="/tags/%E5%A4%8D%E7%9B%98/">#复盘</a>
-        
-          <a href="/tags/%E9%9D%A2%E8%AF%95/">#面试</a>
-        
-          <a href="/tags/AI%E5%9F%BA%E5%BB%BA/">#AI基建</a>
-        
-          <a href="/tags/%E5%8F%8D%E6%80%9D/">#反思</a>
-        
+        <a href="/tags/AI/">#AI</a><a href="/tags/%E5%B7%A5%E4%BD%9C/">#工作</a><a href="/tags/%E5%A4%8D%E7%9B%98/">#复盘</a><a href="/tags/%E9%9D%A2%E8%AF%95/">#面试</a>
       </div>
     
+    <img class="article-cover" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&q=80&auto=format&fit=crop" alt="" fetchpriority="high">
   </header>
-  <div class="article-body">
-    
-      <aside class="article-toc" aria-label="文章目录">
-        <div class="toc-title">目录</div>
-        <ul><li><a href="#写在最前">写在最前</a></li><li><a href="#一、本次面试暴露的-5-大不足">一、本次面试暴露的 5 大不足</a></li><li><a href="#二、面试-48-问-×-当时回答（完整-Q-A）">二、面试 48 问 × 当时回答（完整 Q&amp;A）</a></li><li><a href="#三、按主题复盘：每一类问题，我哪里答错了，应该怎么答">三、按主题复盘：每一类问题，我哪里答错了，应该怎么答</a><ul><li><a href="#3-1-AI-基建表述：训练-vs-推理">3.1 AI 基建表述：训练 vs 推理</a></li><li><a href="#3-2-液冷分类：自己都搞混了">3.2 液冷分类：自己都搞混了</a></li><li><a href="#3-3-UPS-与传统-UPS-的差异">3.3 UPS 与传统 UPS 的差异</a></li><li><a href="#3-4-为什么用光模块不用铜缆（最基础但答错）">3.4 为什么用光模块不用铜缆（最基础但答错）</a></li><li><a href="#3-5-课程基础：OLTP-OLAP、特征值、MSE、IQR、K-means">3.5 课程基础：OLTP/OLAP、特征值、MSE、IQR、K-means</a></li><li><a href="#3-6-大模型机制：Q-K-V-答对，KV-cache-答不出">3.6 大模型机制：Q/K/V 答对，KV cache 答不出</a></li><li><a href="#3-7-LoRA：简历上写过但没讲机制">3.7 LoRA：简历上写过但没讲机制</a></li><li><a href="#3-8-财务指标：顺序、定义、对应项都乱">3.8 财务指标：顺序、定义、对应项都乱</a></li></ul></li><li><a href="#四、面试官画像与”被问穿”规律">四、面试官画像与”被问穿”规律</a></li><li><a href="#五、补强清单（按优先级）">五、补强清单（按优先级）</a><ul><li><a href="#24-小时内必须重记">24 小时内必须重记</a></li><li><a href="#1-周内补齐">1 周内补齐</a></li><li><a href="#持续机制">持续机制</a></li></ul></li><li><a href="#六、行动-Checklist">六、行动 Checklist</a></li><li><a href="#写在最后">写在最后</a></li></ul>
-      </aside>
-    
-    <div class="article-content">
-      <blockquote>
+
+  <div class="article-layout">
+    <div class="article-content"><blockquote>
 <p>基于 2026-06-01 14:59 语音转文字稿整理</p>
 </blockquote>
 <h1 id="写在最前"><a href="#写在最前" class="headerlink" title="写在最前"></a>写在最前</h1><p>一场 AI 基建投资实习面试，48 个问题。</p>
@@ -680,18 +663,135 @@
 <h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>这场面试的真正价值不是”挂了”，而是<strong>让我看见了简历和真实能力的 gap</strong>。</p>
 <p>简历能写”参与 LoRA 微调”，但面试官多问一句”low-rank 怎么体现”就崩——这不是知识问题，是<strong>对自己写过的东西不熟</strong>的问题。</p>
 <p>下一场前：<strong>把简历上每个词都问三遍自己</strong>。</p>
+</div>
+    
+      <aside class="article-toc" aria-label="文章目录">
+        <span>目录</span>
+        <ul><li><a href="#3-1-AI-基建表述：训练-vs-推理">3.1 AI 基建表述：训练 vs 推理</a></li><li><a href="#3-2-液冷分类：自己都搞混了">3.2 液冷分类：自己都搞混了</a></li><li><a href="#3-3-UPS-与传统-UPS-的差异">3.3 UPS 与传统 UPS 的差异</a></li><li><a href="#3-4-为什么用光模块不用铜缆（最基础但答错）">3.4 为什么用光模块不用铜缆（最基础但答错）</a></li><li><a href="#3-5-课程基础：OLTP-OLAP、特征值、MSE、IQR、K-means">3.5 课程基础：OLTP/OLAP、特征值、MSE、IQR、K-means</a></li><li><a href="#3-6-大模型机制：Q-K-V-答对，KV-cache-答不出">3.6 大模型机制：Q/K/V 答对，KV cache 答不出</a></li><li><a href="#3-7-LoRA：简历上写过但没讲机制">3.7 LoRA：简历上写过但没讲机制</a></li><li><a href="#3-8-财务指标：顺序、定义、对应项都乱">3.8 财务指标：顺序、定义、对应项都乱</a></li><li><a href="#24-小时内必须重记">24 小时内必须重记</a></li><li><a href="#1-周内补齐">1 周内补齐</a></li><li><a href="#持续机制">持续机制</a></li></ul>
+      </aside>
+    
+  </div>
 
+  <nav class="post-navigation" aria-label="文章导航">
+    <a href="/2026/06/02/9fd6306c/"><span>上一篇</span><strong>字节跳动_商业化广告风控</strong></a>
+    <a class="next" href="/2026/06/01/lean-seven-wastes-digital/"><span>下一篇</span><strong>精益生产七大浪费的数字工具实现</strong></a>
+  </nav>
+
+  
+    <section class="related-posts">
+      <div class="section-heading"><div><span class="eyebrow">Continue reading</span><h2>继续阅读</h2></div></div>
+      <div class="listing-grid">
+        
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2026/06/18/cc2d9a93/" aria-label="阅读 字节跳动_国际化业务战略分析_一面复盘">
+    
+      <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80&auto=format&fit=crop" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2026-06-18">2026-06-18</time>
+      <span>工作</span>
+      <span>1 分钟阅读</span>
     </div>
+    <h3><a href="/2026/06/18/cc2d9a93/">字节跳动_国际化业务战略分析_一面复盘</a></h3>
+    <p>面试岗位  国际化业务战略分析（商业化广告方向）</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/%E5%85%AC%E5%8F%B8%E7%A0%94%E7%A9%B6/">#公司研究</a>
+        
+          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
+        
+          <a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a>
+        
+      </div>
+    
   </div>
 </article>
 
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2026/06/10/be126d0b/" aria-label="阅读 字节跳动二面复盘报告">
+    
+      <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1200&q=80&auto=format&fit=crop" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2026-06-10">2026-06-10</time>
+      <span>学习</span>
+      <span>7 分钟阅读</span>
+    </div>
+    <h3><a href="/2026/06/10/be126d0b/">字节跳动二面复盘报告</a></h3>
+    <p>候选人背景：大二 · 大数据管理应用专业 · 头部券商经历</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/%E5%85%AC%E5%8F%B8%E7%A0%94%E7%A9%B6/">#公司研究</a>
+        
+          <a href="/tags/%E8%BF%90%E8%90%A5%E7%AE%A1%E7%90%86/">#运营管理</a>
+        
+          <a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a>
+        
+      </div>
+    
   </div>
+</article>
+
+<article class="story-card is-compact" data-reveal>
+  <a class="story-cover " href="/2026/06/10/1113415d/" aria-label="阅读 B站_数据分析实习生_一面复盘">
+    
+      <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=80&auto=format&fit=crop" alt="" loading="lazy">
+    
+  </a>
+  <div class="story-body">
+    <div class="story-kicker">
+      <time datetime="2026-06-10">2026-06-10</time>
+      <span>工作</span>
+      <span>9 分钟阅读</span>
+    </div>
+    <h3><a href="/2026/06/10/1113415d/">B站_数据分析实习生_一面复盘</a></h3>
+    <p>2026年6月10日 | 笔者 | X 大学</p>
+    
+      <div class="tag-row">
+        
+          <a href="/tags/AI/">#AI</a>
+        
+          <a href="/tags/%E5%85%AC%E5%8F%B8%E7%A0%94%E7%A9%B6/">#公司研究</a>
+        
+          <a href="/tags/%E5%92%A8%E8%AF%A2/">#咨询</a>
+        
+          <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+        
+      </div>
+    
+  </div>
+</article>
+
+      </div>
+    </section>
+  
+</article>
+
+  </main>
 
   <footer class="site-footer">
-    <div class="wrap">
+    <div class="site-wrap">
+      <div><strong>夏末</strong><p>不啻微茫，造炬成阳</p></div>
+      <div class="footer-links">
+        <a href="/archives/">全部文章</a>
+        <a href="/risk-observatory/">风险观察站</a>
+        <a href="/wordScenery/">词风景</a>
+      </div>
       <span>&copy; 2026 夏末</span>
-      <span>Powered by Hexo</span>
     </div>
   </footer>
+  
+<script src="/js/site.js"></script>
+
 </body>
 </html>
