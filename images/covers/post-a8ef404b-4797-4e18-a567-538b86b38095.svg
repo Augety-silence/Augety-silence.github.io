@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#f8f2e7"/>
+  <circle cx="1390" cy="120" r="270" fill="#f0c987" opacity=".22"/>
+  <circle cx="1510" cy="780" r="390" fill="#173f35" opacity=".08"/>
+  <path d="M1030 155h360M1030 185h250M1030 215h310" stroke="#173f35" stroke-width="3" opacity=".18"/>
+  <rect x="78" y="72" width="1444" height="756" rx="28" fill="none" stroke="#173f35" stroke-width="3" opacity=".28"/>
+  <text x="130" y="155" class="eyebrow">机器学习</text>
+  <text x="130" y="315" class="title">研究报告_市场收益表示低</text>
+  <text x="130" y="420" class="title">维塌缩</text>
+  <text x="132" y="690" class="description">本项目以无监督表示分析（unsupervised representation analysis）为核心</text>
+  <text x="132" y="764" class="brand">夏末 · 研究 / 技术 / 生活</text>
+  <text x="1450" y="765" text-anchor="end" class="mark">AU</text>
+  <style>
+    .title{font:700 72px "Songti SC","STSong",serif;fill:#173f35;letter-spacing:2px}
+    .eyebrow{font:600 27px -apple-system,"PingFang SC",sans-serif;fill:#173f35;letter-spacing:6px}
+    .description{font:400 27px -apple-system,"PingFang SC",sans-serif;fill:#173f35;opacity:.72}
+    .brand{font:500 24px -apple-system,"PingFang SC",sans-serif;fill:#173f35;opacity:.72;letter-spacing:2px}
+    .mark{font:700 58px Georgia,serif;fill:#f0c987}
+  </style>
+</svg>
