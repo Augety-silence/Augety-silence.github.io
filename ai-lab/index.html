@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 内容实验馆 | 夏末</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="lab-header">
+    <nav>
+      <a href="/">夏末</a>
+      <a href="/archives/">文章</a>
+      <a href="/risk-observatory/">风险观察站</a>
+      <a href="/wordScenery/">词风景</a>
+    </nav>
+    <section class="lab-hero">
+      <p>AI Lab</p>
+      <h1 id="lab-title">AI 内容实验馆</h1>
+      <span id="lab-summary">把博客里的 AI 研究、项目观察、写作灵感和概念解释集中到一个实验性专题里。</span>
+    </section>
+  </header>
+
+  <main>
+    <section class="lab-metrics" id="lab-metrics"></section>
+
+    <section class="lab-section">
+      <div class="section-head">
+        <p>Observation</p>
+        <h2>AI 观察</h2>
+      </div>
+      <div class="observation-grid" id="observations"></div>
+    </section>
+
+    <section class="lab-section two-column">
+      <div>
+        <div class="section-head">
+          <p>Concepts</p>
+          <h2>概念卡片</h2>
+        </div>
+        <div class="term-grid" id="terms"></div>
+      </div>
+      <aside class="radar-panel">
+        <p>Tool Radar</p>
+        <h2>工具/项目雷达</h2>
+        <span>把 AI 工具、开源项目和风险信号放到同一个观察入口。</span>
+        <a href="/risk-observatory/">进入风险观察站</a>
+      </aside>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-head">
+        <p>Ideas</p>
+        <h2>写作灵感</h2>
+      </div>
+      <div class="idea-toolbar">
+        <input id="idea-search" type="search" placeholder="搜索选题、标签或来源文章">
+        <div id="idea-tags"></div>
+      </div>
+      <div class="idea-grid" id="ideas"></div>
+    </section>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
