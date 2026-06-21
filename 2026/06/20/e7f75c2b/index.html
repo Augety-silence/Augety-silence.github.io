@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本项目以无监督表示分析（unsupervised representation analysis）为核心方法论，研究一个金融市场中的表示学习问题：危机时期，市场收益率的有效表示维度是否发生低维塌缩？">
+  <meta name="theme-color" content="#f3f0e8">
+  <title>研究报告_市场收益表示低维塌缩 | 夏末</title>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="page-post">
+  <div class="reading-progress" aria-hidden="true"><span></span></div>
+  <header class="site-header">
+    <div class="site-wrap nav-wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark">夏</span>
+        <span><strong>夏末</strong><small>不啻微茫，造炬成阳</small></span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="/">首页</a>
+        <a href="/archives/">文章</a>
+        <a href="/tags/">主题</a>
+        <a href="/about/">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-wrap">
+    
+<article class="article">
+  <header class="article-header" data-reveal>
+    <div class="article-meta">
+      <time datetime="2026-06-20">2026-06-20</time>
+      
+        <span>学习</span>
+      
+      <span>48 分钟阅读</span>
+    </div>
+    <h1>研究报告_市场收益表示低维塌缩</h1>
+    <p class="article-description">本项目以无监督表示分析（unsupervised representation analysis）为核心方法论，研究一个金融市场中的表示学习问题：危机时期，市场收益率的有效表示维度是否发生低维塌缩？</p>
+    
+      <div class="tag-row">
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a><a href="/tags/%E9%87%91%E8%9E%8D/">#金融</a>
+      </div>
+    
+    <img class="article-cover" src="/images/covers/post-a8ef404b-4797-4e18-a567-538b86b38095.svg" alt="" fetchpriority="high">
+  </header>
+
+  <div class="article-layout">
+    <div class="article-content"><p><strong>金融市场收益表示的低维塌缩</strong></p>
+<p>基于 PCA 的无监督表示分析</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本项目以无监督表示分析（unsupervised representation analysis）为核心方法论，研究一个金融市场中的表示学习问题：危机时期，市场收益率的有效表示维度是否发生低维塌缩？换言之，当系统性风险成为主导时，原本由多个行业、基本面和特质因素共同驱动的高维收益率矩阵，是否会被少数共同成分压缩为更低维的表示结构。</p>
+<p>本文使用 2000 年 1 月 3 日至 2024 年 12 月 31 日 Kenneth French 48 行业等权日频收益率作为主样本，共 6289 个交易日、48 个行业。主方法为 252 个交易日滑动窗口 PCA，步长为 21 个交易日。每个窗口内先对 48 个行业收益率逐列标准化，再计算 PCA 谱结构，因此分析对象接近行业收益率的相关矩阵结构，而不是被高波动行业主导的原始协方差结构。核心指标包括解释 95% 方差所需的有效维度、第一主成分解释方差比、行业平均相关系数、熵有效秩和 participation ratio。</p>
+<p>主结果显示，危机期市场收益率矩阵发生显著低维塌缩。Crisis 窗口的 effective_dim_95 均值为 17.67，而 Calm 窗口为 27.47，gap 为 -9.80；PC1 解释方差从 Calm 的 0.625 升至 Crisis 的 0.781；行业平均相关系数从 0.597 升至 0.766。需要强调的是，PC1 方差和平均相关并不是两条完全独立的证据，而是共同相关结构在谱空间和相关矩阵空间中的两种表达。本文的关键证据因此不放在“PC1 与平均相关同时上升”上，而放在完整谱维度下降、多窗口 label permutation null、market residual PCA 机制消融、AE 非线性压缩和人工恐慌因子模拟共同构成的证据链上。</p>
+<p>方法设计上，本文重点引入两项严谨性实验。第一，Crisis&#x2F;Calm label permutation null：在保留滑动窗口指标和窗口重叠结构的前提下，对窗口的 crisis&#x2F;calm 标签做 10000 次随机置换，检验观测到的分组差异是否可能由标签偶然分配产生。它检验的不是单个窗口内收益是否随机，而是“危机标签是否真的对应一种不同的表示状态”。252 日主窗口下，effective_dim_95、PC1 方差和平均相关的双侧置换 p 值均约为 0.0001。第二，market-factor residual PCA 机制消融：分别剥离等权市场因子和窗口 PC1 后重新进行 PCA，观察低维塌缩是否仍然存在。剥离后 effective_dim_95 的 crisis-calm gap 从 -9.80 缩小到约 -1.79，行业平均相关 gap 从 +0.169 基本降至 +0.001，说明维度塌缩主要来自共同市场因子权重上升。</p>
+<p>此外，本文加入一个情绪隐变量与 PCA 有效维度下降的数学推导，作为实证设计的理论基础：正常时期情绪冲击主要表现为分散的行业噪声，有效维度随行业数量保持较高水平；危机时期情绪项转化为共同恐慌因子，协方差矩阵出现秩一扰动，第一特征值占比上升，从而导致 PCA 有效维度下降。AE 非线性压缩实验从非线性重构角度给出方向一致的稳健性证据：危机年份 d&#x3D;1 瓶颈验证 MSE 均值约为 0.221，平静年份约为 0.401。人工恐慌因子模拟进一步展示，只要一个共同因子的权重在危机区间上升，即可机械地产生有效维度下降、PC1 方差上升和行业相关上升。上下游分析提示产业链位置上可能存在冲击响应差异，但该部分证据对窗口选择敏感，本文仅将其作为探索性扩展。</p>
+<p>本文定位为 ex-post 表示分析，而非危机预测模型。由于滑动窗口高度重叠，文中的 Welch 检验、bootstrap 区间和 permutation p 值均作为描述性对照，不解释为独立样本下的严格推断。</p>
+<p><strong>关键词：</strong> 有效维度；主成分分析；表示学习；label permutation null；机制消融；共同市场因子；系统性风险</p>
+<h1 id="第1章-引言"><a href="#第1章-引言" class="headerlink" title="第1章 引言"></a>第1章 引言</h1><p>2008 年 9 月雷曼兄弟破产后，美国股市几乎所有行业同步下跌。金融、能源、科技、消费、工业等行业虽然基本面不同，却在危机最剧烈的时段呈现出高度一致的方向。2020 年 3 月 COVID-19 冲击再次展现了类似现象：投资者直观感受到的不是某几个行业单独受挫，而是“所有资产都在同一个市场方向上移动”。这种现象在金融语境中通常被描述为相关性上升、分散化失效或系统性风险扩散。本文将这一现象转化为一个机器学习和表示学习问题：危机时期，高维市场收益向量是否变得更容易由低维表示描述？</p>
+<p>在正常市场环境下，48 个行业收益率构成的向量包含多种信息来源。宏观因子、利率、通胀、行业景气度、技术变革、监管政策、供需冲击和公司特质因素共同影响行业收益。此时收益率矩阵应具有相对丰富的维度结构，需要较多主成分才能解释大部分方差。相反，在系统性危机中，恐慌、流动性约束和共同去杠杆行为可能压倒行业差异，使多数行业同时向同一方向运动。若这种直觉成立，那么收益率矩阵的谱结构会出现集中化：第一主成分解释更多方差，行业平均相关上升，解释 95% 方差所需的主成分数下降。</p>
+<p>本文的核心问题是：危机时期，金融市场收益表示是否发生低维塌缩？如果发生，这种塌缩是否对窗口长度、指标选择和事件定义稳健？进一步，塌缩是否主要由共同市场因子权重上升驱动，而不是行业之间独立相关性全面上升？</p>
+<h2 id="1-1-研究定位"><a href="#1-1-研究定位" class="headerlink" title="1.1 研究定位"></a>1.1 研究定位</h2><p>本文不是危机预测研究。我们不试图用历史指标预测下一次危机，也不构建交易策略或预警模型。本文关注的是危机发生时市场数据结构本身的变化，即 ex-post 表示分析。该定位很重要：它决定了本文评价模型的标准不是预测准确率，而是表示结构是否清晰、可解释、稳健，并能否通过消融实验定位主要机制。</p>
+<p>PCA 是本文的主证据，因为它直接刻画高维收益率矩阵的谱结构。若市场收益在危机期被少数共同成分主导，PCA 的前几个特征值应显著增大，累计解释方差应更快上升，有效维度应下降。相比黑箱预测模型，PCA 更适合回答“市场表示维度是否塌缩”这一问题。</p>
+<h2 id="1-2-研究贡献"><a href="#1-2-研究贡献" class="headerlink" title="1.2 研究贡献"></a>1.2 研究贡献</h2><p>本文的贡献有四点。</p>
+<p>第一，本文以 48 行业等权日频收益率为对象，系统展示危机期间收益矩阵有效维度下降。主窗口下，Crisis 的 effective_dim_95 为 17.67，Calm 为 27.47，差异接近 10 个主成分。</p>
+<p>第二，本文使用多指标、多窗口和事件研究增强结论稳健性。除 effective_dim_95 外，还使用 PC1 解释方差、平均相关、熵有效秩和 participation ratio；除 252 日主窗口外，还检验 126 日和 504 日窗口；除宏观分期外，还围绕 GFC 2008 和 COVID 2020 做事件对齐。</p>
+<p>第三，本文引入 crisis&#x2F;calm label permutation null。它的创新点不在于“又做了一次显著性检验”，而在于把研究问题改写成一个更贴近表示学习的反事实：给定已经训练好的窗口级表示指标，真实的 crisis&#x2F;calm 状态标签是否真的比随机标签更能解释维度差异？因此，本文保留滑动窗口、重叠结构和指标估计过程，只随机置换状态标签，而不是去打乱窗口内部收益率。后者会破坏市场同步性，回答的是另一个问题；前者才是在检验“状态标签是否携带表示结构信息”。</p>
+<p>第四，本文用 market-factor residual PCA 做机制消融。这里也不是单纯“换一种算 PCA 的方式”，而是构造了两个互补的消融视角：一个剥离传统意义上的等权市场因子，一个剥离由数据自己学出来的窗口 PC1。前者对应外生、可解释的 market mode 基准，后者对应当前窗口内部最强的共同方向。若两者都能显著削弱维度 gap，说明危机期低维塌缩并不依赖某一种市场因子的任意定义，而是由共同方向权重上升这一更稳定的结构事实驱动。</p>
+<h2 id="1-3-报告结构"><a href="#1-3-报告结构" class="headerlink" title="1.3 报告结构"></a>1.3 报告结构</h2><p>第 2 章介绍数据、危机和平静期定义、PCA 指标、统计设计、机制消融和 AE 方法。第 3 章给出核心假设与情绪隐变量驱动 PCA 有效维度下降的数学推导。第 4 章报告 PCA 主结果。第 5 章报告多窗口稳健性、label permutation null 和 event study。第 6 章讨论共同市场因子机制，并加入人工恐慌因子模拟。第 7 章报告 AE 非线性压缩稳健性。第 8 章给出上下游探索性分析。第 9 章总结结论与局限。</p>
+<h1 id="第2章-数据与方法"><a href="#第2章-数据与方法" class="headerlink" title="第2章 数据与方法"></a>第2章 数据与方法</h1><h2 id="2-1-数据来源与样本"><a href="#2-1-数据来源与样本" class="headerlink" title="2.1 数据来源与样本"></a>2.1 数据来源与样本</h2><p>主数据为 Kenneth French 48 Industry Portfolios 等权日频收益率，样本期为 2000-01-03 至 2024-12-31，共 6289 个交易日和 48 个行业。项目中清洗后的主数据文件为 data&#x2F;processed&#x2F;returns_48industry_2000_2024.csv。</p>
+<p>选用 48 行业等权收益率有三个原因。第一，行业组合比个股数据更稳定，能降低个股特质噪声，更适合观察市场层面的共同结构。第二，48 个行业提供了足够高的横截面维度，可以讨论“表示维度”这一问题。第三，等权口径避免市值加权中过度依赖少数大盘行业或大盘公司的问题，使每个行业在 PCA 标准化前拥有更均衡的研究地位。</p>
+<p>本文另使用上下游 60 龙头公司收益率作为探索性补充。该部分数据用于研究产业链位置上的维度变化差异，不作为主结论依据。</p>
+<h2 id="2-2-Crisis-与-Calm-定义"><a href="#2-2-Crisis-与-Calm-定义" class="headerlink" title="2.2 Crisis 与 Calm 定义"></a>2.2 Crisis 与 Calm 定义</h2><p>所有滑动窗口按窗口结束日 window_end 归入 Crisis、Calm 或 Other。本文使用如下分期：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>类型</strong></td>
+<td align="center"><strong>区间</strong></td>
+<td align="center"><strong>说明</strong></td>
+</tr>
+<tr>
+<td align="center">Crisis</td>
+<td align="center">2008-09-01 至 2009-03-31</td>
+<td align="center">全球金融危机核心冲击期</td>
+</tr>
+<tr>
+<td align="center">Crisis</td>
+<td align="center">2020-02-19 至 2020-04-30</td>
+<td align="center">COVID-19 市场崩盘核心冲击期</td>
+</tr>
+<tr>
+<td align="center">Calm</td>
+<td align="center">2005-01-01 至 2007-06-30</td>
+<td align="center">GFC 前平静扩张期</td>
+</tr>
+<tr>
+<td align="center">Calm</td>
+<td align="center">2013-01-01 至 2019-12-31</td>
+<td align="center">后金融危机长期稳定期</td>
+</tr>
+<tr>
+<td align="center">Calm</td>
+<td align="center">2021-01-01 至 2024-12-31</td>
+<td align="center">COVID 后恢复期</td>
+</tr>
+</tbody></table>
+<p>需要强调的是，窗口标签由窗口结束日决定，并不意味着窗口内所有交易日都处于该时期。例如一个 252 日窗口若结束于危机初期，其窗口内仍会包含大量危机前交易日。本文在解释结果时将窗口标签理解为“窗口结束时所处市场状态”，而不是窗口内每一天的状态。</p>
+<h2 id="2-3-滑动-PCA"><a href="#2-3-滑动-PCA" class="headerlink" title="2.3 滑动 PCA"></a>2.3 滑动 PCA</h2><p>主实验采用 252 个交易日窗口，步长为 21 个交易日。252 日约等于一年交易日，能够提供相对稳定的相关矩阵估计；21 日约等于一个月，使时间序列具有适度分辨率。稳健性检验另使用 126 日和 504 日窗口。</p>
+<p>对每个窗口，本文先对 48 个行业收益率逐列做标准化，使每个行业在该窗口内均值为 0、标准差为 1。然后对标准化后的矩阵做 PCA。由于标准化后的协方差矩阵等价于相关矩阵，本文实际关注的是行业收益之间的共同运动结构，而不是原始波动率大小。</p>
+<p>设窗口内标准化收益矩阵为 X，PCA 得到特征值 λ1 ≥ λ2 ≥ … ≥ λ48。由于每个行业标准化后方差约为 1，总方差约为 48。本文使用以下指标：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>指标</strong></td>
+<td align="center"><strong>定义</strong></td>
+<td align="center"><strong>解释</strong></td>
+</tr>
+<tr>
+<td align="center">`effective_dim_95`</td>
+<td align="center">解释 95% 累计方差所需的最小主成分数</td>
+<td align="center">数值越低，表示越低维</td>
+</tr>
+<tr>
+<td align="center">`pc1_variance`</td>
+<td align="center">第一主成分解释方差比</td>
+<td align="center">衡量最大共同因子支配程度</td>
+</tr>
+<tr>
+<td align="center">`avg_pairwise_corr`</td>
+<td align="center">行业两两相关的平均值</td>
+<td align="center">衡量行业同步性</td>
+</tr>
+<tr>
+<td align="center">entropy effective rank</td>
+<td align="center">基于特征值比例熵的连续有效秩</td>
+<td align="center">衡量谱分布均匀程度</td>
+</tr>
+<tr>
+<td align="center">participation ratio</td>
+<td align="center">(Σλ)^2 &#x2F; Σλ^2</td>
+<td align="center">衡量方差在成分间分散程度</td>
+</tr>
+</tbody></table>
+<p>effective_dim_95 是最直观的主指标。若 Crisis 期间该指标下降，说明达到同样 95% 方差解释率所需的主成分数减少，市场收益率矩阵更接近低秩结构。pc1_variance 和 avg_pairwise_corr 则提供机制直觉：若第一主成分和平均相关同步上升，说明低维塌缩来自共同运动增强。</p>
+<h2 id="2-4-统计检验与稳健性设计"><a href="#2-4-统计检验与稳健性设计" class="headerlink" title="2.4 统计检验与稳健性设计"></a>2.4 统计检验与稳健性设计</h2><p>本文保留 Welch t-test 作为描述性参考，但不把它作为唯一显著性依据。原因是滑动窗口高度重叠。主设定下相邻两个 252 日窗口相隔 21 日，共享约 231 个交易日，不能被视为独立样本。因此，普通 t 检验的 p 值若被解释为独立样本推断，会夸大证据强度。</p>
+<p>为此，本文使用 label permutation null。具体做法是：先计算每个窗口的 PCA 指标，然后只保留 Crisis 和 Calm 窗口；在保留指标值本身、时间顺序和窗口重叠结构的前提下，随机置换 crisis&#x2F;calm 标签 10000 次；每次计算 crisis mean minus calm mean 的 gap；最后比较真实 gap 在置换分布中的位置。该方法直接回答：若 crisis&#x2F;calm 标签没有信息，随机分配标签是否也可能产生同样大的维度差异？</p>
+<p>这里的关键不是“置换”本身，而是置换的层级。本文要研究的是标签是否对应一种不同的表示状态，因此 counterfactual 应该发生在状态标记层，而不是原始收益层。若把交易日或行业内部收益打乱，破坏的是行业同步性、相关结构和谱结构本身，得到的只会是一个更低层级的随机化问题，不能作为本文问题的反事实基线。换言之，label permutation null 保留了表示学习的对象，只替换监督信号的语义，因而更接近“同一组表示在不同状态标签下是否仍会被分开”这一判别问题。</p>
+<p>本文还使用 event study。以 GFC 2008 和 COVID 2020 为事件锚点，将滑动窗口按窗口结束日对齐到事件时间，比较 pre、crisis 和 post 区间的维度变化。该设计避免只依赖宏观分期均值，将维度塌缩具体落实到两个重大危机事件附近。</p>
+<h2 id="2-5-Market-Factor-Residual-PCA"><a href="#2-5-Market-Factor-Residual-PCA" class="headerlink" title="2.5 Market-Factor Residual PCA"></a>2.5 Market-Factor Residual PCA</h2><p>若危机期低维塌缩主要由共同市场因子增强驱动，那么剥离共同市场成分后，Crisis 与 Calm 的维度 gap 应显著缩小。本文使用两种残差化方法。</p>
+<p>第一，等权市场因子残差。对每个交易日，计算 48 个行业收益的等权平均作为市场因子；在每个窗口内，将每个行业收益对该市场因子回归，取残差，再对残差矩阵做 PCA。</p>
+<p>第二，窗口 PC1 残差。先对窗口内标准化收益做 PCA，取第一主成分得分作为窗口局部共同因子；再将各行业收益对该 PC1 得分回归，取残差并重新做 PCA。</p>
+<p>这两种方法对应机器学习中的机制消融，但二者并不重复。等权市场因子残差相当于拿掉一个经济解释最清楚的外部基线，回答“传统 market mode 去掉以后，危机期塌缩还剩多少”；窗口 PC1 残差则拿掉当前样本自己学出来的最强共同方向，回答“即便不依赖预设市场因子，只要移除最强经验共振方向，塌缩是否仍会明显减弱”。如果两者给出相近结论，就说明本文的机制判断不是某一种因子定义的偶然产物，而是对共同方向增强这一结构事实的稳健验证。</p>
+<p>需要强调的是，这里是机制消融，不是因果识别。残差化只能说明：在当前口径下，低维塌缩对共同市场方向高度敏感；它不能证明危机中只有这一条路径，也不能把其他相关机制排除掉。</p>
+<h2 id="2-6-Autoencoder-稳健性实验"><a href="#2-6-Autoencoder-稳健性实验" class="headerlink" title="2.6 Autoencoder 稳健性实验"></a>2.6 Autoencoder 稳健性实验</h2><p>AE 用于检验“危机期更低维”是否只是线性 PCA 的结论。主 AE 架构为 48→20→d→20→48，其中 d 为瓶颈维度，取 1 到 20。年度 AE 实验对若干危机和平静年份分别训练，使用 5 折交叉验证和 3 个随机种子。</p>
+<p>输入数据在训练折内标准化，验证指标使用 per-feature MSE。本文使用 improvement &#x3D; 1 - val_mse 的直观口径，不使用旧版本中会将 improvement 推高到接近 0.995 的 sum(x^2) 分母口径。AE 结果只作为稳健性补充，不作为主证据。</p>
+<h1 id="第3章-核心假设与数学推导"><a href="#第3章-核心假设与数学推导" class="headerlink" title="第3章 核心假设与数学推导"></a>第3章 核心假设与数学推导</h1><p>本章给出本文核心假设与理论推导。实证部分观察到的是 PCA 有效维度在危机期下降；本章说明在一个简化的情绪隐变量模型中，只要危机时期出现足够强的共同恐慌因子，协方差矩阵的特征值就会向第一主成分集中，从而使解释给定方差比例所需的 PCA 有效维度下降。该推导不是对真实市场的完整结构建模，而是为后续 PCA 主结果、market-factor residual PCA 消融和人工恐慌因子模拟提供理论支撑。</p>
+<h2 id="3-1-基本设定"><a href="#3-1-基本设定" class="headerlink" title="3.1 基本设定"></a>3.1 基本设定</h2><p>设市场中共有 n 个行业，令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_&#123;t&#125; = (X_&#123;1t&#125;,X_&#123;2t&#125;,\ldots,X_&#123;nt&#125;)^&#123;\top&#125; \in \mathbb&#123;R&#125;^&#123;n&#125;</span><br></pre></td></tr></table></figure>
+
+<p>表示第 t 期行业收益率向量，并假设其已经中心化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathbb&#123;E&#125;\lbrack X_&#123;t&#125;\rbrack = 0.</span><br></pre></td></tr></table></figure>
+
+<p>本文将行业收益率分解为基本面成分与情绪成分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_&#123;t&#125; = F_&#123;t&#125; + E_&#123;t&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中 $<code>F_&#123;t&#125;</code>$ 表示基本面因子，$<code>E_&#123;t&#125;</code>$ 表示情绪因子。假设 $<code>F_&#123;t&#125;</code>$ 与 $<code>E_&#123;t&#125;</code>$ 相互独立，且二者均具有有限二阶矩。于是</p>
+<p>$<code>\Sigma_&#123;X&#125; = Cov(X_&#123;t&#125;) = \Sigma_&#123;F&#125; + \Sigma_&#123;E&#125;</code>$,</p>
+<p>其中</p>
+<p>$<code>\Sigma_&#123;F&#125; = Cov(F_&#123;t&#125;)</code>$,\</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\quad\quad</span><br></pre></td></tr></table></figure>
+<p><br>$<code>\Sigma_&#123;E&#125; = Cov(E_&#123;t&#125;)</code>$.</p>
+<p>PCA 等价于对协方差矩阵 $<code>(\Sigma_&#123;X&#125;)</code>$作特征值分解。设</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\lambda_&#123;1&#125;(\Sigma_&#123;X&#125;) \geq \lambda_&#123;2&#125;(\Sigma_&#123;X&#125;) \geq \cdots \geq \lambda_&#123;n&#125;(\Sigma_&#123;X&#125;) \geq 0</span><br></pre></td></tr></table></figure>
+
+<p>为 $<code>\Sigma_&#123;X&#125;</code>$的特征值。前 k 个主成分的累计解释比例为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;matrix&#125;</span><br><span class="line">R_&#123;k&#125;(\Sigma_&#123;X&#125;) = \lbrack\sum&#123;i = 1&#125;^&#123;k&#125;\lambda_&#123;i&#125;(\Sigma_&#123;X&#125;)\rbrack/\lbrack\sum&#123;i = 1&#125;^&#123;n&#125;\lambda_&#123;i&#125;(\Sigma_&#123;X&#125;)\rbrack \\</span><br><span class="line">\ \ \ \ \ \ \ \ \ \ \ \ \ \ \  = \lbrack\sum_&#123;i = 1&#125;^&#123;k&#125;\lambda_&#123;i&#125;(\Sigma_&#123;X&#125;)\rbrack/tr(\Sigma_&#123;X&#125;)</span><br><span class="line">\end&#123;matrix&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给定解释比例阈值$<code>\alpha \in (0,1)</code>$，定义 PCA 有效维度为</p>
+<p>$<code>d_&#123;\alpha&#125;(\Sigma_&#123;X&#125;) = mink:R_&#123;k&#125;(\Sigma_&#123;X&#125;) \geq \alpha</code>$<em>.</em></p>
+<p>本文主要取 $<code>\alpha = 0.95</code>$。</p>
+<h2 id="3-2-正常时期：情绪冲击分散"><a href="#3-2-正常时期：情绪冲击分散" class="headerlink" title="3.2 正常时期：情绪冲击分散"></a>3.2 正常时期：情绪冲击分散</h2><p>正常时期，假设行业情绪主要表现为彼此独立的行业噪声：</p>
+<p>$<code>E_&#123;t&#125;^&#123;(N)&#125; = (\varepsilon_&#123;1t&#125;,\varepsilon_&#123;2t&#125;,\ldots,\varepsilon_&#123;nt&#125;)^&#123;\top&#125;</code>$,</p>
+<p>并满足</p>
+<p>$<code>Cov(\varepsilon_&#123;it&#125;,\varepsilon_&#123;jt&#125;) = 0，i \neq j</code>$.</p>
+<p>因此</p>
+<p>$<code>\Sigma_&#123;E&#125;^&#123;(N)&#125; = D = diag(\sigma_&#123;1&#125;^&#123;2&#125;,\ldots,\sigma_&#123;n&#125;^&#123;2&#125;)</code>$.</p>
+<p>正常时期行业收益率协方差矩阵为</p>
+<p>$<code>\Sigma_&#123;X&#125;^&#123;(N)&#125; = \Sigma_&#123;F&#125; + D</code>$.</p>
+<p>为了排除正常时期本身已经由少数共同因子主导的情形，本文假设正常时期不存在显著低秩共同冲击。具体而言，存在常数 M&gt;0 与 c&gt;0，使得</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\lambda_&#123;1&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;) \leq M</span><br></pre></td></tr></table></figure>
+<p>\</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tr(\Sigma_&#123;X&#125;^&#123;(N)&#125;) \geq cn</span><br></pre></td></tr></table></figure>
+
+<p>该假设表示：正常时期单一主方向不能吸收过多市场方差，市场总方差随行业数量增加而增加。于是，对任意 k，有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\sum_&#123;i = 1&#125;^&#123;k&#125;\lambda_&#123;i&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;) \leq k\lambda_&#123;1&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;) \leq kM</span><br></pre></td></tr></table></figure>
+
+<p>因此</p>
+<p>$<code>R_&#123;k&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;) = \frac&#123;\sum_&#123;i = 1&#125;^&#123;k&#125;\lambda_&#123;i&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;)&#125;&#123;tr(\Sigma_&#123;X&#125;^&#123;(N)&#125;)&#125; \leq \frac&#123;kM&#125;&#123;cn&#125;</code>$.</p>
+<p>若 $<code>R_&#123;k&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;) \geq \alpha</code>$，则必须有</p>
+<p>$<code>\frac&#123;kM&#125;&#123;cn&#125; \geq \alpha</code>$,</p>
+<p>即</p>
+<p>$<code>k \geq \frac&#123;\alpha c&#125;&#123;M&#125;n</code>$.</p>
+<p>因此</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d_&#123;\alpha&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;) \geq \lbrack\alpha cn/M\rbrack</span><br></pre></td></tr></table></figure>
+
+<p>这说明，在正常时期，若不存在强共同冲击，则 PCA 有效维度随行业数量呈线性增长，需要较多主成分才能解释总方差。</p>
+<h2 id="3-3-危机时期：共同恐慌因子与低秩化"><a href="#3-3-危机时期：共同恐慌因子与低秩化" class="headerlink" title="3.3 危机时期：共同恐慌因子与低秩化"></a>3.3 危机时期：共同恐慌因子与低秩化</h2><p>危机时期，市场情绪往往不再是彼此独立的行业噪声，而会转化为共同恐慌因子。设危机时期情绪项为</p>
+<p>$<code>E_&#123;t&#125;^&#123;(C)&#125; = bZ_&#123;t&#125; + U_&#123;t&#125;</code>$,</p>
+<p>其中 $<code>(Z_&#123;t&#125; \in \mathbb&#123;R&#125;)</code>$表示市场共同恐慌因子，$<code>(b \in \mathbb&#123;R&#125;^&#123;n&#125;)</code>$表示各行业对共同恐慌因子的暴露向量，$<code>(U_&#123;t&#125; \in \mathbb&#123;R&#125;^&#123;n&#125;)</code>$ 表示行业自身情绪噪声。</p>
+<p>假设</p>
+<p>$<code>Z_&#123;t&#125; \in \mathbb&#123;R&#125;,\quad b \in \mathbb&#123;R&#125;^&#123;n&#125;,\quad U_&#123;t&#125; \in \mathbb&#123;R&#125;^&#123;n&#125;</code>$,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\mathbb&#123;E&#125;\lbrack U_&#123;t&#125;\rbrack = 0,</span><br></pre></td></tr></table></figure>
+
+<p>$<code>Cov(U_&#123;t&#125;) = \Sigma_&#123;U&#125;</code>$,</p>
+<p>且 $<code>Z_&#123;t&#125;</code>$ 与 $<code>U_&#123;t&#125;</code>$ 相互独立。则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\Sigma_&#123;E&#125;^&#123;(C)&#125; = Cov(bZ_&#123;t&#125; + U_&#123;t&#125;) = \tau^&#123;2&#125;bb^&#123;\top&#125; + \Sigma_&#123;U&#125;</span><br></pre></td></tr></table></figure>
+
+<p>于是危机时期收益率协方差矩阵为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\Sigma_&#123;X&#125;^&#123;(C)&#125; = \Sigma_&#123;F&#125; + \Sigma_&#123;U&#125; + \tau^&#123;2&#125;bb^&#123;\top&#125;</span><br></pre></td></tr></table></figure>
+
+<p>记</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A = \Sigma_&#123;F&#125; + \Sigma_&#123;U&#125;.</span><br></pre></td></tr></table></figure>
+
+<p>则</p>
+<p>$<code>\Sigma_&#123;X&#125;^&#123;(C)&#125; = A + \tau^&#123;2&#125;bb^&#123;\top&#125;\ ,\ A\  \succeq \ 0</code>$.</p>
+<p>矩阵$<code>bb^&#123;\top&#125;</code>$是秩一半正定矩阵，其唯一非零特征值为$<code>\| b\|^&#123;2&#125;</code>$。因此，$<code>\tau^&#123;2&#125;bb^&#123;\top&#125;</code>$的唯一非零特征值为</p>
+<p>$<code>\tau^&#123;2&#125;\| b\|^&#123;2&#125;</code>$.</p>
+<p>这说明共同恐慌因子只贡献一个主方向。下面证明：当共同恐慌项足够强时，第一主成分可以解释绝大部分市场方差。</p>
+<p>由 Weyl 不等式，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\lambda_&#123;1&#125;(A + \tau^&#123;2&#125;bb^&#123;\top&#125;) \geq \lambda_&#123;1&#125;(\tau^&#123;2&#125;bb^&#123;\top&#125;) + \lambda_&#123;n&#125;(A).</span><br></pre></td></tr></table></figure>
+
+<p>由于$<code>\ A \succeq 0\</code>$，有 $<code>\lambda_&#123;n&#125;(A) \geq 0\</code>$，因此</p>
+<p>$<code>\lambda_&#123;1&#125;(\Sigma_&#123;X&#125;^&#123;(C)&#125;)\  \geq &#123;\ \tau&#125;^&#123;2&#125;\| b\|^&#123;2&#125;</code>$.</p>
+<p>另一方面，危机时期总方差为</p>
+<p>$<code>tr(\Sigma_&#123;X&#125;^&#123;(C)&#125;) = tr(A) + \tau^&#123;2&#125;\| b\|^&#123;2&#125;</code>$.</p>
+<p>因此第一主成分解释比例满足</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">R_&#123;1&#125;(\Sigma_&#123;X&#125;^&#123;(C)&#125;) = \frac&#123;\lambda_&#123;1&#125;(\Sigma_&#123;X&#125;^&#123;(C)&#125;)&#125;&#123;tr(\Sigma_&#123;X&#125;^&#123;(C)&#125;)&#125; \geq \frac&#123;\tau^&#123;2&#125;|b|^&#123;2&#125;&#125;&#123;tr(A) + \tau^&#123;2&#125;|b|^&#123;2&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若共同恐慌项满足</p>
+<p>$<code>\tau^&#123;2&#125;|b|^&#123;2&#125; \geq \frac&#123;\alpha&#125;&#123;1 - \alpha&#125;tr(A)</code>$,</p>
+<p>则</p>
+<p>$<code>\frac&#123;\tau^&#123;2&#125;|b|^&#123;2&#125;&#125;&#123;tr(A) + \tau^&#123;2&#125;|b|^&#123;2&#125;&#125; \geq \alpha</code>$.</p>
+<p>于是</p>
+<p>$<code>R_&#123;1&#125;(\Sigma_&#123;X&#125;^&#123;(C)&#125;) \geq \alpha</code>$,</p>
+<p>从而</p>
+<p>$<code>d_&#123;\alpha&#125;(\Sigma_&#123;X&#125;^&#123;(C)&#125;) = 1</code>$.</p>
+<p>当 $<code>\alpha = 0.95</code>$ 时，上述条件变为</p>
+<p>$<code>\tau^&#123;2&#125;|b|^&#123;2&#125; \geq 19tr(A)</code>$.</p>
+<p>即当共同恐慌因子贡献的方差足够大时，仅第一主成分就可以解释至少 95% 的市场总方差。</p>
+<h2 id="3-4-有效维度下降结论"><a href="#3-4-有效维度下降结论" class="headerlink" title="3.4 有效维度下降结论"></a>3.4 有效维度下降结论</h2><p>由正常时期的结果可知，</p>
+<p>$<code>d_&#123;\alpha&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;) \geq \frac&#123;\alpha c&#125;&#123;M&#125;n</code>$.</p>
+<p>而危机时期，当共同恐慌因子足够强时，</p>
+<p>$<code>d_&#123;\alpha&#125;(\Sigma_&#123;X&#125;^&#123;(C)&#125;) = 1</code>$.</p>
+<p>因此，对于行业数量较大的市场，有</p>
+<p>$<code>d_&#123;\alpha&#125;(\Sigma_&#123;X&#125;^&#123;(C)&#125;) &lt; d_&#123;\alpha&#125;(\Sigma_&#123;X&#125;^&#123;(N)&#125;)</code>$.</p>
+<p>这表明，危机时期市场收益率的 PCA 有效维度相对于正常时期显著下降。</p>
+<p>其经济含义是：正常时期，行业情绪冲击主要是分散的行业自身噪声，市场波动分布在多个维度上；危机时期，投资者情绪转化为共同恐慌因子，使不同行业收益率暴露于同一低秩冲击方向，从而导致协方差矩阵的特征值集中于第一主成分，市场表现出明显的低维化特征。</p>
+<h2 id="3-5-与本文实证设计的对应关系"><a href="#3-5-与本文实证设计的对应关系" class="headerlink" title="3.5 与本文实证设计的对应关系"></a>3.5 与本文实证设计的对应关系</h2><p>上述推导给出本文实证设计的理论映射。首先，effective_dim_95 对应 $<code>d_&#123;0.95&#125;(\Sigma_&#123;X&#125;)</code>$，其下降是低维塌缩的直接度量。其次，pc1_variance 对应 $<code>R_&#123;1&#125;(\Sigma_&#123;X&#125;)</code>$，其上升反映共同恐慌因子或共同市场因子增强。再次，avg_pairwise_corr 上升是 $<code>bb^&#123;\top&#125;</code>$ 型共同冲击在相关矩阵中的可观察表现。最后，market-factor residual PCA 正是对 $<code>\tau^&#123;2&#125;bb^&#123;\top&#125;</code>$这一低秩共同成分的消融：若剥离共同因子后有效维度 gap 大幅缩小，则说明真实市场中的危机期低维塌缩与该理论机制一致。</p>
+<h1 id="第4章-PCA-主结果"><a href="#第4章-PCA-主结果" class="headerlink" title="第4章 PCA 主结果"></a>第4章 PCA 主结果</h1><h2 id="4-1-有效维度时间序列"><a href="#4-1-有效维度时间序列" class="headerlink" title="4.1 有效维度时间序列"></a>4.1 有效维度时间序列</h2><p>图 1 展示 2000-2024 年间 252 日滑动窗口 effective_dim_95 的时间序列。整体来看，正常市场环境下有效维度大多处在 24-30 附近，而 2008-2009 年和 2020 年出现明显下降。GFC 期间，市场收益矩阵逐步进入低维状态；COVID 冲击则更迅速，短时间内有效维度快速下探。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image1.png" style="width:5.7in;height:2.375in" />
+
+<p><em>图 1：有效维度全时段时间序列（252 日窗口）</em></p>
+<p>该图构成本文最直观的事实基础：低维塌缩不是某一个年度表格中的孤立数字，而是在全样本时间序列中与重大危机事件同步出现的结构变化。</p>
+<h2 id="4-2-Crisis-vs-Calm-核心对比"><a href="#4-2-Crisis-vs-Calm-核心对比" class="headerlink" title="4.2 Crisis vs Calm 核心对比"></a>4.2 Crisis vs Calm 核心对比</h2><p>表 1 汇总 Crisis 与 Calm 窗口的核心 PCA 指标。三个指标方向完全一致：Crisis 的有效维度更低，PC1 方差更高，行业平均相关更高。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>指标</strong></td>
+<td align="center"><strong>Crisis 均值</strong></td>
+<td align="center"><strong>Calm 均值</strong></td>
+<td align="center"><strong>Crisis - Calm</strong></td>
+</tr>
+<tr>
+<td align="center">`effective_dim_95`</td>
+<td align="center">17.67</td>
+<td align="center">27.47</td>
+<td align="center">-9.80</td>
+</tr>
+<tr>
+<td align="center">`pc1_variance`</td>
+<td align="center">0.781</td>
+<td align="center">0.625</td>
+<td align="center">+0.156</td>
+</tr>
+<tr>
+<td align="center">`avg_pairwise_corr`</td>
+<td align="center">0.766</td>
+<td align="center">0.597</td>
+<td align="center">+0.169</td>
+</tr>
+</tbody></table>
+<p>effective_dim_95 的 gap 为 -9.80，意味着危机期达到 95% 方差解释率所需主成分数比平静期少约 10 个。对于只有 48 个行业的矩阵而言，这是一个很大的结构变化。与此同时，PC1 解释方差从 62.5% 升至 78.1%，说明危机期第一共同方向吸收了绝大部分行业收益变动。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image2.png" style="width:5.7in;height:3.53063in" />
+
+<p><em>图 2：Crisis vs Calm 核心指标柱状对比</em></p>
+<h2 id="4-3-PC1-方差与行业平均相关"><a href="#4-3-PC1-方差与行业平均相关" class="headerlink" title="4.3 PC1 方差与行业平均相关"></a>4.3 PC1 方差与行业平均相关</h2><p>低维塌缩不仅表现为 effective_dim_95 下降，也表现为共同成分上升。图 3 和图 4 分别展示 PC1 方差和行业平均相关的全样本时间序列。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image3.png" style="width:5.7in;height:2.375in" />
+
+<p><em>图 3：PC1 解释方差比全时段时间序列</em></p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image4.png" style="width:5.7in;height:2.375in" />
+
+<p><em>图 4：行业平均相关系数全时段时间序列</em></p>
+<p>两个指标在危机期同步上升。PC1 方差上升说明收益率矩阵的最大共同方向变得更强；行业平均相关上升说明行业之间共同运动增强。这与有效维度下降形成闭环：当大部分行业收益向同一方向投射，少数主成分即可解释更多方差，矩阵自然表现为低维。</p>
+<p>因此，本文的主结论不是“危机期收益波动变大”这么简单，而是“危机期收益相关结构更集中”。如果只是所有行业波动率同时上升，但行业间相关结构不变，那么标准化 PCA 下的有效维度不应系统性下降。本文观察到的是标准化后相关结构的谱集中化。</p>
+<h2 id="4-4-PCA-重构曲线"><a href="#4-4-PCA-重构曲线" class="headerlink" title="4.4 PCA 重构曲线"></a>4.4 PCA 重构曲线</h2><p>PCA 重构曲线提供了另一种观察方式。若危机期收益矩阵更低维，则用前 d 个主成分重构时，危机年份的累计解释率曲线应整体更靠左上方，即较小 d 即可达到较高解释率。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image5.png" style="width:5.7in;height:3.42in" />
+
+<p><em>图 5：PCA 重构 R²(d) 曲线</em></p>
+<p>图 5 显示危机年份曲线在低维处明显更高，说明用很少主成分就能解释大量方差。这与 effective_dim_95 的结果一致：危机期收益表示更容易被压缩。</p>
+<h2 id="4-5-Absorption-Ratio-的辅助解释"><a href="#4-5-Absorption-Ratio-的辅助解释" class="headerlink" title="4.5 Absorption Ratio 的辅助解释"></a>4.5 Absorption Ratio 的辅助解释</h2><p>项目中也保留了 Absorption Ratio 相关图表。需要特别说明的是，当前代码中的 ar20&#x2F;ar50 不是“固定前 20 个或前 50 个主成分的解释率”。在 48 行业设定下，“前 50 个主成分”本身也没有直接含义。当前实现更接近“达到 20%&#x2F;50% 累计方差阈值所需最小 k 后的累计解释比例”。当 PC1 本身已经超过 50% 方差解释率时，ar20 和 ar50 常常会与 PC1 方差非常接近。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image6.png" style="width:5.7in;height:2.03571in" />
+
+<p><em>图 6：吸收比率相关时间序列</em></p>
+<p>因此，本文将 Absorption Ratio 作为与 PC1 方差方向一致的辅助图表，而不将其作为独立核心证据。核心解释仍以 effective_dim_95、PC1 方差和平均相关为主。</p>
+<h2 id="4-6-本章小结"><a href="#4-6-本章小结" class="headerlink" title="4.6 本章小结"></a>4.6 本章小结</h2><p>PCA 主结果表明，Crisis 期间市场收益不是简单地“更波动”，而是行业相关结构发生集中化：更少主成分解释更多方差，PC1 解释方差上升，行业平均相关同步上升。危机期 48 行业收益矩阵从较高维的行业差异结构，塌缩为由少数共同成分主导的低维表示。</p>
+<h1 id="第5章-稳健性与统计设计"><a href="#第5章-稳健性与统计设计" class="headerlink" title="第5章 稳健性与统计设计"></a>第5章 稳健性与统计设计</h1><h2 id="5-1-多窗口稳健性"><a href="#5-1-多窗口稳健性" class="headerlink" title="5.1 多窗口稳健性"></a>5.1 多窗口稳健性</h2><p>为检验结果是否依赖 252 日窗口，本文使用 126 日、252 日和 504 日三个窗口长度重复计算 PCA 指标。结果如表 2 所示，三个窗口均显示 Crisis 有效维度低于 Calm。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>窗口长度</strong></td>
+<td align="center"><strong>Crisis `effective_dim_95`</strong></td>
+<td align="center"><strong>Calm `effective_dim_95`</strong></td>
+<td align="center"><strong>Gap</strong></td>
+</tr>
+<tr>
+<td align="center">126 日</td>
+<td align="center">13.78</td>
+<td align="center">25.23</td>
+<td align="center">-11.45</td>
+</tr>
+<tr>
+<td align="center">252 日</td>
+<td align="center">17.67</td>
+<td align="center">27.47</td>
+<td align="center">-9.80</td>
+</tr>
+<tr>
+<td align="center">504 日</td>
+<td align="center">21.00</td>
+<td align="center">27.90</td>
+<td align="center">-6.90</td>
+</tr>
+</tbody></table>
+<p>窗口越短，对危机冲击的反应越敏感，gap 更大；窗口越长，估计更平滑，gap 变小但仍保持同向。这说明维度塌缩不是 252 日窗口的人为产物。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image7.png" style="width:5.7in;height:3.29581in" />
+
+<p><em>图 7：多窗口多指标维度塌缩对比</em></p>
+<p>除 effective_dim_95 外，熵有效秩、participation ratio、PC1 方差和平均相关也给出同向证据。多指标一致性降低了单一指标选择带来的解释风险。</p>
+<h2 id="5-2-Label-Permutation-Null"><a href="#5-2-Label-Permutation-Null" class="headerlink" title="5.2 Label Permutation Null"></a>5.2 Label Permutation Null</h2><p>滑动窗口 PCA 的一个重要统计问题是窗口间高度重叠。主设定中相邻窗口共享约 92% 的交易日，不能把 288 个窗口简单视为独立样本。Welch t-test 可以作为描述性参考，但不应作为严格推断基础。更具体地说，如果直接把 Crisis 组和 Calm 组窗口均值拿来做两样本检验，数值上会得到很小的 p 值，但这个 p 值默认每一行窗口指标近似独立，而这与滑动窗口构造方式不符。</p>
+<p>为此，本文使用 label permutation null。它保留每个窗口的 PCA 指标值、时间排序和窗口重叠结构，只随机置换 crisis&#x2F;calm 标签。这样做的含义是：如果危机标签与低维表示没有关系，那么随机分配标签也应能产生类似大小的 crisis-calm gap。若真实 gap 位于置换分布极端尾部，则说明标签与表示维度之间存在强关联。</p>
+<p>这个设计的关键点在于“置换对象”不是窗口内部收益率，而是窗口状态标签。若在窗口内打乱交易日或逐行业打乱时间序列，会直接破坏收益率同步性，而同步性恰恰是本文要研究的市场结构；那类置换更适合回答“时间同步性是否重要”，不适合回答“危机标签是否对应低维表示”。本文的 label permutation null 则把问题限定为分组层面：给定已经计算好的表示指标，真实危机标签是否比随机标签更能解释维度差异。它本质上是一个状态级 counterfactual，而不是数据级 randomization。</p>
+<p>主窗口下结果如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>指标</strong></td>
+<td align="center"><strong>真实 Crisis-Calm gap</strong></td>
+<td align="center"><strong>Null mean</strong></td>
+<td align="center"><strong>Null SD</strong></td>
+<td align="center"><strong>双侧置换 p 值</strong></td>
+</tr>
+<tr>
+<td align="center">`effective_dim_95`</td>
+<td align="center">-9.8025</td>
+<td align="center">+0.02</td>
+<td align="center">1.26</td>
+<td align="center">≈ 0.0001</td>
+</tr>
+<tr>
+<td align="center">entropy effective rank</td>
+<td align="center">-3.7510</td>
+<td align="center">+0.002</td>
+<td align="center">0.67</td>
+<td align="center">≈ 0.0001</td>
+</tr>
+<tr>
+<td align="center">participation ratio</td>
+<td align="center">-0.9342</td>
+<td align="center">-0.002</td>
+<td align="center">0.18</td>
+<td align="center">≈ 0.0001</td>
+</tr>
+<tr>
+<td align="center">`pc1_variance`</td>
+<td align="center">+0.1563</td>
+<td align="center">-0.0002</td>
+<td align="center">0.023</td>
+<td align="center">≈ 0.0001</td>
+</tr>
+<tr>
+<td align="center">`avg_pairwise_corr`</td>
+<td align="center">+0.1692</td>
+<td align="center">+0.0002</td>
+<td align="center">0.025</td>
+<td align="center">≈ 0.0001</td>
+</tr>
+</tbody></table>
+<p>从表中可以看到，随机标签下的 null mean 基本接近 0，而真实观测 gap 远离 null 分布中心。例如 252 日窗口的 effective_dim_95 真实 gap 为 -9.8025，约为 null SD 的 7.8 倍。这说明在保留窗口依赖结构的前提下，随机标签很难产生本文观察到的维度差异。PC1 方差和平均相关也位于同方向极端尾部，但如前文所述，它们主要用于解释共同成分增强；真正代表完整谱压缩的，是 effective_dim_95、熵有效秩和 participation ratio 三个维度指标。</p>
+<p>因此，这个创新点的价值不在于得到一个更小的 p 值，而在于构造了一个更贴近研究问题的反事实对照：如果危机标签只是随机标签，维度 gap 应该围绕 0 波动；但真实标签对应的 gap 远超随机标签范围。需要再次强调，置换 p 值在本文中仍作为描述性 null 对照，而不是独立窗口推断。它的价值在于提供一种不依赖正态性和独立窗口假设的稳健性检查。</p>
+<h2 id="5-3-Event-Study"><a href="#5-3-Event-Study" class="headerlink" title="5.3 Event Study"></a>5.3 Event Study</h2><p>除宏观分期均值外，本文还围绕两个具体危机事件做 event study：GFC 2008 和 COVID 2020。事件时间按 PCA 窗口结束日相对于事件日的交易日距离计算，并比较 pre、crisis 和 post 区间。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image8.png" style="width:5.7in;height:3.14857in" />
+
+<p><em>图 8：危机事件前后有效维度时序</em></p>
+<p>关键结果如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>事件</strong></td>
+<td align="center"><strong>Pre `effective_dim_95`</strong></td>
+<td align="center"><strong>Crisis `effective_dim_95`</strong></td>
+<td align="center"><strong>Crisis - Pre</strong></td>
+</tr>
+<tr>
+<td align="center">GFC 2008</td>
+<td align="center">23.91</td>
+<td align="center">17.71</td>
+<td align="center">-6.19</td>
+</tr>
+<tr>
+<td align="center">COVID 2020</td>
+<td align="center">28.25</td>
+<td align="center">16.57</td>
+<td align="center">-11.68</td>
+</tr>
+</tbody></table>
+<p>COVID 的塌缩更陡峭，GFC 的塌缩更渐进。两者幅度不同，但方向一致：危机事件附近有效维度下降。PC1 方差和平均相关也呈现同向上升。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image9.png" style="width:5.7in;height:4.01714in" />
+
+<p><em>图 9：危机事件前后 PC1 方差与行业相关性</em></p>
+<p>本文只在 event study 中引用 effective_dim_95、pc1_variance 和 avg_pairwise_corr 三类指标，不使用旧结果表中残留的 ar20&#x2F;ar50 行，以避免口径混淆。</p>
+<h2 id="5-4-本章小结"><a href="#5-4-本章小结" class="headerlink" title="5.4 本章小结"></a>5.4 本章小结</h2><p>多窗口、多指标、label permutation null 和 event study 共同说明，危机期低维塌缩不是单一窗口、单一指标或单一分期定义造成的偶然现象。虽然滑动窗口重叠限制了严格统计推断，但多种描述性证据的方向高度一致，足以支持本文作为表示分析的核心结论。</p>
+<h1 id="第6章-机制解释：共同市场因子驱动"><a href="#第6章-机制解释：共同市场因子驱动" class="headerlink" title="第6章 机制解释：共同市场因子驱动"></a>第6章 机制解释：共同市场因子驱动</h1><h2 id="6-1-从现象到机制"><a href="#6-1-从现象到机制" class="headerlink" title="6.1 从现象到机制"></a>6.1 从现象到机制</h2><p>第 4 章和第 5 章说明危机期市场收益出现低维塌缩，但这还没有回答塌缩来自哪里。一个自然解释是：危机时期共同市场因子变强，所有行业收益对同一市场方向的暴露同步上升。若这一解释成立，那么剥离共同市场成分后，Crisis 与 Calm 的维度差异应显著缩小。</p>
+<p>本文通过 market-factor residual PCA 检验该机制。这里的核心思想是：先观察完整输入下的现象，再移除一个候选关键成分，观察现象是否大幅减弱。如果危机期低维塌缩来自共同市场方向，那么移除这一方向后，PCA 谱结构应重新变得分散；如果维度 gap 仍然存在，则说明行业独立结构或其他非市场成分仍在驱动塌缩。</p>
+<h2 id="6-2-Market-Factor-Residual-PCA"><a href="#6-2-Market-Factor-Residual-PCA" class="headerlink" title="6.2 Market-Factor Residual PCA"></a>6.2 Market-Factor Residual PCA</h2><p>本文比较三种收益矩阵：</p>
+<p>1. 原始收益矩阵。 2. 剥离等权市场因子后的残差收益矩阵。 3. 剥离窗口 PC1 后的残差收益矩阵。</p>
+<p>这两个残差版本分别有不同含义。等权市场因子残差使用 48 个行业每日平均收益作为外生式市场方向，解释上接近传统资产定价中的 market mode；窗口 PC1 残差则完全由窗口内数据学习得到，代表该窗口最强的经验共同方向。前者更直观，后者更贴合 PCA 谱结构。若两种剥离方式得到相似结论，就说明机制判断不是某一种市场因子定义的偶然结果，而是对“共同方向增强”这一结构事实的双重校验。</p>
+<p>三者使用完全相同的滑动 PCA 指标计算流程：同样的窗口、同样的标准化、同样的维度指标、同样的 crisis&#x2F;calm 标签。唯一变化是输入矩阵中是否保留共同市场成分。结果如表 4 所示。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>变体</strong></td>
+<td align="center"><strong>`effective_dim_95` gap</strong></td>
+<td align="center"><strong>PC1 gap</strong></td>
+<td align="center"><strong>平均相关 gap</strong></td>
+<td align="center"><strong>维度 gap 缩减</strong></td>
+</tr>
+<tr>
+<td align="center">原始收益</td>
+<td align="center">-9.80</td>
+<td align="center">+0.156</td>
+<td align="center">+0.169</td>
+<td align="center">0%</td>
+</tr>
+<tr>
+<td align="center">剥离等权市场因子</td>
+<td align="center">-1.79</td>
+<td align="center">+0.047</td>
+<td align="center">+0.0014</td>
+<td align="center">约 81.7%</td>
+</tr>
+<tr>
+<td align="center">剥离窗口 PC1</td>
+<td align="center">-1.78</td>
+<td align="center">+0.042</td>
+<td align="center">+0.0011</td>
+<td align="center">约 81.9%</td>
+</tr>
+</tbody></table>
+<p>剥离共同市场成分后，原本接近 10 个主成分的维度 gap 缩小到不到 2 个主成分；行业平均相关 gap 几乎归零。这说明原始收益中观察到的危机期同步性，主要不是行业之间每一对关系独立增强，而是所有行业共同投射到同一个市场方向上的强度上升。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image10.png" style="width:5.7in;height:2.80952in" />
+
+<p><em>图 10：市场因子剥离前后有效维度时间序列</em></p>
+<p>这一结果是本文最重要的机制证据。它将“危机期相关性上升”这一宏观描述，细化为“共同市场因子权重上升导致 PCA 谱集中化”。更重要的是，它改变了对主结果的解释：如果只看原始 PCA，我们只能说危机期更低维；加入残差消融后，可以进一步说低维化的绝大部分来自共同市场方向，而不是来自行业之间复杂、分散、独立的结构性变化。换句话说，原始 PCA 只是现象检测，而 residual PCA 则把现象和一个可操作的机制假设连接起来。</p>
+<h2 id="6-3-人工恐慌因子模拟"><a href="#6-3-人工恐慌因子模拟" class="headerlink" title="6.3 人工恐慌因子模拟"></a>6.3 人工恐慌因子模拟</h2><p>为进一步说明共同因子权重上升足以生成有效维度下降，本文使用人工 48 行业收益模拟。模拟数据中，每个行业收益由一个共享恐慌因子和行业自身独立扰动组成：</p>
+<p>R_i,t &#x3D; beta_i * panic_weight_t * panic_t + idiosyncratic_i,t</p>
+<p>其中 panic_t 是所有行业共享的恐慌因子，panic_weight_t 在人工危机区间上升并随后回落，idiosyncratic_i,t 为行业独立扰动。除共享恐慌因子外，行业之间没有额外相关结构。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image11.png" style="width:5.7in;height:2.34141in" />
+
+<p><em>图 11：人工恐慌因子模拟：有效维度与恐慌权重</em></p>
+<p>模拟结果如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>Panic loading 水平</strong></td>
+<td align="center"><strong>`effective_dim_95`</strong></td>
+<td align="center"><strong>PC1 方差</strong></td>
+<td align="center"><strong>平均相关</strong></td>
+</tr>
+<tr>
+<td align="center">低</td>
+<td align="center">42.63</td>
+<td align="center">0.074</td>
+<td align="center">0.048</td>
+</tr>
+<tr>
+<td align="center">高</td>
+<td align="center">26.33</td>
+<td align="center">0.814</td>
+<td align="center">0.810</td>
+</tr>
+</tbody></table>
+<p>当共同恐慌因子权重低时，48 个行业主要由独立扰动驱动，有效维度接近高维状态；当共同恐慌因子权重升高时，PC1 方差和平均相关快速上升，有效维度显著下降。该模拟展示了一个最小机制：即使没有复杂行业网络，只要共同因子在某段时间被放大，滑动 PCA 就会观察到低维塌缩。</p>
+<h2 id="6-4-机制解释的边界"><a href="#6-4-机制解释的边界" class="headerlink" title="6.4 机制解释的边界"></a>6.4 机制解释的边界</h2><p>需要谨慎的是，market residual PCA 是机制消融，不是严格因果识别。剥离共同市场因子后 gap 大幅缩小，说明共同因子解释了绝大部分现象，但不能证明真实危机中不存在其他机制。人工模拟也是概念验证，不是对现实市场参数的校准。本文的机制结论应表述为：共同市场因子权重上升足以解释并生成与实证同方向、同量级的低维塌缩图像。</p>
+<h1 id="第7章-AE-非线性压缩稳健性"><a href="#第7章-AE-非线性压缩稳健性" class="headerlink" title="第7章 AE 非线性压缩稳健性"></a>第7章 AE 非线性压缩稳健性</h1><h2 id="7-1-AE-实验目的"><a href="#7-1-AE-实验目的" class="headerlink" title="7.1 AE 实验目的"></a>7.1 AE 实验目的</h2><p>PCA 是线性方法。若危机期低维塌缩只是 PCA 的线性假设产物，那么非线性压缩模型未必会观察到同样现象。为此，本文使用 Autoencoder 作为稳健性补充，检验危机期收益是否也更容易被低维瓶颈重构。</p>
+<p>AE 的作用不是替代 PCA，也不是证明非线性机制。本文将 AE 定位为方法三角验证：如果 PCA 和 AE 在“危机期更可压缩”这一方向上保持一致，那么主结论对模型形式更稳健。</p>
+<h2 id="7-2-年度-AE-设计"><a href="#7-2-年度-AE-设计" class="headerlink" title="7.2 年度 AE 设计"></a>7.2 年度 AE 设计</h2><p>主 AE 架构为 48→20→d→20→48，使用 ReLU 激活，瓶颈维度 d 从 1 到 20。实验对 2006、2008、2014、2015、2020、2024 等年份分别进行，采用 5 折交叉验证和 3 个随机种子。输入在训练折内标准化，验证集使用 per-feature MSE。</p>
+<h2 id="7-3-年度-AE-结果"><a href="#7-3-年度-AE-结果" class="headerlink" title="7.3 年度 AE 结果"></a>7.3 年度 AE 结果</h2><p>表 6 汇总 d&#x3D;1 时的验证 MSE。危机年份的 d&#x3D;1 重构误差明显更低。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>年份</strong></td>
+<td align="center"><strong>类型</strong></td>
+<td align="center"><strong>d&#x3D;1 验证 MSE</strong></td>
+</tr>
+<tr>
+<td align="center">2006</td>
+<td align="center">Calm</td>
+<td align="center">0.368</td>
+</tr>
+<tr>
+<td align="center">2008</td>
+<td align="center">Crisis</td>
+<td align="center">0.208</td>
+</tr>
+<tr>
+<td align="center">2014</td>
+<td align="center">Calm</td>
+<td align="center">0.383</td>
+</tr>
+<tr>
+<td align="center">2015</td>
+<td align="center">Calm</td>
+<td align="center">0.416</td>
+</tr>
+<tr>
+<td align="center">2020</td>
+<td align="center">Crisis</td>
+<td align="center">0.234</td>
+</tr>
+<tr>
+<td align="center">2024</td>
+<td align="center">Calm</td>
+<td align="center">0.436</td>
+</tr>
+</tbody></table>
+<p>Crisis 年份 d&#x3D;1 MSE 均值约为 0.221，Calm 年份约为 0.401。这说明在危机年份，即使用 1 维瓶颈也能较好重构 48 行业收益，市场收益结构更容易被压缩。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image12.png" style="width:5.7in;height:2.03571in" />
+
+<p><em>图 12：AE shallow ReLU 各瓶颈维度 improvement 曲线</em></p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image13.png" style="width:5.7in;height:2.375in" />
+
+<p><em>图 13：Crisis vs Calm 的 AE d&#x3D;1 验证 MSE 对比</em></p>
+<h2 id="7-4-滑动-AE-与消融"><a href="#7-4-滑动-AE-与消融" class="headerlink" title="7.4 滑动 AE 与消融"></a>7.4 滑动 AE 与消融</h2><p>滑动 AE 结果也显示方向一致：d&#x3D;1 时，危机窗口 MSE 约为 0.238，平静窗口约为 0.405。该结果与年度 AE 和 PCA 主结果一致。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image14.png" style="width:5.7in;height:2.03571in" />
+
+<p><em>图 14：滑动 AE d&#x3D;1 MSE 全时段时间序列</em></p>
+<p>架构消融显示，Tanh 和 ReLU 整体优于 Sigmoid；不同深度架构并没有改变“危机期更可压缩”的方向。消融实验的意义在于说明结果不是某个单一 AE 架构偶然造成的，而不是将某个架构差异解释为金融机制。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image15.png" style="width:5.7in;height:1.47035in" />
+
+<p><em>图 15：AE 深度消融：不同深度架构验证 MSE</em></p>
+<h2 id="7-5-本章小结"><a href="#7-5-本章小结" class="headerlink" title="7.5 本章小结"></a>7.5 本章小结</h2><p>AE 从非线性重构角度支持 PCA 的主结论：危机期收益矩阵更容易被低维瓶颈重构。然而，AE 在行业聚合收益上的增量并不构成新的核心机制。本文因此将 AE 定位为稳健性补充，而不是主证据或非线性机制证明。</p>
+<h1 id="第8章-上下游探索性分析"><a href="#第8章-上下游探索性分析" class="headerlink" title="第8章 上下游探索性分析"></a>第8章 上下游探索性分析</h1><h2 id="8-1-问题与方法"><a href="#8-1-问题与方法" class="headerlink" title="8.1 问题与方法"></a>8.1 问题与方法</h2><p>除整体市场维度塌缩外，一个自然扩展问题是：低维塌缩是否在产业链上下游之间存在时序差异？如果冲击沿产业链传播，上游行业可能先于下游出现维度下降。</p>
+<p>项目使用上下游 60 龙头公司收益率，将样本拆分为上游和下游两组，并分别计算滑动 PCA 有效维度。该部分分析不作为主结论，而是探索危机压缩现象在产业链结构中的异质性。</p>
+<h2 id="8-2-结果"><a href="#8-2-结果" class="headerlink" title="8.2 结果"></a>8.2 结果</h2><p>1 年窗口结果显示，GFC 期间上游和下游最低点接近同步，均在 2008-11-13 附近；COVID 期间，上游最低点约为 2020-03-23，下游最低点约为 2020-04-22，存在约一个月错位。</p>
+<p>细粒度 2 月窗口 + 1 周步长结果则显示，COVID 期间 48 行业、上游和下游最低点均在 2020-03-16 附近。这说明上下游错位对窗口长度敏感，不能过度解释为稳定的产业链因果传导。</p>
+<img src="/images/posts/post-a8ef404b-4797-4e18-a567-538b86b38095/image16.png" style="width:5.7in;height:2.375in" />
+
+<p><em>图 16：COVID 2020 期间 48 行业、上游和下游有效维度放大图</em></p>
+<p>lead-lag 分析中，lag&#x3D;-1 的相关约为 0.451，脚本解释为上游可能领先下游约一个月。但 lag&#x3D;-1、0、+1 的相关系数接近，说明滞后识别并不锋利。</p>
+<h2 id="8-3-本章小结"><a href="#8-3-本章小结" class="headerlink" title="8.3 本章小结"></a>8.3 本章小结</h2><p>上下游分析提示危机压缩现象在产业链位置上可能存在响应强度或时序差异，尤其 COVID 期间上游在部分窗口设定下表现出更早触底迹象。但由于结果对窗口长度敏感，且上下游样本与 48 行业主样本不是同一统计对象，本文将该部分定位为 exploratory analysis，不作为主结论。</p>
+<h1 id="第9章-结论与局限"><a href="#第9章-结论与局限" class="headerlink" title="第9章 结论与局限"></a>第9章 结论与局限</h1><h2 id="9-1-主要结论"><a href="#9-1-主要结论" class="headerlink" title="9.1 主要结论"></a>9.1 主要结论</h2><p>本文围绕“危机时期金融市场收益表示是否发生低维塌缩”这一问题，使用 2000-2024 年 48 行业等权日收益率进行了无监督表示分析。最终结论不是来自单一指标，而是来自一条逐层加固的证据链。</p>
+<p>第一，现象层面，危机期收益矩阵有效维度显著下降。Crisis 窗口 effective_dim_95 为 17.67，Calm 为 27.47，gap 为 -9.80。PC1 方差和行业平均相关同步上升，但二者主要用于解释共同成分增强，而不被包装成相互独立的两条证据。</p>
+<p>第二，理论层面，情绪隐变量模型说明共同恐慌因子会给协方差矩阵带来秩一扰动，使第一特征值占比上升，并在共同因子足够强时压低 PCA 有效维度。该推导为实证部分的低维塌缩解释提供了数学基础。</p>
+<p>第三，谱证据层面，完整特征谱发生压缩。有效维度、熵有效秩和 participation ratio 均指向方差从尾部主成分向头部主成分集中；平均相关则作为 PC1 上升的直观诊断，而不是替代完整谱分析。</p>
+<p>第四，稳健性层面，该现象不依赖单一窗口或单一指标。126、252、504 日窗口均给出同向结果；label permutation null 显示真实 crisis-calm gap 位于随机标签分布极端尾部；event study 在 GFC 2008 和 COVID 2020 两个事件附近均观察到有效维度下降。</p>
+<p>第五，机制层面，共同市场因子增强是主要来源。剥离等权市场因子或窗口 PC1 后，有效维度 gap 从 -9.80 缩小到约 -1.79，行业平均相关 gap 基本归零。人工恐慌因子模拟进一步展示，共同因子权重上升足以生成同方向的 PCA 图像。</p>
+<p>AE 非线性压缩结果方向一致，说明危机期更可压缩并非 PCA 的孤立现象；上下游分析提供了产业链异质性的探索性线索。</p>
+<h2 id="9-2-局限"><a href="#9-2-局限" class="headerlink" title="9.2 局限"></a>9.2 局限</h2><p>本文有六点局限。</p>
+<p>第一，本文是 ex-post 表示分析，不是危机预测模型。它解释历史危机发生时的数据结构变化，不提供未来危机预警能力。</p>
+<p>第二，危机样本有限。主危机事件主要是 2008 GFC 和 2020 COVID，独立危机数量较少，无法穷尽所有危机类型。</p>
+<p>第三，滑动窗口高度重叠。本文的 Welch 检验、bootstrap 区间和 permutation p 值均应作为描述性对照，不应解释为独立窗口下的严格推断。</p>
+<p>第四，48 行业聚合层级可能掩盖个股层面的复杂非线性结构。AE 在行业层面的增量有限，不代表个股层面也一定如此。</p>
+<p>第五，market residual PCA 和模拟不是严格因果识别。它们支持共同因子机制，但不能排除其他渠道，也不能校准真实危机中的结构参数。</p>
+<p>第六，上下游分析样本和主样本不同，且结果对窗口长度敏感，因此只能作为探索性扩展。</p>
+<h2 id="9-3-未来方向"><a href="#9-3-未来方向" class="headerlink" title="9.3 未来方向"></a>9.3 未来方向</h2><p>未来可以从三个方向扩展。第一，将维度指标用于 out-of-sample 的前瞻性验证，检验其是否与未来波动率或回撤有关，但这需要严格避免事后信息泄露。第二，将分析扩展到个股层面，观察更高维资产空间中 AE 是否能捕捉 PCA 之外的非线性压缩结构。第三，将上下游分析扩展为更正式的产业链 event study，引入更细粒度的供应链关系数据和稳健滞后识别。</p>
+<p>总体而言，本文表明：危机时期市场收益并非仅仅“更剧烈波动”，而是其表示结构本身发生收缩。市场从多行业、多信息源的较高维状态，塌缩为由共同市场因子主导的低维表示。这一结论通过 PCA 主证据、标签置换、机制消融、事件研究、AE 稳健性和模拟实验共同得到支持。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1] KRITZMAN M, LI Y, PAGE S, et al. Principal components as a measure of systemic risk[J]. The Journal of Portfolio Management, 2011, 37(4):112-126.</p>
+<p>[2] PLEROU V, GOPIKRISHNAN P, ROSENOW B, et al. Random matrix approach to cross correlations in financial data[J]. Physical Review E, 2002, 65(6):066126.</p>
+<p>[3] FRENCH K R. 48 Industry Portfolios, daily equal-weighted returns[DB&#x2F;OL]. Kenneth R. French Data Library.</p>
+<p>[4] GOODFELLOW I, BENGIO Y, COURVILLE A. Deep Learning[M]. Cambridge: MIT Press, 2016.</p>
+</div>
+    
+      <aside class="article-toc" aria-label="文章目录">
+        <span>目录</span>
+        <ul><li><a href="#1-1-研究定位">1.1 研究定位</a></li><li><a href="#1-2-研究贡献">1.2 研究贡献</a></li><li><a href="#1-3-报告结构">1.3 报告结构</a></li><li><a href="#2-1-数据来源与样本">2.1 数据来源与样本</a></li><li><a href="#2-2-Crisis-与-Calm-定义">2.2 Crisis 与 Calm 定义</a></li><li><a href="#2-3-滑动-PCA">2.3 滑动 PCA</a></li><li><a href="#2-4-统计检验与稳健性设计">2.4 统计检验与稳健性设计</a></li><li><a href="#2-5-Market-Factor-Residual-PCA">2.5 Market-Factor Residual PCA</a></li><li><a href="#2-6-Autoencoder-稳健性实验">2.6 Autoencoder 稳健性实验</a></li><li><a href="#3-1-基本设定">3.1 基本设定</a></li><li><a href="#3-2-正常时期：情绪冲击分散">3.2 正常时期：情绪冲击分散</a></li><li><a href="#3-3-危机时期：共同恐慌因子与低秩化">3.3 危机时期：共同恐慌因子与低秩化</a></li><li><a href="#3-4-有效维度下降结论">3.4 有效维度下降结论</a></li><li><a href="#3-5-与本文实证设计的对应关系">3.5 与本文实证设计的对应关系</a></li><li><a href="#4-1-有效维度时间序列">4.1 有效维度时间序列</a></li><li><a href="#4-2-Crisis-vs-Calm-核心对比">4.2 Crisis vs Calm 核心对比</a></li><li><a href="#4-3-PC1-方差与行业平均相关">4.3 PC1 方差与行业平均相关</a></li><li><a href="#4-4-PCA-重构曲线">4.4 PCA 重构曲线</a></li><li><a href="#4-5-Absorption-Ratio-的辅助解释">4.5 Absorption Ratio 的辅助解释</a></li><li><a href="#4-6-本章小结">4.6 本章小结</a></li><li><a href="#5-1-多窗口稳健性">5.1 多窗口稳健性</a></li><li><a href="#5-2-Label-Permutation-Null">5.2 Label Permutation Null</a></li><li><a href="#5-3-Event-Study">5.3 Event Study</a></li><li><a href="#5-4-本章小结">5.4 本章小结</a></li><li><a href="#6-1-从现象到机制">6.1 从现象到机制</a></li><li><a href="#6-2-Market-Factor-Residual-PCA">6.2 Market-Factor Residual PCA</a></li><li><a href="#6-3-人工恐慌因子模拟">6.3 人工恐慌因子模拟</a></li><li><a href="#6-4-机制解释的边界">6.4 机制解释的边界</a></li><li><a href="#7-1-AE-实验目的">7.1 AE 实验目的</a></li><li><a href="#7-2-年度-AE-设计">7.2 年度 AE 设计</a></li><li><a href="#7-3-年度-AE-结果">7.3 年度 AE 结果</a></li><li><a href="#7-4-滑动-AE-与消融">7.4 滑动 AE 与消融</a></li><li><a href="#7-5-本章小结">7.5 本章小结</a></li><li><a href="#8-1-问题与方法">8.1 问题与方法</a></li><li><a href="#8-2-结果">8.2 结果</a></li><li><a href="#8-3-本章小结">8.3 本章小结</a></li><li><a href="#9-1-主要结论">9.1 主要结论</a></li><li><a href="#9-2-局限">9.2 局限</a></li><li><a href="#9-3-未来方向">9.3 未来方向</a></li></ul>
+      </aside>
+    
+  </div>
+
+  <nav class="post-navigation" aria-label="文章导航">
+    <span></span>
+    <a class="next" href="/2026/06/20/54632c51/"><span>下一篇</span><strong>字节跳动_国际化业务战略分析_一面复盘报告</strong></a>
+  </nav>
+
+  
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-wrap">
+      <div><strong>夏末</strong><p>不啻微茫，造炬成阳</p></div>
+      <div class="footer-links">
+        <a href="/archives/">全部文章</a>
+        <a href="/risk-observatory/">风险观察站</a>
+        <a href="/wordScenery/">词风景</a>
+      </div>
+      <span>&copy; 2026 夏末</span>
+    </div>
+  </footer>
+  
+<script src="/js/site.js"></script>
+
+</body>
+</html>
